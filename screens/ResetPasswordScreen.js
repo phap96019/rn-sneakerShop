@@ -1,3 +1,4 @@
+//Login Screen
 import React from "react";
 import {
   View,
@@ -12,9 +13,8 @@ import {
 import InputComponent from "../components/InputComponent";
 import ButtonComponent from "../components/ButtonComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import LoginScreen from "./LoginScreen";
 
-export default class SignUpScreen extends React.Component {
+export default class ResetPasswordScreen extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -33,21 +33,19 @@ export default class SignUpScreen extends React.Component {
                 "https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062"
             }}
           />
+          <View style={styles.title}>
+            <Text style={styles.title}>Reset password</Text>
+          </View>
 
           <InputComponent
-            label="Email"
-            autoCorrect={true}
-            autoCapitalize="none"
-          />
-          <InputComponent
-            label="Password"
+            label="New password"
             autoCorrect={true}
             autoCapitalize="none"
             secureTextEntry //Password
             //showIconPassword
           />
           <InputComponent
-            label="Confirm Password"
+            label="confirm password"
             autoCorrect={true}
             autoCapitalize="none"
             secureTextEntry //Password
@@ -57,21 +55,9 @@ export default class SignUpScreen extends React.Component {
             <ButtonComponent
               activeOpacity={0.8}
               containerStyle={{ flex: 1, marginTop: 30 }}
-              title="Sign up"
+              title="Reset"
               handleOnPress={() => {}}
             />
-          </View>
-          <View style={styles.linkContainer}>
-            <TouchableOpacity
-              style={styles.link}
-              onPress={() => {
-                this.props.navigation.goBack(null);
-                return true;
-                this.props.navigation.navigate("Login");
-              }}
-            >
-              <Text>Have an account? Sign in</Text>
-            </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
@@ -97,10 +83,11 @@ const styles = StyleSheet.create({
     height: 150
   },
   title: {
-    textAlign: "center"
+    fontSize: 15,
+    padding: 15
     //opacity: 0.5  //độ mờ
   },
-
+  formContainer: {},
   linkContainer: {
     paddingTop: 20,
     alignItems: "center",

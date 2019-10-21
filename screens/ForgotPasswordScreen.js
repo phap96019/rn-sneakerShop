@@ -1,3 +1,4 @@
+//Login Screen
 import React from "react";
 import {
   View,
@@ -12,9 +13,8 @@ import {
 import InputComponent from "../components/InputComponent";
 import ButtonComponent from "../components/ButtonComponent";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import LoginScreen from "./LoginScreen";
 
-export default class SignUpScreen extends React.Component {
+export default class ForgotPasswordScreen extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -33,46 +33,41 @@ export default class SignUpScreen extends React.Component {
                 "https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062"
             }}
           />
+          <View style={styles.messageContainer}>
+            <Text style={styles.message}>Enter your Email.</Text>
+            <Text style={styles.message}>
+              We'll email instruction on how to reset your password.
+            </Text>
+          </View>
+          {/* <View>
+            <Tex>Enter your Email.</Tex>
+            <Text>We'll email instruction on how to reset your password.</Text>
+          </View> */}
 
           <InputComponent
             label="Email"
             autoCorrect={true}
             autoCapitalize="none"
           />
-          <InputComponent
-            label="Password"
-            autoCorrect={true}
-            autoCapitalize="none"
-            secureTextEntry //Password
-            //showIconPassword
-          />
-          <InputComponent
-            label="Confirm Password"
-            autoCorrect={true}
-            autoCapitalize="none"
-            secureTextEntry //Password
-            //showIconPassword
-          />
           <View style={{ flexDirection: "row" }}>
             <ButtonComponent
               activeOpacity={0.8}
               containerStyle={{ flex: 1, marginTop: 30 }}
-              title="Sign up"
+              title="Send me an email"
               handleOnPress={() => {}}
             />
           </View>
-          <View style={styles.linkContainer}>
+
+          {/* <View style={styles.linkContainer}>
             <TouchableOpacity
               style={styles.link}
               onPress={() => {
-                this.props.navigation.goBack(null);
-                return true;
-                this.props.navigation.navigate("Login");
+                this.props.navigation.navigate("SignUp");
               }}
             >
-              <Text>Have an account? Sign in</Text>
+              <Text>Don't have an account?</Text>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
@@ -100,13 +95,17 @@ const styles = StyleSheet.create({
     textAlign: "center"
     //opacity: 0.5  //độ mờ
   },
-
+  formContainer: {},
   linkContainer: {
     paddingTop: 20,
     alignItems: "center",
     justifyContent: "space-between"
   },
-  link: {
-    paddingTop: 15
+  messageContainer: {
+    //padding: 20,
+    paddingTop: 50
+  },
+  message: {
+    fontSize: 15
   }
 });

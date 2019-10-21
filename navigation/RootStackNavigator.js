@@ -3,6 +3,8 @@ import { createStackNavigator } from "react-navigation-stack";
 import MainBottomNavigator from "./MainBottomNavigator";
 import SignUpScreen from "../screens/SignUpScreen";
 import LoginScreeen from "../screens/LoginScreen";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
+import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -19,11 +21,26 @@ const RootStackNavigator = createStackNavigator(
       })
     },
     SignUp: {
-      screen: SignUpScreen
+      screen: SignUpScreen,
+      navigationOptions: () => ({
+        title: "Create an account"
+      })
+    },
+    Forgot: {
+      screen: ForgotPasswordScreen,
+      navigationOptions: () => ({
+        title: "Forgot Password"
+      })
+    },
+    Reset: {
+      screen: ResetPasswordScreen,
+      navigationOptions: () => ({
+        header: null
+      })
     }
   },
   {
-    initialRouteName: "Login"
+    initialRouteName: "Reset"
   }
 );
 

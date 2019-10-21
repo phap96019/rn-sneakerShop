@@ -55,7 +55,12 @@ export default class LoginScreen extends React.Component {
             />
           </View>
           <View style={styles.linkContainer}>
-            <TouchableOpacity style={styles.link}>
+            <TouchableOpacity
+              style={styles.link}
+              onPress={() => {
+                this.props.navigation.navigate("Forgot");
+              }}
+            >
               <Text>Forgot password?</Text>
             </TouchableOpacity>
 

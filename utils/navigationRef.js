@@ -10,15 +10,15 @@ export const navigate = (routeName, params) => {
   _navigator.dispatch(
     NavigationActions.navigate({
       routeName,
-      params
+      params,
     })
   );
 };
-export const navigateRePlace = (routeName, params) => {
+export const navigateReplace = (routeName, params) => {
   _navigator.dispatch(
     StackActions.replace({
       routeName,
-      params
+      params,
     })
   );
 };

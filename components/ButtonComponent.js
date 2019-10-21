@@ -1,6 +1,5 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import { Button } from "react-native-elements";
 
 const ButtonComponent = ({
   containerStyle,
@@ -30,15 +29,15 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 12
+      height: 12,
     },
     shadowOpacity: 0.58,
     shadowRadius: 16.0,
-    elevation: 24
+    elevation: 24,
   },
   textStyle: {
-    color: "#fff"
-  }
+    color: "#fff",
+  },
 });
 
 export default ButtonComponent;

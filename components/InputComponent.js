@@ -10,6 +10,7 @@ const InputComponent = ({
   rightIcon,
   labelStyle,
   containerStyle,
+  refInput,
   ...props
 }) => {
   const [showPassword, setShowPassword] = useState(false);

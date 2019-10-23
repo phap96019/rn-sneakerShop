@@ -6,121 +6,108 @@ import {
   TextInput,
   Image,
   Dimensions,
-  TouchableOpacity
+  Platform,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-export class AccountScreen extends Component {
-  render() {
-    return (
-      <ScrollView>
-        <View style={{ flex: 1 }}>
-          <Text> </Text>
-          <Text> </Text>
-          <View style={styles.container}>
+import ButtonComponent from "../components/ButtonComponent";
+import InputComponent from "../components/InputComponent";
+// import RadioForm, {
+//   RadioButton,
+//   RadioButtonInput,
+//   RadioButtonLabel
+// } from "react-native-simple-radio-button";
+
+const item = {
+  name: "Ngoc Trinh",
+  mail: "Abc@gmail.com",
+};
+const ChangeAvatar = () => {};
+const AccountScreen = prop => {
+  return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Platform.select({ ios: 80, android: 20 })}
+        behavior="padding"
+        style={styles.container}
+      >
+        <View>
+          <TouchableOpacity
+            style={styles.avatarContainer}
+            //onPress={{ ChangeAvatar }}
+          >
             <Image
-              style={styles.Image}
+              style={styles.avatar}
               source={{
                 uri:
-                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
+                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171",
               }}
             />
-            <Text style={styles.textA}>Ngọc Trinh</Text>
-            <Text>trinhpro@gmail.com</Text>
-          </View>
-          <View style={styles.profile}>
-            <TouchableOpacity style={styles.buttonEditTop}>
-              <Text style={styles.buttonText}>Account</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonEditBot}>
-              <Text style={styles.buttonText}>Password</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.btList}>
-            <TouchableOpacity style={styles.bteasy}>
-              <Ionicons name="md-reorder" size={20} color="#3d3d3d" />
-              <Text style={styles.textB}> Order</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.bteasy}>
-              <Ionicons name="ios-cart" size={20} color="#3d3d3d" />
-              <Text style={styles.textB}> Cart</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.bteasy}>
-              <Ionicons name="ios-heart-empty" size={20} color="#3d3d3d" />
-              <Text style={styles.textB}> Wish list</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.bteasy}>
-              <Ionicons name="ios-settings" size={20} color="#3d3d3d" />
-              <Text style={styles.textB}> Setting</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
+          <View style={styles.NameAndMail}>
+            <InputComponent
+              label="Name"
+              autoCorrect={true}
+              autoCapitalize="none"
+            />
+            <InputComponent
+              label="Phone number"
+              autoCorrect={true}
+              autoCapitalize="none"
+            />
+            <InputComponent
+              label="Address"
+              autoCorrect={true}
+              autoCapitalize="none"
+            />
+            {/* <RadioForm
+              radio_props={radio_props}
+              initial={0}
+              buttonColor={"#2f3542"}
+              onPress={Keyboard.dismiss}
+              //onPress={(value) => {this.setState({value:value})}}
+            /> */}
           </View>
 
-          <View style={styles.profile}>
-            <TouchableOpacity style={styles.buttonEditBot}>
-              <Text style={styles.buttonText}>LOGOUT</Text>
-            </TouchableOpacity>
+          <View style={styles.ButtonContainer}>
+            <ButtonComponent
+              activeOpacity={0.8}
+              containerStyle={{ flex: 1, marginTop: 20 }}
+              title="Save"
+              handleOnPress={() => {}}
+            />
           </View>
         </View>
-      </ScrollView>
-    );
-  }
-}
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
+  );
+};
 
 const styles = StyleSheet.create({
+  avatarContainer: {
+    // justifyContent: "center",
+    alignItems: "center",
+  },
+  avatar: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+  },
+  ButtonContainer: {
+    flexDirection: "row",
+  },
+
   container: {
     flex: 1,
+    backgroundColor: "white",
     justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
+    // alignItems: "center",
+    paddingHorizontal: 15,
   },
-  textA: {
-    fontSize: 20,
-    fontWeight: "bold"
-  },
-  Image: {
-    height: 100,
-    width: 100,
-    borderRadius: 100,
-    paddingHorizontal: 10
-  },
-  profile: {
-    marginTop: 20,
-    margin: 10
-  },
-  buttonEditTop: {
-    backgroundColor: "#95a5a6",
-    paddingVertical: 13,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    marginBottom: 5
-  },
-  buttonEditBot: {
-    backgroundColor: "#95a5a6",
-    paddingVertical: 13,
-    borderBottomRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    marginBottom: 5
-  },
-  buttonText: {
-    textAlign: "center",
-    color: "#FFFFFF"
-  },
-  //các nút cơ bản phía dưới
-  btList: {
-    margin: 10
-  },
-  bteasy: {
-    backgroundColor: "#ecf0f1",
-    paddingVertical: 13,
-    marginBottom: 5,
-    paddingLeft: 15,
-    flexDirection: "row"
-  },
-  textB: {
-    textAlign: "left",
-    color: "#3d3d3d"
-  }
 });
 
 export default AccountScreen;

@@ -11,36 +11,36 @@ const RootStackNavigator = createStackNavigator(
     Main: {
       screen: MainBottomNavigator,
       navigationOptions: () => ({
-        headerMode: "none"
-      })
+        headerMode: "none",
+      }),
     },
     Login: {
       screen: LoginScreeen,
       navigationOptions: () => ({
-        header: null
-      })
+        header: null,
+      }),
     },
     SignUp: {
       screen: SignUpScreen,
       navigationOptions: () => ({
-        title: "Create an account"
-      })
+        title: "Create an account",
+      }),
     },
     Forgot: {
       screen: ForgotPasswordScreen,
       navigationOptions: () => ({
-        title: "Forgot Password"
-      })
+        title: "Forgot Password",
+      }),
     },
     Reset: {
       screen: ResetPasswordScreen,
       navigationOptions: () => ({
-        header: null
-      })
-    }
+        header: null,
+      }),
+    },
   },
   {
-    initialRouteName: "Reset"
+    initialRouteName: "Main",
   }
 );
 

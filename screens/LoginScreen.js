@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Image,
   Text,
-  Platform,
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,

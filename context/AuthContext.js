@@ -6,9 +6,14 @@ import { navigate, navigateReplace } from "../utils/navigationRef";
 const authReducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_SUCCESS":
+    case "SIGNUP_SUCCESS":
       return { ...state, token: action.payload, error: "" };
     case "SET_AUTH_ERROR":
       return { ...state, error: action.payload };
+    case "CLEAR_AUTH_ERROR":
+      return { ...state, error: "" };
+    case "LOG_OUT":
+      return { ...state, error: "", token: "", isSignIn: false };
     default:
       return state;
   }
@@ -16,6 +21,9 @@ const authReducer = (state, action) => {
 
 const signIn = dispatch => {
   return async ({ email, password }) => {
+    // TODO: 10/23/19 Trim email and password to delete space
+    email = email.trim();
+    password = password.trim();
     // TODO: 10/07/19  Check email and password not empty string
     try {
       if (!email || !password) {
@@ -41,18 +49,28 @@ const signIn = dispatch => {
 };
 
 const signUp = dispatch => {
-  return ({ email, password }) => {
-    //do here
-  };
+  return ({ email, password, passwordConfirm }) => {};
 };
-const signOut = dispatch => {
-  return ({ email, password }) => {
-    //do here
-  };
+
+const tryLocalSignIn = dispatch => async () => {
+  const token = await AsyncStorage.getItem("token");
+  if (token) {
+    dispatch({ type: "LOGIN_SUCCESS", payload: token });
+    // navigateReplace("Main");
+  }
+};
+
+const clearError = dispatch => () => {
+  dispatch({ type: "CLEAR_AUTH_ERROR" });
+};
+
+const signOut = dispatch => async () => {
+  await AsyncStorage.removeItem("token");
+  dispatch({ type: "LOG_OUT" });
 };
 
 export const { Provider, Context } = contextFactory(
   authReducer,
-  { signIn, signUp, signOut },
+  { signIn, signUp, signOut, clearError, tryLocalSignIn },
   { isSignIn: false, token: null, error: "" }
 );

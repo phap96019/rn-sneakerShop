@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "../screens/HomeScreen";
 import AccountScreen from "../screens/AccountScreen";
 import LoginScreen from "../screens/LoginScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 
 class SettingsScreen extends React.Component {
   render() {
@@ -19,7 +20,7 @@ class SettingsScreen extends React.Component {
 
 const TabNavigator = createBottomTabNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: ProfileScreen,
     navigationOptions: {
       tabBarLabel: "Home",
       tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />
@@ -42,9 +43,9 @@ const TabNavigator = createBottomTabNavigator({
     }
   },
   Profile: {
-    screen: AccountScreen,
+    screen: ProfileScreen,
     navigationOptions: {
-      tabBarLabel: "Home",
+      tabBarLabel: "Profile",
       tabBarIcon: ({ tintColor }) => <Ionicons name="md-person" size={30} />
     }
   }

@@ -5,6 +5,8 @@ import SignUpScreen from "../screens/SignUpScreen";
 import LoginScreeen from "../screens/LoginScreen";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen";
 import ResetPasswordScreen from "../screens/ResetPasswordScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import AccountScreen from "../screens/AccountScreen";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -37,10 +39,23 @@ const RootStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         header: null
       })
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: () => ({
+        header: null
+      })
+    },
+    Account: {
+      screen: AccountScreen,
+      navigationOptions: () => ({
+        itle: "Forgot Password"
+      })
     }
   },
   {
-    initialRouteName: "Reset"
+    //initialRouteName: "Login"
+    initialRouteName: "Account"
   }
 );
 

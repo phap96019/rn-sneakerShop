@@ -14,42 +14,44 @@ const RootStackNavigator = createStackNavigator(
     Main: {
       screen: MainBottomNavigator,
       navigationOptions: () => ({
-        headerMode: "none"
-      })
+        header: null,
+      }),
     },
     Login: {
       screen: LoginScreeen,
       navigationOptions: () => ({
-        header: null
-      })
+        header: null,
+      }),
     },
     SignUp: {
       screen: SignUpScreen,
       navigationOptions: () => ({
-        title: "Create an account"
-      })
+        title: "Create an account",
+      }),
     },
     Forgot: {
       screen: ForgotPasswordScreen,
       navigationOptions: () => ({
-        title: "Forgot Password"
-      })
+        title: "Forgot Password",
+      }),
     },
     Reset: {
       screen: ResetPasswordScreen,
       navigationOptions: () => ({
-        header: null
-      })
+        header: null,
+      }),
     },
     Profile: {
       screen: ProfileScreen,
-      navigationOptions: () => ({
-        header: null
-      })
+      navigationOptions: {
+        header: null,
+        title: "ABC",
+      },
     },
     Account: {
       screen: AccountScreen,
       navigationOptions: () => ({
+<<<<<<< HEAD
         title: "Account"
       })
     },
@@ -63,6 +65,15 @@ const RootStackNavigator = createStackNavigator(
   {
     //initialRouteName: "Login"
     initialRouteName: "Password"
+=======
+        title: "Forgot Password",
+      }),
+    },
+  },
+  {
+    //initialRouteName: "Login"
+    initialRouteName: "Main",
+>>>>>>> 83ca1aac0dad060895550ecfb45637f4f86ee13e
   }
 );
 

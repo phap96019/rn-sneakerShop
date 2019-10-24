@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Image,
   Text,
-  Platform,
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback
@@ -110,7 +109,6 @@ const styles = StyleSheet.create({
     textAlign: "center"
     //opacity: 0.5  //độ mờ
   },
-  formContainer: {},
   linkContainer: {
     paddingTop: 20,
     alignItems: "center",

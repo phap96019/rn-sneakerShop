@@ -41,21 +41,22 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 12
+      height: 12,
     },
     shadowOpacity: 0.58,
     shadowRadius: 16.0,
-    elevation: 24
+    elevation: 24,
   },
   textStyle: {
-    color: "#2f3542"
+    color: "#2f3542",
   },
   ButtonRight: {
     flexDirection: "row-reverse",
     flex: 1,
-    textAlign: "right",
-    alignSelf: "center"
-  }
+    // textAlign: "right",
+    marginRight: 20,
+    alignSelf: "center",
+  },
 });
 
 export default ListButtonComponent;

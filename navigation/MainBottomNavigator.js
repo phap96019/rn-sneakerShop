@@ -23,8 +23,8 @@ const TabNavigator = createBottomTabNavigator({
     screen: ProfileScreen,
     navigationOptions: {
       tabBarLabel: "Home",
-      tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />
-    }
+      tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />,
+    },
   },
   Settings: {
     screen: SettingsScreen,
@@ -32,23 +32,23 @@ const TabNavigator = createBottomTabNavigator({
       tabBarLabel: "Filter",
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-color-filter" size={30} />
-      )
-    }
+      ),
+    },
   },
   Filter: {
     screen: LoginScreen,
     navigationOptions: {
       tabBarLabel: "Search",
-      tabBarIcon: ({ tintColor }) => <Ionicons name="ios-search" size={30} />
-    }
+      tabBarIcon: ({ tintColor }) => <Ionicons name="ios-search" size={30} />,
+    },
   },
   Profile: {
     screen: ProfileScreen,
     navigationOptions: {
       tabBarLabel: "Profile",
-      tabBarIcon: ({ tintColor }) => <Ionicons name="md-person" size={30} />
-    }
-  }
+      tabBarIcon: ({ tintColor }) => <Ionicons name="md-person" size={30} />,
+    },
+  },
 });
 
-export default createAppContainer(TabNavigator);
+export default TabNavigator;

@@ -7,7 +7,7 @@ import {
   Platform,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 import InputComponent from "../components/InputComponent";
@@ -17,7 +17,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 const LoginScreen = props => {
   const [inputData, setInputData] = useState({
     email: "",
-    password: "",
+    password: ""
   });
   const { state, signIn } = useContext(AuthContext);
   const { email, password } = inputData;
@@ -39,7 +39,7 @@ const LoginScreen = props => {
           style={styles.logo}
           source={{
             uri:
-              "https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062",
+              "https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062"
           }}
         />
 
@@ -95,33 +95,33 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 15,
+    paddingHorizontal: 15
   },
   logoContainer: {
     alignItems: "center",
     justifyContent: "center",
-    flexGrow: 1,
+    flexGrow: 1
   },
   logo: {
     width: 200,
-    height: 150,
+    height: 150
   },
   title: {
-    textAlign: "center",
+    textAlign: "center"
     //opacity: 0.5  //độ mờ
   },
   formContainer: {},
   linkContainer: {
     paddingTop: 20,
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   link: {
-    paddingTop: 15,
+    paddingTop: 15
   },
   error: {
-    color: "#e74c3c",
-  },
+    color: "#e74c3c"
+  }
 });
 
 export default LoginScreen;

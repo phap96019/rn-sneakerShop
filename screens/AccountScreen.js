@@ -76,7 +76,7 @@ const AccountScreen = prop => {
           <View style={styles.ButtonContainer}>
             <ButtonComponent
               activeOpacity={0.8}
-              containerStyle={{ flex: 1, marginTop: 20 }}
+              containerStyle={{ marginTop: 20 }}
               title="Save"
               handleOnPress={() => {}}
             />

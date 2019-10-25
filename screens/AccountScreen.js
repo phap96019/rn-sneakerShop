@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback
 } from "react-native";
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
@@ -24,14 +24,14 @@ import InputComponent from "../components/InputComponent";
 
 const item = {
   name: "Ngoc Trinh",
-  mail: "Abc@gmail.com",
+  mail: "Abc@gmail.com"
 };
 const ChangeAvatar = () => {};
 const AccountScreen = prop => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
-        keyboardVerticalOffset={Platform.select({ ios: 80, android: 20 })}
+        keyboardVerticalOffset={Platform.select({ ios: 80, android: 80 })}
         behavior="padding"
         style={styles.container}
       >
@@ -44,7 +44,7 @@ const AccountScreen = prop => {
               style={styles.avatar}
               source={{
                 uri:
-                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171",
+                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
               }}
             />
           </TouchableOpacity>
@@ -76,7 +76,7 @@ const AccountScreen = prop => {
           <View style={styles.ButtonContainer}>
             <ButtonComponent
               activeOpacity={0.8}
-              containerStyle={{ flex: 1, marginTop: 20 }}
+              containerStyle={{ marginTop: 20, flex: 1 }}
               title="Save"
               handleOnPress={() => {}}
             />
@@ -90,15 +90,15 @@ const AccountScreen = prop => {
 const styles = StyleSheet.create({
   avatarContainer: {
     // justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   avatar: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
+    width: 125,
+    height: 125,
+    borderRadius: 100
   },
   ButtonContainer: {
-    flexDirection: "row",
+    flexDirection: "row"
   },
 
   container: {
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     // alignItems: "center",
-    paddingHorizontal: 15,
-  },
+    paddingHorizontal: 15
+  }
 });
 
 export default AccountScreen;

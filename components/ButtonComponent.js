@@ -15,7 +15,7 @@ const ButtonComponent = ({
       onPress={handleOnPress ? handleOnPress : 0.9}
       style={{ ...styles.buttonContainer, ...containerStyle }}
     >
-      <Text style={{ ...styles.textStyle }}>{title}</Text>
+      <Text style={{ ...styles.textStyle, ...textStyle }}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -29,15 +29,15 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 12,
+      height: 12
     },
     shadowOpacity: 0.58,
     shadowRadius: 16.0,
-    elevation: 24,
+    elevation: 24
   },
   textStyle: {
-    color: "#fff",
-  },
+    color: "#fff"
+  }
 });
 
 export default ButtonComponent;

@@ -32,7 +32,7 @@ const signIn = dispatch => {
 
       const { data } = await apiHelper.post("/api/v1/users/login", {
         email,
-        password,
+        password
       });
       await AsyncStorage.setItem("token", data.token);
       dispatch({ type: "LOGIN_SUCCESS", payload: data });

@@ -32,6 +32,7 @@ const RootStackNavigator = createStackNavigator(
       screen: ForgotPasswordScreen,
       navigationOptions: () => ({
         title: "Forgot Password",
+        path: "forgot/:token",
       }),
     },
     Reset: {

@@ -8,6 +8,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
+import { NavigationEvents } from "react-navigation";
 import { Context as AuthContext } from "../context/AuthContext";
 import InputComponent from "../components/InputComponent";
 import ButtonComponent from "../components/ButtonComponent";
@@ -18,7 +19,7 @@ const LoginScreen = props => {
     email: "",
     password: "",
   });
-  const { state, signIn } = useContext(AuthContext);
+  const { state, signIn, clearError } = useContext(AuthContext);
   const { email, password } = inputData;
   const handleOnChange = name => text => {
     setInputData({ ...inputData, [name]: text });
@@ -34,6 +35,7 @@ const LoginScreen = props => {
         behavior="padding"
         style={styles.container}
       >
+        <NavigationEvents onWillBlur={clearError} />
         <Image
           style={styles.logo}
           source={{
@@ -70,7 +72,12 @@ const LoginScreen = props => {
           />
         </View>
         <View style={styles.linkContainer}>
-          <TouchableOpacity style={styles.link}>
+          <TouchableOpacity
+            style={styles.link}
+            onPress={() => {
+              props.navigation.navigate("Forgot");
+            }}
+          >
             <Text>Forgot password?</Text>
           </TouchableOpacity>
 

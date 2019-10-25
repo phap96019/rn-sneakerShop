@@ -8,6 +8,7 @@ import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import AccountScreen from "../screens/AccountScreen";
 import PasswordScreen from "../screens/PasswordScreen";
+import ScreenForTest from "../screens/ScreenForTest";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -59,11 +60,17 @@ const RootStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         title: "Change password"
       })
+    },
+    Test: {
+      screen: ScreenForTest,
+      navigationOptions: () => ({
+        header: null
+      })
     }
   },
   {
     //initialRouteName: "Login"
-    initialRouteName: "Password"
+    initialRouteName: "Test"
   }
 );
 

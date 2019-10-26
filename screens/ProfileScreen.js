@@ -111,7 +111,9 @@ const ProfileScreen = props => {
                 borderTopLeftRadius: 10,
                 borderTopRightRadius: 10
               }}
-              handleOnPress={handleOnSubmit}
+              handleOnPress={() => {
+                props.navigation.navigate("Order");
+              }}
             />
             <ListButtonComponent
               activeOpacity={0.8}

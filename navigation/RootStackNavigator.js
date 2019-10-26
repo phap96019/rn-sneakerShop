@@ -10,6 +10,8 @@ import AccountScreen from "../screens/AccountScreen";
 import PasswordScreen from "../screens/PasswordScreen";
 import WishListScreen from "../screens/WishListScreen";
 import CartScreen from "../screens/CartScreen";
+import OrderScreen from "../screens/OrderScreen";
+import SearchScreen from "../screens/SearchScreen";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -74,10 +76,22 @@ const RootStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         title: "Cart"
       })
+    },
+    Order: {
+      screen: OrderScreen,
+      navigationOptions: () => ({
+        title: "Order"
+      })
+    },
+    Search: {
+      screen: SearchScreen,
+      navigationOptions: () => ({
+        header: null
+      })
     }
   },
   {
-    //initialRouteName: "Cart"
+    //initialRouteName: "Search"
   }
 );
 

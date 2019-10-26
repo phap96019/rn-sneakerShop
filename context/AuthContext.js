@@ -48,10 +48,40 @@ const signIn = dispatch => {
   };
 };
 
-const signUp = dispatch => {
-  return ({ email, password, passwordConfirm }) => {};
-};
+const signUp = dispatch => async ({
+  name,
+  email,
+  password,
+  passwordConfirm,
+}) => {
+  // TODO: 10/23/19 Trim string
+  name = name.trim();
+  email = email.trim();
+  password = password.trim();
+  // TODO: 10/07/19  Check email and password not empty string
+  try {
+    if (!name || !email || !password) {
+      throw new Error("Please enter name, email and password!");
+    }
 
+    const { data } = await apiHelper.post("/api/v1/users/signup", {
+      name,
+      email,
+      password,
+      passwordConfirm,
+    });
+    await AsyncStorage.setItem("token", data.token);
+    dispatch({ type: "SIGNUP_SUCCESS", payload: data });
+    // navigate("Main");
+    navigateReplace("Main");
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: "SET_AUTH_ERROR", payload });
+  }
+};
 const tryLocalSignIn = dispatch => async () => {
   const token = await AsyncStorage.getItem("token");
   if (token) {
@@ -68,9 +98,30 @@ const signOut = dispatch => async () => {
   await AsyncStorage.removeItem("token");
   dispatch({ type: "LOG_OUT" });
 };
+const forgotPassword = dispatch => async ({ email }) => {
+  email = email.trim();
+
+  try {
+    if (!email) {
+      throw new Error("Please enter email !");
+    }
+
+    const { data } = await apiHelper.post("/api/v1/users/forgotPassword", {
+      email,
+    });
+    // navigate("Main");
+    navigateReplace("Reset");
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: "SET_AUTH_ERROR", payload });
+  }
+};
 
 export const { Provider, Context } = contextFactory(
   authReducer,
-  { signIn, signUp, signOut, clearError, tryLocalSignIn },
+  { signIn, signUp, signOut, clearError, tryLocalSignIn, forgotPassword },
   { isSignIn: false, token: null, error: "" }
 );

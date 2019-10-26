@@ -34,7 +34,8 @@ const RootStackNavigator = createStackNavigator(
     Forgot: {
       screen: ForgotPasswordScreen,
       navigationOptions: () => ({
-        title: "Forgot Password"
+        title: "Forgot Password",
+        path: "forgot/:token"
       })
     },
     Reset: {
@@ -65,7 +66,7 @@ const RootStackNavigator = createStackNavigator(
     WishList: {
       screen: WishListScreen,
       navigationOptions: () => ({
-        title: "Wish List"
+        title: "Wish list"
       })
     },
     Cart: {

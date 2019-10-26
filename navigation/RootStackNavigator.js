@@ -8,7 +8,8 @@ import ResetPasswordScreen from "../screens/ResetPasswordScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import AccountScreen from "../screens/AccountScreen";
 import PasswordScreen from "../screens/PasswordScreen";
-import ScreenForTest from "../screens/ScreenForTest";
+import WishListScreen from "../screens/WishListScreen";
+import CartScreen from "../screens/CartScreen";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -61,16 +62,21 @@ const RootStackNavigator = createStackNavigator(
         title: "Change password"
       })
     },
-    Test: {
-      screen: ScreenForTest,
+    WishList: {
+      screen: WishListScreen,
       navigationOptions: () => ({
-        header: null
+        title: "Wish List"
+      })
+    },
+    Cart: {
+      screen: CartScreen,
+      navigationOptions: () => ({
+        title: "Cart"
       })
     }
   },
   {
-    //initialRouteName: "Login"
-    initialRouteName: "Test"
+    //initialRouteName: "Cart"
   }
 );
 

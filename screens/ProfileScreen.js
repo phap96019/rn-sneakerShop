@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Keyboard,
   ImageBackground,
-  StatusBar,
+  StatusBar
 } from "react-native";
 
 import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
@@ -20,7 +20,7 @@ import AccountScreen from "../screens/AccountScreen";
 
 const item = {
   name: "Ngoc Trinh",
-  mail: "trinhtrinh@gmail.com",
+  mail: "trinhtrinh@gmail.com"
 };
 const handleOnSubmit = () => {};
 
@@ -33,7 +33,7 @@ const ProfileScreen = props => {
           style={{
             height: Dimensions.get("window").height / 2.5,
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "center"
           }}
         >
           <View
@@ -41,17 +41,17 @@ const ProfileScreen = props => {
               position: "absolute",
               top: 0,
               left: 0,
-              right: 0,
+              right: 0
             }}
           >
             <Image
               style={{
                 width: Dimensions.get("window").width,
-                height: Dimensions.get("window").height / 2,
+                height: Dimensions.get("window").height / 2
               }}
               source={{
                 uri:
-                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171",
+                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
               }}
             />
           </View>
@@ -60,7 +60,7 @@ const ProfileScreen = props => {
               style={styles.Image}
               source={{
                 uri:
-                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171",
+                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
               }}
             />
           </View>
@@ -78,7 +78,7 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 0,
                 borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
+                borderTopRightRadius: 10
               }}
               handleOnPress={() => {
                 props.navigation.navigate("Account");
@@ -92,9 +92,11 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 10,
                 borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
+                borderTopRightRadius: 0
               }}
-              handleOnPress={handleOnSubmit}
+              handleOnPress={() => {
+                props.navigation.navigate("Password");
+              }}
             />
           </View>
 
@@ -107,7 +109,7 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 0,
                 borderTopLeftRadius: 10,
-                borderTopRightRadius: 10,
+                borderTopRightRadius: 10
               }}
               handleOnPress={handleOnSubmit}
             />
@@ -116,14 +118,18 @@ const ProfileScreen = props => {
               containerStyle={{ flex: 1 }}
               title="Cart"
               iconName="ios-cart"
-              handleOnPress={handleOnSubmit}
+              handleOnPress={() => {
+                props.navigation.navigate("Cart");
+              }}
             />
             <ListButtonComponent
               activeOpacity={0.8}
               containerStyle={{ flex: 1 }}
               title="Wish list"
               iconName="ios-heart-empty"
-              handleOnPress={handleOnSubmit}
+              handleOnPress={() => {
+                props.navigation.navigate("WishList");
+              }}
             />
             <ListButtonComponent
               activeOpacity={0.8}
@@ -133,7 +139,7 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 10,
                 borderTopLeftRadius: 0,
-                borderTopRightRadius: 0,
+                borderTopRightRadius: 0
               }}
               handleOnPress={handleOnSubmit}
             />
@@ -155,24 +161,24 @@ const ProfileScreen = props => {
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
-    textAlign: "center",
+    textAlign: "center"
   },
   imageContainer: {
-    alignItems: "center",
+    alignItems: "center"
   },
   Image: {
     width: 100,
     height: 100,
     borderRadius: 100,
-    paddingTop: 15,
+    paddingTop: 15
   },
   TextName: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#FFF",
+    color: "#FFF"
   },
   Info: {
-    padding: 5,
-  },
+    padding: 5
+  }
 });
 export default ProfileScreen;

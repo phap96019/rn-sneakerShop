@@ -12,12 +12,14 @@ import ButtonComponent from "../components/ButtonComponent";
 const item = {
   name: "Giày loại A",
   size: "Size: 40",
-  cost: "$ 200",
+  cost: 200,
   pic:
     "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg"
 };
+//=====================
 const handleOnSubmit = () => {};
 const WishListItemComponent = ({
+  item,
   containerStyle,
   buttonStyle,
   textStyle,
@@ -27,17 +29,21 @@ const WishListItemComponent = ({
   ...props
 }) => {
   return (
-    <TouchableOpacity
-      {...props}
-      onPress={handleOnPress ? handleOnPress : 0.9}
-      style={{ ...styles.buttonContainer, ...containerStyle, ...buttonStyle }}
-    >
-      <View style={{ ...buttonStyle, ...styles.container }}>
-        <View>
+    <View style={styles.container}>
+      <TouchableOpacity
+        {...props}
+        onPress={handleOnPress}
+        style={{
+          ...styles.touchContainer,
+          ...containerStyle,
+          ...buttonStyle
+        }}
+      >
+        <View style={{ marginRight: 17 }}>
           <Image
             style={{
-              width: 100,
-              height: 100,
+              width: 110,
+              height: 110,
               borderRadius: 15
             }}
             source={{
@@ -45,17 +51,15 @@ const WishListItemComponent = ({
             }}
           />
         </View>
-        <View style={styles.infoContainer}>
+        <View style={styles.info}>
           <Text style={{ fontSize: 17, fontWeight: "bold" }}>{item.name}</Text>
           <Text style={{}}>{item.size}</Text>
-          <Text style={{ fontWeight: "bold" }}>{item.cost}</Text>
+          <Text style={{ fontWeight: "bold" }}>{"$ " + item.cost}</Text>
           <ButtonComponent
             activeOpacity={0.8}
             containerStyle={{
               flex: 1,
-              margin: 10,
-              paddingBottom: 10,
-              width: 200,
+              width: 130,
               backgroundColor: "#FFF",
               shadowColor: "red",
               shadowOffset: {
@@ -69,62 +73,29 @@ const WishListItemComponent = ({
               borderColor: "#2d3436"
             }}
             textStyle={{ color: "#000", marginBottom: 5 }}
-            title="Add to cart"
+            title="Remove"
             handleOnPress={handleOnSubmit}
           />
         </View>
-        <View
-          style={{ alignItems: "flex-end", width: 50, backgroundColor: "red" }}
-        >
-          <TouchableOpacity onPress={() => {}}>
-            <Ionicons
-              name="ios-close-circle-outline"
-              size={25}
-              color="#3d3d3d"
-            />
-          </TouchableOpacity>
-        </View>
-
-        {/* <View style={styles.ButtonRight}>
-          <Ionicons name="md-arrow-dropright" size={20} color="#3d3d3d" />
-        </View> */}
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 const styles = StyleSheet.create({
-  buttonContainer: {
-    backgroundColor: "#ffffff",
-    justifyContent: "center",
-    //alignItems: "center",
-    padding: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 12
-    },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-    elevation: 24
-  },
-  textStyle: {
-    color: "#2f3542"
-  },
-  ButtonRight: {
-    flexDirection: "row-reverse",
-    flex: 1,
-    // textAlign: "right",
-    marginRight: 20,
-    alignSelf: "center"
-  },
   container: {
     flexDirection: "row",
-    height: 100
+    borderBottomWidth: 1,
+    margin: 5,
+    paddingBottom: 10
   },
-  infoContainer: {
-    padding: 5,
-    paddingLeft: 20
-    //width: 300
+  touchContainer: {
+    flex: 1,
+    height: 110,
+    flexDirection: "row"
+  },
+  info: {
+    flex: 1,
+    padding: 5
   }
 });
 

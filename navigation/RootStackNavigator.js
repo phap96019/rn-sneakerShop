@@ -12,6 +12,7 @@ import WishListScreen from "../screens/WishListScreen";
 import CartScreen from "../screens/CartScreen";
 import OrderScreen from "../screens/OrderScreen";
 import SearchScreen from "../screens/SearchScreen";
+import TestScreen from "../screens/TestScreen";
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -88,10 +89,16 @@ const RootStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         header: null
       })
+    },
+    Test: {
+      screen: TestScreen,
+      navigationOptions: () => ({
+        header: null
+      })
     }
   },
   {
-    //initialRouteName: "Search"
+    //initialRouteName: "Test"
   }
 );
 

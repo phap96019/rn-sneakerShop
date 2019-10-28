@@ -1,123 +1,163 @@
-// Search Screen
-import React, { useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
-// eslint-disable-next-line import/no-extraneous-dependencies
+import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  Image,
+  StatusBar,
+  TouchableOpacity,
+  Dimensions,
+  Button,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Context as AuthContext } from '../context/AuthContext';
+import Test1Component from '../components/Test1Component';
+import Test2Component from '../components/Test2Component';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
+dataX = [
+  {
+    id: 0,
+    name: 'Adidas Ultra Boost',
+    size: 'Size: 40',
+    cost: 44.99,
+    pic:
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
-  textA: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  {
+    id: 1,
+    name: 'Adilette',
+    size: 'Size: 40',
+    cost: 25,
+    pic: 'https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg',
   },
-  Image: {
-    height: 100,
-    width: 100,
-    borderRadius: 100,
-    paddingHorizontal: 10,
+  {
+    id: 2,
+    name: 'SuperStar',
+    size: 'Size: 40',
+    cost: 71,
+    pic:
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
-  profile: {
-    marginTop: 20,
-    margin: 10,
+  {
+    id: 3,
+    name: 'Stan Smith',
+    size: 'Size: 40',
+    cost: 100,
+    pic:
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
-  buttonEditTop: {
-    backgroundColor: '#95a5a6',
-    paddingVertical: 13,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    marginBottom: 5,
+  {
+    id: 4,
+    name: 'Busenitz',
+    size: 'Size: 40',
+    cost: 21.4,
+    pic:
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
-  buttonEditBot: {
-    backgroundColor: '#95a5a6',
-    paddingVertical: 13,
-    borderBottomRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    marginBottom: 5,
-  },
-  buttonText: {
-    textAlign: 'center',
-    color: '#FFFFFF',
-  },
-  // các nút cơ bản phía dưới
-  btList: {
-    margin: 10,
-  },
-  bteasy: {
-    backgroundColor: '#ecf0f1',
-    paddingVertical: 13,
-    marginBottom: 5,
-    paddingLeft: 15,
-    flexDirection: 'row',
-  },
-  textB: {
-    textAlign: 'left',
-    color: '#3d3d3d',
-  },
-});
+];
 
-const HomeScreen = () => {
-  const { tryLocalSignIn, state } = useContext(AuthContext);
-
-  useEffect(() => {
-    tryLocalSignIn();
-  }, []);
-
+const HomeScreen = props => {
   return (
-    <ScrollView>
-      <View style={{ flex: 1 }}>
-        <Text> {state.token ? 'Đã đăng nhập ' : 'chưa đăng nhập'}</Text>
-        <Text> </Text>
-        <View style={styles.container}>
+    <ScrollView style={{ flex: 1 }}>
+      <StatusBar backgroundColor="transparent" barStyle="light-content" />
+      <View
+        style={{
+          height: Dimensions.get('window').height / 2,
+        }}
+      >
+        <View style={{ position: 'absolute' }}>
           <Image
-            style={styles.Image}
+            style={{
+              width: Dimensions.get('window').width,
+              height: Dimensions.get('window').height / 2,
+            }}
             source={{
-              uri:
-                'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171',
+              uri: 'https://i.pinimg.com/originals/cc/ab/5e/ccab5e910619394d2641a99a962c7517.jpg',
             }}
           />
-          <Text style={styles.textA}>Ngọc Trinh</Text>
-          <Text>trinhpro@gmail.com</Text>
         </View>
-        <View style={styles.profile}>
-          <TouchableOpacity style={styles.buttonEditTop}>
-            <Text style={styles.buttonText}>Account</Text>
+        <View
+          style={{
+            justifyContent: 'flex-end',
+            flexDirection: 'row',
+            marginTop: 40,
+            marginRight: 20,
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('WishList');
+            }}
+          >
+            <View style={{ marginRight: 20 }}>
+              <Ionicons name="ios-heart-empty" size={25} color="white" />
+            </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonEditBot}>
-            <Text style={styles.buttonText}>Password</Text>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Cart');
+            }}
+          >
+            <View>
+              <Ionicons name="ios-cart" size={25} color="white" />
+            </View>
           </TouchableOpacity>
         </View>
+      </View>
 
-        <View style={styles.btList}>
-          <TouchableOpacity style={styles.bteasy}>
-            <Ionicons name="md-reorder" size={20} color="#3d3d3d" />
-            <Text style={styles.textB}> Order</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bteasy}>
-            <Ionicons name="ios-cart" size={20} color="#3d3d3d" />
-            <Text style={styles.textB}> Cart</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bteasy}>
-            <Ionicons name="ios-heart-empty" size={20} color="#3d3d3d" />
-            <Text style={styles.textB}> Wish list</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.bteasy}>
-            <Ionicons name="ios-settings" size={20} color="#3d3d3d" />
-            <Text style={styles.textB}> Setting</Text>
-          </TouchableOpacity>
-        </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 20,
+        }}
+      >
+        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Designer Collection</Text>
+        <TouchableOpacity>
+          <Text style={{ fontSize: 15, color: '#2f3542' }}>Show all</Text>
+        </TouchableOpacity>
+      </View>
 
-        <View style={styles.profile}>
-          <TouchableOpacity style={styles.buttonEditBot}>
-            <Text style={styles.buttonText}>LOGOUT</Text>
-          </TouchableOpacity>
-        </View>
+      <View style={{ marginLeft: 20 }}>
+        <FlatList
+          data={dataX}
+          keyExtractor={data => data.id.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return <Test1Component item={item} />;
+          }}
+        />
+      </View>
+
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginHorizontal: 20,
+          marginBottom: 20,
+          marginTop: 50,
+        }}
+      >
+        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Top Trends</Text>
+        <TouchableOpacity>
+          <Text style={{ fontSize: 15, color: '#2f3542' }}>Show all</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={{ marginLeft: 20, marginBottom: 20 }}>
+        <FlatList
+          data={dataX}
+          keyExtractor={data => data.id.toString()}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => {
+            return <Test2Component item={item} />;
+          }}
+        />
       </View>
     </ScrollView>
   );

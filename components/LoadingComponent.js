@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import animation from '../assets/animation.json';
 import AnimationViewComponent from './AnimationViewComponent';
-import { Context as AuthContext } from '../context/AuthContext';
 
 const styles = StyleSheet.create({
   containerStyle: {

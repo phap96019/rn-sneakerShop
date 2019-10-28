@@ -8,6 +8,7 @@ import AccountScreen from "../screens/AccountScreen";
 import LoginScreen from "../screens/LoginScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import SearchScreen from "../screens/SearchScreen";
+import TestScreen from "../screens/TestScreen";
 class SettingsScreen extends React.Component {
   render() {
     return (
@@ -20,7 +21,7 @@ class SettingsScreen extends React.Component {
 
 const TabNavigator = createBottomTabNavigator({
   Home: {
-    screen: ProfileScreen,
+    screen: TestScreen,
     navigationOptions: {
       tabBarLabel: "Home",
       tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />

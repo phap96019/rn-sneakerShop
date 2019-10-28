@@ -1,33 +1,41 @@
-import React, { Component } from "react";
+import React from 'react';
 import {
   View,
-  Text,
   StyleSheet,
-  TextInput,
   Image,
-  Dimensions,
   Platform,
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableWithoutFeedback
-} from "react-native";
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-import ButtonComponent from "../components/ButtonComponent";
-import InputComponent from "../components/InputComponent";
-// import RadioForm, {
-//   RadioButton,
-//   RadioButtonInput,
-//   RadioButtonLabel
-// } from "react-native-simple-radio-button";
+  TouchableWithoutFeedback,
+} from 'react-native';
+import ButtonComponent from '../components/ButtonComponent';
+import InputComponent from '../components/InputComponent';
 
-const item = {
-  name: "Ngoc Trinh",
-  mail: "Abc@gmail.com"
-};
-const ChangeAvatar = () => {};
-const AccountScreen = prop => {
+const styles = StyleSheet.create({
+  avatarContainer: {
+    // justifyContent: "center",
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 125,
+    height: 125,
+    borderRadius: 100,
+  },
+  ButtonContainer: {
+    flexDirection: 'row',
+  },
+
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    // alignItems: "center",
+    paddingHorizontal: 15,
+  },
+});
+
+const AccountScreen = () => {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -38,32 +46,20 @@ const AccountScreen = prop => {
         <View>
           <TouchableOpacity
             style={styles.avatarContainer}
-            //onPress={{ ChangeAvatar }}
+            // onPress={{ ChangeAvatar }}
           >
             <Image
               style={styles.avatar}
               source={{
                 uri:
-                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
+                  'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171',
               }}
             />
           </TouchableOpacity>
           <View style={styles.NameAndMail}>
-            <InputComponent
-              label="Name"
-              autoCorrect={true}
-              autoCapitalize="none"
-            />
-            <InputComponent
-              label="Phone number"
-              autoCorrect={true}
-              autoCapitalize="none"
-            />
-            <InputComponent
-              label="Address"
-              autoCorrect={true}
-              autoCapitalize="none"
-            />
+            <InputComponent label="Name" autoCorrect autoCapitalize="none" />
+            <InputComponent label="Phone number" autoCorrect autoCapitalize="none" />
+            <InputComponent label="Address" autoCorrect autoCapitalize="none" />
             {/* <RadioForm
               radio_props={radio_props}
               initial={0}
@@ -86,28 +82,5 @@ const AccountScreen = prop => {
     </TouchableWithoutFeedback>
   );
 };
-
-const styles = StyleSheet.create({
-  avatarContainer: {
-    // justifyContent: "center",
-    alignItems: "center"
-  },
-  avatar: {
-    width: 125,
-    height: 125,
-    borderRadius: 100
-  },
-  ButtonContainer: {
-    flexDirection: "row"
-  },
-
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
-    // alignItems: "center",
-    paddingHorizontal: 15
-  }
-});
 
 export default AccountScreen;

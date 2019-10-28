@@ -1,29 +1,20 @@
-import React from "react";
-import * as Expo from "expo";
-import { StyleSheet, Text, View } from "react-native";
-import RootStackNavigator from "./navigation/RootStackNavigator";
-import { setNavigator } from "./utils/navigationRef";
-import { Provider as AuthProvider } from "./context/AuthContext";
+import React from 'react';
+import * as Expo from 'expo';
+import RootStackNavigator from './navigation/RootStackNavigator';
+import { setNavigator } from './utils/navigationRef';
+import { Provider as AuthProvider } from './context/AuthContext';
 
+const prefix = Expo.Linking.makeUrl('/');
 export default function App() {
-  const prefix = Expo.Linking.makeUrl("/");
+  console.log(prefix);
   return (
     <AuthProvider>
       <RootStackNavigator
+        uriPrefix={prefix}
         ref={navigator => {
           setNavigator(navigator);
         }}
-        uriPrefix={prefix}
       />
     </AuthProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

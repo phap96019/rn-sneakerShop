@@ -8,6 +8,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "qssneaker",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -21,7 +22,17 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.yenmaiteam.qssneaker"
+      "package": "com.yenmaiteam.qssneaker",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": {
+            "scheme": "https",
+            "host": "*.qssneaker.herokuapp.com"
+          },
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     }
   }
 }

@@ -1,5 +1,5 @@
-//Login Screen
-import React, { useState, useContext } from "react";
+/* eslint-disable react/no-unescaped-entities */
+import React, { useState, useContext } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,16 +9,54 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-} from "react-native";
-import InputComponent from "../components/InputComponent";
-import ButtonComponent from "../components/ButtonComponent";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { NavigationEvents } from "react-navigation";
-import { Context as AuthContext } from "../context/AuthContext";
+} from 'react-native';
+import { NavigationEvents } from 'react-navigation';
+import InputComponent from '../components/InputComponent';
+import ButtonComponent from '../components/ButtonComponent';
+import { Context as AuthContext } from '../context/AuthContext';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+  logo: {
+    width: 200,
+    height: 150,
+  },
+  title: {
+    textAlign: 'center',
+    // opacity: 0.5  //độ mờ
+  },
+  formContainer: {},
+  linkContainer: {
+    paddingTop: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  messageContainer: {
+    // padding: 20,
+    paddingTop: 50,
+  },
+  error: {
+    color: '#e74c3c',
+  },
+  message: {
+    fontSize: 15,
+  },
+});
 
 const ForgotPasswordScreen = () => {
   const [inputData, setInputData] = useState({
-    email: "",
+    email: '',
   });
   const { state, forgotPassword, clearError } = useContext(AuthContext);
   const { email } = inputData;
@@ -41,31 +79,25 @@ const ForgotPasswordScreen = () => {
           style={styles.logo}
           source={{
             uri:
-              "https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062",
+              'https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062',
           }}
         />
         <View style={styles.messageContainer}>
           <Text style={styles.message}>Enter your Email.</Text>
-          <Text style={styles.message}>
-            We'll email instruction on how to reset your password.
-          </Text>
+          <Text style={styles.message}>We'll email instruction on how to reset your password.</Text>
         </View>
-        {/* <View>
-            <Tex>Enter your Email.</Tex>
-            <Text>We'll email instruction on how to reset your password.</Text>
-          </View> */}
 
         <InputComponent
           label="Email"
-          autoCorrect={true}
+          autoCorrect
           autoCapitalize="none"
           value={email}
-          handleOnChange={handleOnChange("email")}
+          handleOnChange={handleOnChange('email')}
         />
         <View>
-          <Text style={styles.error}>{state.error !== "" && state.error}</Text>
+          <Text style={styles.error}>{state.error !== '' && state.error}</Text>
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: 'row' }}>
           <ButtonComponent
             activeOpacity={0.8}
             containerStyle={{ flex: 1, marginTop: 30 }}
@@ -88,44 +120,5 @@ const ForgotPasswordScreen = () => {
     </TouchableWithoutFeedback>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 15,
-  },
-  logoContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flexGrow: 1,
-  },
-  logo: {
-    width: 200,
-    height: 150,
-  },
-  title: {
-    textAlign: "center",
-    //opacity: 0.5  //độ mờ
-  },
-  formContainer: {},
-  linkContainer: {
-    paddingTop: 20,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  messageContainer: {
-    //padding: 20,
-    paddingTop: 50,
-  },
-  error: {
-    color: "#e74c3c",
-  },
-  message: {
-    fontSize: 15,
-  },
-});
 
 export default ForgotPasswordScreen;

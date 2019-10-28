@@ -1,25 +1,81 @@
-import React from "react";
+import React, { useState, useContext } from 'react';
 import {
   View,
+  Text,
   StyleSheet,
   Image,
-  Text,
   Platform,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableWithoutFeedback
-} from "react-native";
-import InputComponent from "../components/InputComponent";
-import ButtonComponent from "../components/ButtonComponent";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import LoginScreen from "./LoginScreen";
+  TouchableWithoutFeedback,
+} from 'react-native';
+import { Context as AuthContext } from '../context/AuthContext';
+import InputComponent from '../components/InputComponent';
+import ButtonComponent from '../components/ButtonComponent';
+import trimData from '../utils/trimData';
+import LoadingComponent from '../components/LoadingComponent';
 
 const item = {
   pic:
-    "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
+    'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171',
 };
 
-const PasswordScreen = props => {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+  },
+  logoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+  logo: {
+    width: 150,
+    height: 150,
+    borderRadius: 100,
+  },
+  error: {
+    color: '#e74c3c',
+    textAlign: 'center',
+  },
+});
+
+const PasswordScreen = () => {
+  const [inputData, setInputData] = useState({
+    passwordCurrent: '',
+    password: '',
+    passwordConfirm: '',
+  });
+  const { state, updatePassword, clearError, setLoading } = useContext(AuthContext);
+  const { passwordCurrent, password, passwordConfirm } = inputData;
+  const handleOnChange = key => text => {
+    setInputData({ ...inputData, [key]: text });
+  };
+  const handleOnSubmit = () => {
+    // Trim data to clear space
+    const cleanData = trimData(inputData);
+
+    // Update data input.
+    // Don't send inputData to context beacause setInputData is async fuction
+    setInputData(cleanData);
+
+    // Dismiss keyboard
+    Keyboard.dismiss();
+
+    // Cleare error on screen
+    clearError();
+
+    // Set lottie loading
+    setLoading();
+
+    // Handle login
+    updatePassword(cleanData);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <KeyboardAvoidingView
@@ -27,39 +83,49 @@ const PasswordScreen = props => {
         behavior="padding"
         style={styles.container}
       >
+        {state.loading && <LoadingComponent />}
         <Image
           style={styles.logo}
           source={{
-            uri: item.pic
+            uri: item.pic,
           }}
         />
 
         <InputComponent
           label="Password"
-          autoCorrect={true}
+          autoCorrect
           autoCapitalize="none"
-          secureTextEntry //Password
+          secureTextEntry // Password
+          value={passwordCurrent}
+          handleOnChange={handleOnChange('passwordCurrent')}
         />
         <InputComponent
           label="New password"
-          autoCorrect={true}
+          autoCorrect
           autoCapitalize="none"
-          secureTextEntry //Password
-          //showIconPassword
+          secureTextEntry // Password
+          // showIconPassword
+          value={password}
+          handleOnChange={handleOnChange('password')}
         />
         <InputComponent
           label="Confirm new password"
-          autoCorrect={true}
+          autoCorrect
           autoCapitalize="none"
-          secureTextEntry //Password
-          //showIconPassword
+          secureTextEntry // Password
+          // showIconPassword
+          password={passwordConfirm}
+          handleOnChange={handleOnChange('passwordConfirm')}
         />
-        <View style={{ flexDirection: "row" }}>
+        <View>
+          <Text style={styles.error}>{state.error !== '' && state.error}</Text>
+        </View>
+        <View style={{ flexDirection: 'row' }}>
           <ButtonComponent
             activeOpacity={0.8}
             containerStyle={{ flex: 1, marginTop: 30 }}
             title="Change password"
-            handleOnPress={() => {}}
+            handleOnPress={handleOnSubmit}
           />
         </View>
       </KeyboardAvoidingView>
@@ -68,22 +134,3 @@ const PasswordScreen = props => {
 };
 
 export default PasswordScreen;
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 15
-  },
-  logoContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    flexGrow: 1
-  },
-  logo: {
-    width: 150,
-    height: 150,
-    borderRadius: 100
-  }
-});

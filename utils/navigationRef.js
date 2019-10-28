@@ -1,13 +1,13 @@
-import { NavigationActions, StackActions } from "react-navigation";
+import { NavigationActions, StackActions } from 'react-navigation';
 
-let _navigator;
+let navigator;
 
 export const setNavigator = navigatorRef => {
-  _navigator = navigatorRef;
+  navigator = navigatorRef;
 };
 
 export const navigate = (routeName, params) => {
-  _navigator.dispatch(
+  navigator.dispatch(
     NavigationActions.navigate({
       routeName,
       params,
@@ -15,7 +15,7 @@ export const navigate = (routeName, params) => {
   );
 };
 export const navigateReplace = (routeName, params) => {
-  _navigator.dispatch(
+  navigator.dispatch(
     StackActions.replace({
       routeName,
       params,
@@ -24,3 +24,21 @@ export const navigateReplace = (routeName, params) => {
 };
 
 // add other navigation functions that you need and export them
+
+export const navigateCheckLogin = (routeName, state, params) => () => {
+  if (state.isSignIn) {
+    navigator.dispatch(
+      NavigationActions.navigate({
+        routeName,
+        params,
+      })
+    );
+  } else {
+    navigator.dispatch(
+      NavigationActions.navigate({
+        routeName: 'Login',
+        params,
+      })
+    );
+  }
+};

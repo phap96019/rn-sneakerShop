@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,32 +9,87 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   ScrollView,
-} from "react-native";
-import { NavigationEvents } from "react-navigation";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import InputComponent from "../components/InputComponent";
-import ButtonComponent from "../components/ButtonComponent";
-import { Context as AuthContext } from "../context/AuthContext";
+} from 'react-native';
+import { NavigationEvents } from 'react-navigation';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import InputComponent from '../components/InputComponent';
+import ButtonComponent from '../components/ButtonComponent';
+import LoadingComponent from '../components/LoadingComponent';
+import { Context as AuthContext } from '../context/AuthContext';
+import trimData from '../utils/trimData';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    // alignItems: 'center',
+    paddingHorizontal: 15,
+  },
+  logoContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexGrow: 1,
+  },
+  logo: {
+    width: 200,
+    height: 150,
+  },
+  title: {
+    textAlign: 'center',
+    // opacity: 0.5  //độ mờ
+  },
+
+  linkContainer: {
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  error: {
+    color: '#e74c3c',
+    textAlign: 'center',
+  },
+  link: {
+    marginVertical: 15,
+  },
+});
 
 const SignUpScreen = props => {
   const [inputData, setInputData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    passwordConfirm: "",
+    name: '',
+    email: '',
+    password: '',
+    passwordConfirm: '',
   });
-  const { state, signUp, clearError } = useContext(AuthContext);
+  const { state, signUp, clearError, setLoading } = useContext(AuthContext);
   const { name, email, password, passwordConfirm } = inputData;
-  const handleOnChange = name => text => {
-    setInputData({ ...inputData, [name]: text });
+  const handleOnChange = key => text => {
+    setInputData({ ...inputData, [key]: text });
   };
   const handleOnSubmit = () => {
+    // Trim data to clear space
+    const cleanData = trimData(inputData);
+
+    // Update data input.
+    // Don't send inputData to context beacause setInputData is async fuction
+    setInputData(cleanData);
+
+    // Dismiss keyboard
     Keyboard.dismiss();
-    signUp(inputData);
+
+    // Cleare error on screen
+    clearError();
+
+    // Set lottie loading
+    setLoading();
+
+    // Handle login
+    signUp(cleanData);
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} style={{ flex: 1 }}>
       <KeyboardAvoidingView
         enabled
         keyboardVerticalOffset={Platform.select({ ios: 40, android: 100 })}
@@ -42,53 +97,56 @@ const SignUpScreen = props => {
         style={styles.container}
       >
         <ScrollView
-          contentContainerStyle={{ alignItems: "center" }}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
           showsVerticalScrollIndicator={false}
         >
           <NavigationEvents onWillBlur={clearError} />
+          {state.loading && <LoadingComponent />}
           <Image
             style={styles.logo}
             source={{
               uri:
-                "https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062",
+                'https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062',
             }}
           />
 
           <InputComponent
             label="Name"
-            autoCorrect={true}
+            autoCorrect
             value={name}
-            handleOnChange={handleOnChange("name")}
+            handleOnChange={handleOnChange('name')}
           />
           <InputComponent
             label="Email"
-            autoCorrect={true}
+            autoCorrect
             autoCapitalize="none"
             value={email}
-            handleOnChange={handleOnChange("email")}
+            handleOnChange={handleOnChange('email')}
           />
           <InputComponent
             label="Password"
-            autoCorrect={true}
+            autoCorrect
             autoCapitalize="none"
-            secureTextEntry //Password
+            secureTextEntry // Password
             value={password}
-            handleOnChange={handleOnChange("password")}
+            handleOnChange={handleOnChange('password')}
           />
           <InputComponent
             label="Confirm Password"
-            autoCorrect={true}
+            autoCorrect
             autoCapitalize="none"
-            secureTextEntry //Password
+            secureTextEntry // Password
             value={passwordConfirm}
-            handleOnChange={handleOnChange("passwordConfirm")}
+            handleOnChange={handleOnChange('passwordConfirm')}
           />
           <View>
-            <Text style={styles.error}>
-              {state.error !== "" && state.error}
-            </Text>
+            <Text style={styles.error}>{state.error !== '' && state.error}</Text>
           </View>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ flexDirection: 'row' }}>
             <ButtonComponent
               activeOpacity={0.8}
               containerStyle={{ flex: 1, marginTop: 30 }}
@@ -102,7 +160,7 @@ const SignUpScreen = props => {
               onPress={() => {
                 props.navigation.goBack(null);
                 return true;
-                props.navigation.navigate("Login");
+                props.navigation.navigate('Login');
               }}
             >
               <Text>Have an account? Sign in</Text>
@@ -113,42 +171,5 @@ const SignUpScreen = props => {
     </TouchableWithoutFeedback>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "white",
-    justifyContent: "center",
-    // alignItems: "center",
-    paddingHorizontal: 15,
-  },
-  logoContainer: {
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
-    flexGrow: 1,
-  },
-  logo: {
-    width: 200,
-    height: 150,
-  },
-  title: {
-    textAlign: "center",
-    //opacity: 0.5  //độ mờ
-  },
-
-  linkContainer: {
-    marginTop: 20,
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  error: {
-    color: "#e74c3c",
-    textAlign: "center",
-  },
-  link: {
-    marginVertical: 15,
-  },
-});
 
 export default SignUpScreen;

@@ -1,71 +1,127 @@
-import React, { Component } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-  Keyboard,
-  ImageBackground,
-  StatusBar
-} from "react-native";
-
-import { MaterialCommunityIcons, Ionicons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-import ListButtonComponent from "../components/ListButtonComponent";
-import ButtonComponent from "../components/ButtonComponent";
-import AccountScreen from "../screens/AccountScreen";
+import React, { useState, useContext } from 'react';
+import { View, Text, StyleSheet, Image, Dimensions, StatusBar } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Context as AuthContext } from '../context/AuthContext';
+import ListButtonComponent from '../components/ListButtonComponent';
+import ButtonComponent from '../components/ButtonComponent';
+import AnimationViewComponent from '../components/AnimationViewComponent';
+import animationSource from '../assets/personal.json';
 
 const item = {
-  name: "Ngoc Trinh",
-  mail: "trinhtrinh@gmail.com"
+  name: 'Ngoc Trinh',
+  mail: 'trinhtrinh@gmail.com',
 };
-const handleOnSubmit = () => {};
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    textAlign: 'center',
+  },
+  imageContainer: {
+    alignItems: 'center',
+  },
+  Image: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    paddingTop: 15,
+  },
+  TextName: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#FFF',
+  },
+  Info: {
+    padding: 5,
+  },
+});
 
 const ProfileScreen = props => {
+  const { state, signOut } = useContext(AuthContext);
+
+  const renderComponnet = () => {
+    if (state.isSignIn) {
+      return (
+        <View>
+          <View style={styles.imageContainer}>
+            <Image
+              style={styles.Image}
+              source={{
+                uri:
+                  'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171',
+              }}
+            />
+          </View>
+          <Text style={styles.TextName}>{item.name}</Text>
+          <Text style={{ color: '#FFF' }}>{item.mail}</Text>
+        </View>
+      );
+    }
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <AnimationViewComponent
+          source={animationSource}
+          animationStyle={{ width: 90, height: 90 }}
+          containerStyle={{
+            borderRadius: 100,
+            marginVertical: 15,
+            backgroundColor: '#fff',
+          }}
+          autoPlay
+        />
+        <View style={{ flexDirection: 'row' }}>
+          <ButtonComponent
+            activeOpacity={0.8}
+            containerStyle={{ paddingHorizontal: 80 }}
+            title="Login"
+            handleOnPress={() => {
+              props.navigation.push('Login');
+            }}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  const navigateCheckLogin = (routeName, params) => () => {
+    if (state.isSignIn) {
+      props.navigation.navigate({ routeName, params });
+      return;
+    }
+    props.navigation.navigate('Login');
+  };
+
   return (
     <ScrollView style={{ flex: 1 }}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
       <View style={styles.container}>
         <View
           style={{
-            height: Dimensions.get("window").height / 2.5,
-            justifyContent: "center",
-            alignItems: "center"
+            height: Dimensions.get('window').height / 2.5,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <View
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               left: 0,
-              right: 0
+              right: 0,
             }}
           >
             <Image
               style={{
-                width: Dimensions.get("window").width,
-                height: Dimensions.get("window").height / 2
+                width: Dimensions.get('window').width,
+                height: Dimensions.get('window').height / 2,
               }}
               source={{
                 uri:
-                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
+                  'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171',
               }}
             />
           </View>
-          <View style={styles.imageContainer}>
-            <Image
-              style={styles.Image}
-              source={{
-                uri:
-                  "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171"
-              }}
-            />
-          </View>
-          <Text style={styles.TextName}>{item.name}</Text>
-          <Text style={{ color: "#FFF" }}>{item.mail}</Text>
+          {renderComponnet()}
         </View>
 
         <View style={{ marginHorizontal: 15 }}>
@@ -78,11 +134,9 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 0,
                 borderTopLeftRadius: 10,
-                borderTopRightRadius: 10
+                borderTopRightRadius: 10,
               }}
-              handleOnPress={() => {
-                props.navigation.navigate("Account");
-              }}
+              handleOnPress={navigateCheckLogin('Account')}
             />
             <ListButtonComponent
               activeOpacity={0.8}
@@ -92,11 +146,9 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 10,
                 borderTopLeftRadius: 0,
-                borderTopRightRadius: 0
+                borderTopRightRadius: 0,
               }}
-              handleOnPress={() => {
-                props.navigation.navigate("Password");
-              }}
+              handleOnPress={navigateCheckLogin('Password')}
             />
           </View>
 
@@ -109,11 +161,9 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 0,
                 borderTopLeftRadius: 10,
-                borderTopRightRadius: 10
+                borderTopRightRadius: 10,
               }}
-              handleOnPress={() => {
-                props.navigation.navigate("Order");
-              }}
+              handleOnPress={navigateCheckLogin('Order')}
             />
             <ListButtonComponent
               activeOpacity={0.8}
@@ -121,7 +171,7 @@ const ProfileScreen = props => {
               title="Cart"
               iconName="ios-cart"
               handleOnPress={() => {
-                props.navigation.navigate("Cart");
+                props.navigation.navigate('Cart');
               }}
             />
             <ListButtonComponent
@@ -129,9 +179,7 @@ const ProfileScreen = props => {
               containerStyle={{ flex: 1 }}
               title="Wish list"
               iconName="ios-heart-empty"
-              handleOnPress={() => {
-                props.navigation.navigate("WishList");
-              }}
+              handleOnPress={navigateCheckLogin('WishList')}
             />
             <ListButtonComponent
               activeOpacity={0.8}
@@ -141,18 +189,22 @@ const ProfileScreen = props => {
               buttonStyle={{
                 borderRadius: 10,
                 borderTopLeftRadius: 0,
-                borderTopRightRadius: 0
+                borderTopRightRadius: 0,
               }}
-              handleOnPress={handleOnSubmit}
+              handleOnPress={() => {}}
             />
           </View>
-          <View style={{ flexDirection: "row", marginBottom: 20 }}>
-            <ButtonComponent
-              activeOpacity={0.8}
-              containerStyle={{ flex: 1, marginTop: 30 }}
-              title="Logout"
-              handleOnPress={handleOnSubmit}
-            />
+          <View style={{ flexDirection: 'row', marginBottom: 20 }}>
+            {state.isSignIn && (
+              <ButtonComponent
+                activeOpacity={0.8}
+                containerStyle={{ flex: 1, marginTop: 30 }}
+                title="Logout"
+                handleOnPress={() => {
+                  signOut();
+                }}
+              />
+            )}
           </View>
         </View>
       </View>
@@ -160,27 +212,4 @@ const ProfileScreen = props => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    textAlign: "center"
-  },
-  imageContainer: {
-    alignItems: "center"
-  },
-  Image: {
-    width: 100,
-    height: 100,
-    borderRadius: 100,
-    paddingTop: 15
-  },
-  TextName: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#FFF"
-  },
-  Info: {
-    padding: 5
-  }
-});
 export default ProfileScreen;

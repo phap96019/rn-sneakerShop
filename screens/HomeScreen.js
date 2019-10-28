@@ -1,9 +1,66 @@
-//Search Screen
-import React, { useEffect, useContext } from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { ScrollView } from "react-native-gesture-handler";
-import { Context as AuthContext } from "../context/AuthContext";
+// Search Screen
+import React, { useEffect, useContext } from 'react';
+import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Ionicons } from '@expo/vector-icons';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Context as AuthContext } from '../context/AuthContext';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  },
+  textA: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  Image: {
+    height: 100,
+    width: 100,
+    borderRadius: 100,
+    paddingHorizontal: 10,
+  },
+  profile: {
+    marginTop: 20,
+    margin: 10,
+  },
+  buttonEditTop: {
+    backgroundColor: '#95a5a6',
+    paddingVertical: 13,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    marginBottom: 5,
+  },
+  buttonEditBot: {
+    backgroundColor: '#95a5a6',
+    paddingVertical: 13,
+    borderBottomRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    marginBottom: 5,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
+  // các nút cơ bản phía dưới
+  btList: {
+    margin: 10,
+  },
+  bteasy: {
+    backgroundColor: '#ecf0f1',
+    paddingVertical: 13,
+    marginBottom: 5,
+    paddingLeft: 15,
+    flexDirection: 'row',
+  },
+  textB: {
+    textAlign: 'left',
+    color: '#3d3d3d',
+  },
+});
 
 const HomeScreen = () => {
   const { tryLocalSignIn, state } = useContext(AuthContext);
@@ -15,14 +72,14 @@ const HomeScreen = () => {
   return (
     <ScrollView>
       <View style={{ flex: 1 }}>
-        <Text> {state.token ? "Đã đăng nhập " : "chưa đăng nhập"}</Text>
+        <Text> {state.token ? 'Đã đăng nhập ' : 'chưa đăng nhập'}</Text>
         <Text> </Text>
         <View style={styles.container}>
           <Image
             style={styles.Image}
             source={{
               uri:
-                "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171",
+                'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171',
             }}
           />
           <Text style={styles.textA}>Ngọc Trinh</Text>
@@ -65,61 +122,5 @@ const HomeScreen = () => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center",
-  },
-  textA: {
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  Image: {
-    height: 100,
-    width: 100,
-    borderRadius: 100,
-    paddingHorizontal: 10,
-  },
-  profile: {
-    marginTop: 20,
-    margin: 10,
-  },
-  buttonEditTop: {
-    backgroundColor: "#95a5a6",
-    paddingVertical: 13,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    marginBottom: 5,
-  },
-  buttonEditBot: {
-    backgroundColor: "#95a5a6",
-    paddingVertical: 13,
-    borderBottomRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    marginBottom: 5,
-  },
-  buttonText: {
-    textAlign: "center",
-    color: "#FFFFFF",
-  },
-  //các nút cơ bản phía dưới
-  btList: {
-    margin: 10,
-  },
-  bteasy: {
-    backgroundColor: "#ecf0f1",
-    paddingVertical: 13,
-    marginBottom: 5,
-    paddingLeft: 15,
-    flexDirection: "row",
-  },
-  textB: {
-    textAlign: "left",
-    color: "#3d3d3d",
-  },
-});
 
 export default HomeScreen;

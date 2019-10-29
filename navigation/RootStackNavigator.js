@@ -14,6 +14,9 @@ import OrderScreen from '../screens/OrderScreen';
 import SearchScreen from '../screens/SearchScreen';
 import NoficationScreen from '../screens/NoficationScreen';
 import NoficationChangePasswordScreen from '../screens/NoficationChangePasswordScreen';
+import SearchResultScreen from '../screens/SearchResultScreen';
+import FilterScreen from '../screens/FilterScreen';
+import ProductScreen from '../screens/ProductScreen';
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -92,6 +95,24 @@ const RootStackNavigator = createStackNavigator(
         header: null,
       }),
     },
+    SearchResult: {
+      screen: SearchResultScreen,
+      navigationOptions: () => ({
+        title: 'Search Result',
+      }),
+    },
+    Filter: {
+      screen: FilterScreen,
+      navigationOptions: () => ({
+        header: null,
+      }),
+    },
+    Product: {
+      screen: ProductScreen,
+      navigationOptions: () => ({
+        title: 'Product A',
+      }),
+    },
     Nofication: {
       screen: NoficationScreen,
     },
@@ -100,7 +121,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'Login',
+    // initialRouteName: 'Product',
   }
 );
 

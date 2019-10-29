@@ -9,6 +9,7 @@ import LoginScreen from '../screens/LoginScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SearchScreen from '../screens/SearchScreen';
 import TestScreen from '../screens/TestScreen';
+import FilterScreen from '../screens/FilterScreen';
 
 class SettingsScreen extends React.Component {
   render() {
@@ -29,7 +30,7 @@ const TabNavigator = createBottomTabNavigator({
     },
   },
   Filter: {
-    screen: SettingsScreen,
+    screen: FilterScreen,
     navigationOptions: {
       tabBarLabel: 'Filter',
       tabBarIcon: ({ tintColor }) => (

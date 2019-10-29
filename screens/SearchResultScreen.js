@@ -15,10 +15,12 @@ import InputComponent from '../components/InputComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WishListItemComponent from '../components/WishListItemComponent';
-data = [
+import SearchResultItemComponent from '../components/SearchResultItemComponent';
+
+data2 = [
   {
     id: 0,
-    name: 'Giày loại XL',
+    name: 'Giày loại X',
     size: 'Size: 40',
     cost: 200,
     pic:
@@ -72,25 +74,24 @@ data = [
       'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
 ];
-const total = 400;
-const CartScreen = props => {
+const SearchResultScreen = props => {
   return (
     <View
       style={{
         flex: 1,
         justifyContent: 'center',
         flexDirection: 'row',
-        //alignItems: "center",
         margin: 10,
+        paddingBottom: 20,
       }}
     >
       <ScrollView>
         <View>
           <FlatList
-            data={data}
+            data={data2}
             keyExtractor={data => data.id.toString()}
             renderItem={({ item }) => (
-              <WishListItemComponent
+              <SearchResultItemComponent
                 item={item}
                 activeOpacity={0.8}
                 handleOnPress={() => {}}
@@ -98,28 +99,9 @@ const CartScreen = props => {
             )}
           />
         </View>
-        <View style={styles.totalContainer}>
-          <Text style={styles.total}>{'Total: $ ' + total}</Text>
-        </View>
-        <View>
-          <ButtonComponent
-            activeOpacity={0.8}
-            containerStyle={{ flex: 1, marginTop: 30, marginBottom: 20 }}
-            title="Proceed to ordering"
-            handleOnPress={() => {}}
-          />
-        </View>
       </ScrollView>
     </View>
   );
 };
-const styles = StyleSheet.create({
-  totalContainer: {
-    margin: 10,
-  },
-  total: {
-    fontSize: 20,
-    textAlign: 'right',
-  },
-});
-export default CartScreen;
+
+export default SearchResultScreen;

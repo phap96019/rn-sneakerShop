@@ -1,4 +1,3 @@
-import React, { useState, useEffect, useContext } from 'react';
 import { View, StyleSheet, Text, ScrollView, FlatList } from 'react-native';
 import { Context as UserContext } from '../context/UserContext';
 import sourceAnimation from '../assets/emptybox.json';
@@ -8,26 +7,6 @@ import WishListItemComponent from '../components/WishListItemComponent';
 
 const data = [
   {
-    id: 0,
-    name: 'Giày loại XL',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 1,
-    name: 'Giày loại A',
-    size: 'Size: 40',
-    cost: 200,
-    pic: 'https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg',
-  },
-  {
-    id: 2,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
       'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
   {

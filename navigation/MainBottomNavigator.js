@@ -32,9 +32,7 @@ const TabNavigator = createBottomTabNavigator({
     screen: SettingsScreen,
     navigationOptions: {
       tabBarLabel: 'Filter',
-      tabBarIcon: ({ tintColor }) => (
-        <Ionicons name="ios-color-filter" size={30} />
-      ),
+      tabBarIcon: ({ tintColor }) => <Ionicons name="ios-color-filter" size={30} />,
     },
   },
   Search: {

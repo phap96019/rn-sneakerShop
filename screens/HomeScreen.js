@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,10 +12,11 @@ import {
   Button,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Context as AuthContext } from '../context/AuthContext';
 import Test1Component from '../components/Test1Component';
 import Test2Component from '../components/Test2Component';
 
-dataX = [
+const dataX = [
   {
     id: 0,
     name: 'Adidas Ultra Boost',
@@ -58,6 +59,10 @@ dataX = [
 ];
 
 const HomeScreen = props => {
+  const { tryLocalSignIn } = useContext(AuthContext);
+  useEffect(() => {
+    tryLocalSignIn();
+  }, []);
   return (
     <ScrollView style={{ flex: 1 }}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />

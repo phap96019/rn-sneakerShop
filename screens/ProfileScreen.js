@@ -1,16 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions, StatusBar } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { NavigationEvents } from 'react-navigation';
 import { Context as AuthContext } from '../context/AuthContext';
+import { Context as UserContext } from '../context/UserContext';
 import ListButtonComponent from '../components/ListButtonComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import AnimationViewComponent from '../components/AnimationViewComponent';
 import animationSource from '../assets/personal.json';
-
-const item = {
-  name: 'Ngoc Trinh',
-  mail: 'trinhtrinh@gmail.com',
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -38,9 +35,17 @@ const styles = StyleSheet.create({
 
 const ProfileScreen = props => {
   const { state, signOut } = useContext(AuthContext);
+  const { state: userState, getMe, setLoading } = useContext(UserContext);
+  const { user } = userState;
+  useEffect(() => {
+    if (state.isSignIn && !user) {
+      setLoading();
+      getMe();
+    }
+  }, []);
 
   const renderComponnet = () => {
-    if (state.isSignIn) {
+    if (state.isSignIn && user) {
       return (
         <View>
           <View style={styles.imageContainer}>
@@ -52,11 +57,12 @@ const ProfileScreen = props => {
               }}
             />
           </View>
-          <Text style={styles.TextName}>{item.name}</Text>
-          <Text style={{ color: '#FFF' }}>{item.mail}</Text>
+          <Text style={styles.TextName}>{user.name}</Text>
+          <Text style={{ color: '#FFF' }}>{user.email}</Text>
         </View>
       );
     }
+
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <AnimationViewComponent
@@ -93,7 +99,15 @@ const ProfileScreen = props => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
+      <NavigationEvents
+        onWillFocus={() => {
+          if (state.isSignIn) {
+            getMe();
+          }
+        }}
+      />
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
+
       <View style={styles.container}>
         <View
           style={{

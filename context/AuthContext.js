@@ -20,6 +20,8 @@ const authReducer = (state, action) => {
       return { ...state, error: action.payload, loading: false };
     case 'CLEAR_AUTH_ERROR':
       return { ...state, error: '', loading: false };
+    case 'TRY_LOGIN_FAIL':
+      return { ...state, loading: false };
     case 'RESET_PASSWORD':
     case 'UPDATE_PASSWORD':
       return {
@@ -92,7 +94,9 @@ const tryLocalSignIn = dispatch => async () => {
   if (token) {
     dispatch({ type: 'LOGIN_SUCCESS', payload: token });
     // navigateReplace("Main");
+    return;
   }
+  dispatch({ type: 'TRY_LOGIN_FAIL' });
 };
 
 const clearError = dispatch => () => {

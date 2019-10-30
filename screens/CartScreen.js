@@ -1,105 +1,136 @@
-import React, { useState, useContext } from "react";
-import {
-  View,
-  StyleSheet,
-  Image,
-  Text,
-  KeyboardAvoidingView,
-  Keyboard,
-  TouchableWithoutFeedback,
-  ScrollView,
-  FlatList
-} from "react-native";
-import { Context as AuthContext } from "../context/AuthContext";
-import InputComponent from "../components/InputComponent";
-import ButtonComponent from "../components/ButtonComponent";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import WishListItemComponent from "../components/WishListItemComponent";
-data = [
+import React, { useState, useEffect, useContext } from 'react';
+import { View, StyleSheet, Text, ScrollView, FlatList } from 'react-native';
+import { Context as UserContext } from '../context/UserContext';
+import sourceAnimation from '../assets/emptybox.json';
+import AnimationViewComponent from '../components/AnimationViewComponent';
+import ButtonComponent from '../components/ButtonComponent';
+import WishListItemComponent from '../components/WishListItemComponent';
+
+const data = [
   {
     id: 0,
-    name: "Giày loại XL",
-    size: "Size: 40",
+    name: 'Giày loại XL',
+    size: 'Size: 40',
     cost: 200,
     pic:
-      "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg"
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
   {
     id: 1,
-    name: "Giày loại A",
-    size: "Size: 40",
+    name: 'Giày loại A',
+    size: 'Size: 40',
     cost: 200,
-    pic: "https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg"
+    pic: 'https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg',
   },
   {
     id: 2,
-    name: "Giày loại b",
-    size: "Size: 40",
+    name: 'Giày loại b',
+    size: 'Size: 40',
     cost: 200,
     pic:
-      "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg"
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
   {
     id: 3,
-    name: "Giày loại b",
-    size: "Size: 40",
+    name: 'Giày loại b',
+    size: 'Size: 40',
     cost: 200,
     pic:
-      "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg"
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
   {
     id: 4,
-    name: "Giày loại b",
-    size: "Size: 40",
+    name: 'Giày loại b',
+    size: 'Size: 40',
     cost: 200,
     pic:
-      "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg"
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
   {
     id: 5,
-    name: "Giày loại b",
-    size: "Size: 40",
+    name: 'Giày loại b',
+    size: 'Size: 40',
     cost: 200,
     pic:
-      "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg"
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
   {
     id: 6,
-    name: "Giày loại b",
-    size: "Size: 40",
+    name: 'Giày loại b',
+    size: 'Size: 40',
     cost: 200,
     pic:
-      "https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg"
-  }
+      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
+  },
 ];
 const total = 400;
 const CartScreen = props => {
+  const [cartItems, setCartItems] = useState([]);
+  const { cart, getCart } = useContext(UserContext);
+  useEffect(() => {
+    getCart();
+    setCartItems(cart);
+  }, []);
+
+  console.log(cartItems);
+
+  if (!cartItems.length) {
+    return (
+      <View style={styles.container}>
+        <AnimationViewComponent
+          animationStyle={{ width: 200, height: 200 }}
+          autoPlay
+          source={sourceAnimation}
+        />
+        <View>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              fontWeight: 'bold',
+              marginVertical: 10,
+            }}
+          >
+            Opps! Your cart is empty
+          </Text>
+          <Text style={{ textAlign: 'center' }}>Add somthing to make me happy:)</Text>
+        </View>
+        <View style={{ flexDirection: 'row', marginVertical: 15 }}>
+          <ButtonComponent
+            activeOpacity={0.8}
+            title="Shopping now"
+            handleOnPress={() => {
+              props.navigation.pop();
+            }}
+            containerStyle={{ flex: 1 }}
+          />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        flexDirection: "row",
-        //alignItems: "center",
-        margin: 10
+        justifyContent: 'center',
+        flexDirection: 'row',
+        // alignItems: "center",
+        margin: 10,
       }}
     >
       <ScrollView>
         <View>
           <FlatList
-            data={data}
-            keyExtractor={data => data.id.toString()}
+            data={state.cart}
+            keyExtractor={item => item.id}
             renderItem={({ item }) => (
-              <WishListItemComponent
-                item={item}
-                activeOpacity={0.8}
-                handleOnPress={() => {}}
-              />
+              <WishListItemComponent item={item} activeOpacity={0.8} handleOnPress={() => {}} />
             )}
           />
         </View>
         <View style={styles.totalContainer}>
-          <Text style={styles.total}>{"Total: $ " + total}</Text>
+          <Text style={styles.total}>{`Total: $ ${total}`}</Text>
         </View>
         <View>
           <ButtonComponent
@@ -114,12 +145,19 @@ const CartScreen = props => {
   );
 };
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginHorizontal: 15,
+    marginVertical: 80,
+  },
   totalContainer: {
-    margin: 10
+    margin: 10,
   },
   total: {
     fontSize: 20,
-    textAlign: "right"
-  }
+    textAlign: 'right',
+  },
 });
 export default CartScreen;

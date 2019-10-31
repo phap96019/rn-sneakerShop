@@ -58,7 +58,7 @@ const ForgotPasswordScreen = () => {
   const [inputData, setInputData] = useState({
     email: '',
   });
-  const { state, forgotPassword, clearError } = useContext(AuthContext);
+  const { error, forgotPassword, clearError } = useContext(AuthContext);
   const { email } = inputData;
   const handleOnChange = name => text => {
     setInputData({ ...inputData, [name]: text });
@@ -84,7 +84,9 @@ const ForgotPasswordScreen = () => {
         />
         <View style={styles.messageContainer}>
           <Text style={styles.message}>Enter your Email.</Text>
-          <Text style={styles.message}>We'll email instruction on how to reset your password.</Text>
+          <Text style={styles.message}>
+            We'll email instruction on how to reset your password.
+          </Text>
         </View>
 
         <InputComponent
@@ -95,7 +97,7 @@ const ForgotPasswordScreen = () => {
           handleOnChange={handleOnChange('email')}
         />
         <View>
-          <Text style={styles.error}>{state.error !== '' && state.error}</Text>
+          <Text style={styles.error}>{error !== '' && error}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <ButtonComponent

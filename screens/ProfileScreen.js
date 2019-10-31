@@ -1,16 +1,19 @@
-import React, { useState, useContext } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, StatusBar } from 'react-native';
+import React, { useEffect, useContext } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  StatusBar,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Context as AuthContext } from '../context/AuthContext';
+import { Context as UserContext } from '../context/UserContext';
 import ListButtonComponent from '../components/ListButtonComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import AnimationViewComponent from '../components/AnimationViewComponent';
 import animationSource from '../assets/personal.json';
-
-const item = {
-  name: 'Ngoc Trinh',
-  mail: 'trinhtrinh@gmail.com',
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -37,10 +40,24 @@ const styles = StyleSheet.create({
 });
 
 const ProfileScreen = props => {
-  const { state, signOut } = useContext(AuthContext);
+  const { isSignIn, signOut } = useContext(AuthContext);
+  const { user, getMe } = useContext(UserContext);
+  useEffect(() => {
+    const didBlurSubscription = props.navigation.addListener(
+      'willFocus',
+      () => {
+        if (isSignIn) {
+          getMe();
+        }
+      }
+    );
+    return () => {
+      didBlurSubscription.remove();
+    };
+  }, [isSignIn]);
 
   const renderComponnet = () => {
-    if (state.isSignIn) {
+    if (isSignIn) {
       return (
         <View>
           <View style={styles.imageContainer}>
@@ -52,11 +69,16 @@ const ProfileScreen = props => {
               }}
             />
           </View>
-          <Text style={styles.TextName}>{item.name}</Text>
-          <Text style={{ color: '#FFF' }}>{item.mail}</Text>
+          {user && (
+            <View>
+              <Text style={styles.TextName}>{user.name}</Text>
+              <Text style={{ color: '#FFF' }}>{user.email}</Text>
+            </View>
+          )}
         </View>
       );
     }
+
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <AnimationViewComponent
@@ -84,7 +106,7 @@ const ProfileScreen = props => {
   };
 
   const navigateCheckLogin = (routeName, params) => () => {
-    if (state.isSignIn) {
+    if (isSignIn) {
       props.navigation.navigate({ routeName, params });
       return;
     }
@@ -94,6 +116,7 @@ const ProfileScreen = props => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
+
       <View style={styles.container}>
         <View
           style={{
@@ -195,7 +218,7 @@ const ProfileScreen = props => {
             />
           </View>
           <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-            {state.isSignIn && (
+            {isSignIn && (
               <ButtonComponent
                 activeOpacity={0.8}
                 containerStyle={{ flex: 1, marginTop: 30 }}

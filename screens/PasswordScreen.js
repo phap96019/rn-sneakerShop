@@ -50,7 +50,9 @@ const PasswordScreen = () => {
     password: '',
     passwordConfirm: '',
   });
-  const { state, updatePassword, clearError, setLoading } = useContext(AuthContext);
+  const { loading, error, updatePassword, clearError, setLoading } = useContext(
+    AuthContext
+  );
   const { passwordCurrent, password, passwordConfirm } = inputData;
   const handleOnChange = key => text => {
     setInputData({ ...inputData, [key]: text });
@@ -83,7 +85,7 @@ const PasswordScreen = () => {
         behavior="padding"
         style={styles.container}
       >
-        {state.loading && <LoadingComponent />}
+        {loading && <LoadingComponent />}
         <Image
           style={styles.logo}
           source={{
@@ -118,7 +120,7 @@ const PasswordScreen = () => {
           handleOnChange={handleOnChange('passwordConfirm')}
         />
         <View>
-          <Text style={styles.error}>{state.error !== '' && state.error}</Text>
+          <Text style={styles.error}>{error !== '' && error}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <ButtonComponent

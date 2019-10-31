@@ -8,7 +8,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#1d1d1d', // rgba(30, 30, 30, 0.05)
     position: 'absolute',
     zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 15,
+    alignSelf: 'center',
   },
   animationStyle: {
     backgroundColor: 'transparent',

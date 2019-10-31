@@ -57,7 +57,9 @@ const LoginScreen = props => {
     email: '',
     password: '',
   });
-  const { state, signIn, clearError, setLoading } = useContext(AuthContext);
+  const { loading, error, signIn, clearError, setLoading } = useContext(
+    AuthContext
+  );
   const { email, password } = inputData;
   const handleOnChange = name => text => {
     setInputData({ ...inputData, [name]: text });
@@ -89,7 +91,7 @@ const LoginScreen = props => {
         behavior="padding"
         style={styles.container}
       >
-        {state.loading && <LoadingComponent />}
+        {loading && <LoadingComponent />}
         <NavigationEvents onWillBlur={clearError} />
 
         <Image
@@ -117,7 +119,7 @@ const LoginScreen = props => {
           handleOnChange={handleOnChange('password')}
         />
         <View>
-          <Text style={styles.error}>{state.error !== '' && state.error}</Text>
+          <Text style={styles.error}>{error !== '' && error}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <ButtonComponent

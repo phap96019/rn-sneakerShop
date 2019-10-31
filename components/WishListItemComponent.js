@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -8,18 +8,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import ButtonComponent from '../components/ButtonComponent';
-import PlusNumberComponent from '../components/PlusNumberComponent';
+import ButtonComponent from './ButtonComponent';
+import { Context as UserContext } from '../context/UserContext';
 
-const item = {
-  name: 'Giày loại A',
-  size: 'Size: 40',
-  cost: 200,
-  pic:
-    'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-};
-//=====================
-const handleOnSubmit = ({ item, countButton }) => {};
 const WishListItemComponent = ({
   item,
   containerStyle,
@@ -33,6 +24,11 @@ const WishListItemComponent = ({
 }) => {
   const renderCountButton = button => {
     if (button) return <PlusNumberComponent />;
+  };
+  const { removeCartItems, setLoading } = useContext(UserContext);
+  const handleOnSubmit = id => {
+    setLoading();
+    removeCartItems(id);
   };
   return (
     <View style={styles.container}>
@@ -53,41 +49,39 @@ const WishListItemComponent = ({
               borderRadius: 15,
             }}
             source={{
-              uri: item.pic,
+              uri: item.variant.product.imageCover,
             }}
           />
         </View>
         <View style={styles.info}>
-          <View style={{ flexDirection: 'row' }}>
-            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
-              {item.name}
-            </Text>
-          </View>
-          <Text style={{}}>{item.size}</Text>
-          <Text style={{ fontWeight: 'bold' }}>{'$ ' + item.cost}</Text>
-          <View style={{ paddingTop: 8, height: 20 }}>
-            <ButtonComponent
-              activeOpacity={0.8}
-              containerStyle={{
-                flex: 1,
-                width: 130,
-                backgroundColor: '#FFF',
-                shadowColor: 'blue',
-                shadowOffset: {
-                  width: 0,
-                  height: 0,
-                },
-                shadowOpacity: 0,
-                shadowRadius: 0,
-                elevation: 0,
-                borderWidth: 1,
-                borderColor: '#2d3436',
-              }}
-              textStyle={{ color: '#000', marginBottom: 5 }}
-              title="Remove"
-              handleOnPress={handleOnSubmit}
-            />
-          </View>
+          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+            {item.variant.product.name}
+          </Text>
+          <Text style={{}}>{item.variant.size}</Text>
+          <Text
+            style={{ fontWeight: 'bold' }}
+          >{`$ ${item.variant.product.price}`}</Text>
+          <ButtonComponent
+            activeOpacity={0.8}
+            containerStyle={{
+              flex: 1,
+              width: 130,
+              backgroundColor: '#FFF',
+              shadowColor: 'red',
+              shadowOffset: {
+                width: 0,
+                height: 0,
+              },
+              shadowOpacity: 0,
+              shadowRadius: 0,
+              elevation: 0,
+              borderWidth: 1,
+              borderColor: '#2d3436',
+            }}
+            textStyle={{ color: '#000', marginBottom: 5 }}
+            title="Remove"
+            handleOnPress={() => handleOnSubmit(item._id)}
+          />
         </View>
       </TouchableOpacity>
       <View

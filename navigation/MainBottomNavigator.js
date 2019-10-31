@@ -11,19 +11,9 @@ import SearchScreen from '../screens/SearchScreen';
 import TestScreen from '../screens/TestScreen';
 import FilterScreen from '../screens/FilterScreen';
 
-class SettingsScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Filter</Text>
-      </View>
-    );
-  }
-}
-
 const TabNavigator = createBottomTabNavigator({
   Home: {
-    screen: HomeScreen,
+    screen: TestScreen,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -12,10 +12,11 @@ import {
   Button,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Test1Component from '../components/Test1Component';
+import { Context as AuthContext } from '../context/AuthContext';
+import BigListItemComponent from '../components/BigListItemComponent';
 import Test2Component from '../components/Test2Component';
 
-dataX = [
+const dataX = [
   {
     id: 0,
     name: 'Adidas Ultra Boost',
@@ -58,6 +59,10 @@ dataX = [
 ];
 
 const HomeScreen = props => {
+  const { tryLocalSignIn } = useContext(AuthContext);
+  useEffect(() => {
+    tryLocalSignIn();
+  }, []);
   return (
     <ScrollView style={{ flex: 1 }}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
@@ -117,9 +122,7 @@ const HomeScreen = props => {
           margin: 20,
         }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>
-          Designer Collection
-        </Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>New Arrival</Text>
         <TouchableOpacity>
           <Text style={{ fontSize: 15, color: '#2f3542' }}>Show all</Text>
         </TouchableOpacity>
@@ -133,7 +136,7 @@ const HomeScreen = props => {
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
-            return <Test1Component item={item} />;
+            return <BigListItemComponent item={item} />;
           }}
         />
       </View>

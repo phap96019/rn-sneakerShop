@@ -52,7 +52,9 @@ const styles = StyleSheet.create({
 });
 
 const ResetPasswordScreen = props => {
-  const { state, clearError, resetPassword, setLoading } = useContext(AuthContext);
+  const { error, loading, clearError, resetPassword, setLoading } = useContext(
+    AuthContext
+  );
   const [token, setToken] = useState('');
   const [inputData, setInputData] = useState({
     password: '',
@@ -96,7 +98,7 @@ const ResetPasswordScreen = props => {
         behavior="padding"
         style={styles.container}
       >
-        {state.loading && <LoadingComponent />}
+        {loading && <LoadingComponent />}
         <Image
           style={styles.logo}
           source={{
@@ -125,7 +127,7 @@ const ResetPasswordScreen = props => {
           handleOnChange={handleOnChange('passwordConfirm')}
         />
         <View>
-          <Text style={styles.error}>{state.error !== '' && state.error}</Text>
+          <Text style={styles.error}>{error !== '' && error}</Text>
         </View>
         <View style={{ flexDirection: 'row' }}>
           <ButtonComponent

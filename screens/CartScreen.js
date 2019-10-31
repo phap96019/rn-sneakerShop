@@ -15,6 +15,8 @@ import InputComponent from '../components/InputComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WishListItemComponent from '../components/WishListItemComponent';
+import PlusNumberComponent from '../components/PlusNumberComponent';
+
 data = [
   {
     id: 0,
@@ -91,6 +93,7 @@ const CartScreen = props => {
             keyExtractor={data => data.id.toString()}
             renderItem={({ item }) => (
               <WishListItemComponent
+                countButton
                 item={item}
                 activeOpacity={0.8}
                 handleOnPress={() => {}}

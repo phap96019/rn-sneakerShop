@@ -11,44 +11,14 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Context as AuthContext } from '../context/AuthContext';
 import InputComponent from '../components/InputComponent';
 import ButtonComponent from '../components/ButtonComponent';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import WishListItemComponent from '../components/WishListItemComponent';
 import ListOderComponent from '../components/ListOderComponent';
 import { Ionicons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
-const onSubmit = () => {};
-const SearchScreen = props => {
-  return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.Container}>
-        <Animatable.View
-          animation="slideInRight"
-          duration={500}
-          style={styles.SearchContainer}
-        >
-          <Ionicons
-            name={'ios-search'}
-            size={30}
-            color="#3d3d3d"
-            style={{ padding: 10 }}
-          />
-          <TextInput
-            placeholder="Search"
-            autoFocus={true}
-            returnKeyType="go"
-            onSubmitEditing={() => {
-              props.navigation.navigate('SearchResult');
-            }}
-            style={{ fontSize: 20, marginLeft: 5, flex: 1 }}
-          />
-        </Animatable.View>
-      </View>
-    </View>
-  );
-};
 
 const styles = StyleSheet.create({
   Container: {
@@ -67,5 +37,53 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
 });
+
+const onSubmit = () => {};
+const SearchScreen = props => {
+  return (
+    <View style={{ flex: 1 }}>
+      <View style={styles.Container}>
+        <Animatable.View
+          animation="slideInRight"
+          duration={500}
+          style={styles.SearchContainer}
+        >
+          <Ionicons
+            name={'ios-search'}
+            size={30}
+            color="#3d3d3d"
+            style={{ padding: 10 }}
+          />
+          <TextInput
+            placeholder="Search"
+            autoFocus
+            returnKeyType="go"
+            onSubmitEditing={() => {
+              props.navigation.navigate('SearchResult');
+            }}
+            style={{ fontSize: 20, marginLeft: 5, flex: 1 }}
+          />
+          <View style={{ width: 50, height: 50 }}>
+            <TouchableOpacity
+              onPress={() => {}}
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                top: -5,
+              }}
+            >
+              <Ionicons
+                name={'ios-close'}
+                size={40}
+                color="#3d3d3d"
+                style={{ padding: 10 }}
+              />
+            </TouchableOpacity>
+          </View>
+        </Animatable.View>
+      </View>
+    </View>
+  );
+};
 
 export default SearchScreen;

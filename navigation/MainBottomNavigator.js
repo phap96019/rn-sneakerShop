@@ -23,7 +23,7 @@ class SettingsScreen extends React.Component {
 
 const TabNavigator = createBottomTabNavigator({
   Home: {
-    screen: TestScreen,
+    screen: HomeScreen,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />,

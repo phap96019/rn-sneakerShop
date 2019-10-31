@@ -10,6 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import ButtonComponent from './ButtonComponent';
 import { Context as UserContext } from '../context/UserContext';
+import PlusNumberComponent from '../components/PlusNumberComponent';
 
 const WishListItemComponent = ({
   item,
@@ -54,7 +55,11 @@ const WishListItemComponent = ({
           />
         </View>
         <View style={styles.info}>
-          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={{ fontSize: 17, fontWeight: 'bold' }}
+          >
             {item.variant.product.name}
           </Text>
           <Text style={{}}>{item.variant.size}</Text>

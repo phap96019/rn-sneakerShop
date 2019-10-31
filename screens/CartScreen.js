@@ -86,6 +86,7 @@ const CartScreen = props => {
               keyExtractor={item => item._id}
               renderItem={({ item }) => (
                 <WishListItemComponent
+                  countButton
                   item={item}
                   activeOpacity={0.8}
                   handleOnPress={() => {}}

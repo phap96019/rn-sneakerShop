@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Context as AuthContext } from '../context/AuthContext';
-import Test1Component from '../components/Test1Component';
+import BigListItemComponent from '../components/BigListItemComponent';
 import Test2Component from '../components/Test2Component';
 
 const dataX = [
@@ -78,7 +78,8 @@ const HomeScreen = props => {
               height: Dimensions.get('window').height / 2,
             }}
             source={{
-              uri: 'https://i.pinimg.com/originals/cc/ab/5e/ccab5e910619394d2641a99a962c7517.jpg',
+              uri:
+                'https://i.pinimg.com/originals/cc/ab/5e/ccab5e910619394d2641a99a962c7517.jpg',
             }}
           />
         </View>
@@ -119,7 +120,7 @@ const HomeScreen = props => {
           margin: 20,
         }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Designer Collection</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>New Arrival</Text>
         <TouchableOpacity>
           <Text style={{ fontSize: 15, color: '#2f3542' }}>Show all</Text>
         </TouchableOpacity>
@@ -132,7 +133,7 @@ const HomeScreen = props => {
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
-            return <Test1Component item={item} />;
+            return <BigListItemComponent item={item} />;
           }}
         />
       </View>

@@ -62,7 +62,9 @@ const SignUpScreen = props => {
     password: '',
     passwordConfirm: '',
   });
-  const { state, signUp, clearError, setLoading } = useContext(AuthContext);
+  const { loading, error, signUp, clearError, setLoading } = useContext(
+    AuthContext
+  );
   const { name, email, password, passwordConfirm } = inputData;
   const handleOnChange = key => text => {
     setInputData({ ...inputData, [key]: text });
@@ -105,7 +107,7 @@ const SignUpScreen = props => {
           showsVerticalScrollIndicator={false}
         >
           <NavigationEvents onWillBlur={clearError} />
-          {state.loading && <LoadingComponent />}
+          {loading && <LoadingComponent />}
           <Image
             style={styles.logo}
             source={{
@@ -144,7 +146,7 @@ const SignUpScreen = props => {
             handleOnChange={handleOnChange('passwordConfirm')}
           />
           <View>
-            <Text style={styles.error}>{state.error !== '' && state.error}</Text>
+            <Text style={styles.error}>{error !== '' && error}</Text>
           </View>
           <View style={{ flexDirection: 'row' }}>
             <ButtonComponent

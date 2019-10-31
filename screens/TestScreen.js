@@ -10,10 +10,11 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Test1Component from '../components/Test1Component';
+import BigListItemComponent from '../components/BigListItemComponent';
 import Test2Component from '../components/Test2Component';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
+import NewArriavalComponent from '../components/NewArriavalComponent';
 
 const dataX = [
   {
@@ -58,17 +59,21 @@ const dataX = [
 ];
 
 const TestScreen = props => {
-  const { state, tryLocalSignIn, setLoading: setAuthLoading } = useContext(AuthContext);
-  const { getMe, getCart, setLoading: setUserLoading } = useContext(UserContext);
+  const { isSignIn, tryLocalSignIn, setLoading: setAuthLoading } = useContext(
+    AuthContext
+  );
+  const { getMe, getCart, setLoading: setUserLoading } = useContext(
+    UserContext
+  );
   useEffect(() => {
     setAuthLoading();
     tryLocalSignIn();
-    if (state.isSignIn) {
+    if (isSignIn) {
       setUserLoading();
       getMe();
       getCart();
     }
-  }, []);
+  }, [isSignIn]);
   return (
     <ScrollView style={{ flex: 1 }}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
@@ -84,7 +89,8 @@ const TestScreen = props => {
               height: Dimensions.get('window').height / 2,
             }}
             source={{
-              uri: 'https://i.pinimg.com/originals/cc/ab/5e/ccab5e910619394d2641a99a962c7517.jpg',
+              uri:
+                'https://i.pinimg.com/originals/cc/ab/5e/ccab5e910619394d2641a99a962c7517.jpg',
             }}
           />
         </View>
@@ -125,22 +131,23 @@ const TestScreen = props => {
           margin: 20,
         }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Designer Collection</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>New Arrival</Text>
         <TouchableOpacity>
           <Text style={{ fontSize: 15, color: '#2f3542' }}>Show all</Text>
         </TouchableOpacity>
       </View>
 
       <View style={{ marginLeft: 20 }}>
-        <FlatList
+        {/* <FlatList
           data={dataX}
           keyExtractor={data => data.id.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
-            return <Test1Component item={item} />;
+            return <BigListItemComponent item={item} />;
           }}
-        />
+        /> */}
+        <NewArriavalComponent />
       </View>
 
       <View

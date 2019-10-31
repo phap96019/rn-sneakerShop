@@ -48,9 +48,16 @@ const AccountScreen = props => {
     phone: '',
     address: '',
   });
-  const { state, updateMe, getMe, clearError, setLoading } = useContext(UserContext);
+  const {
+    user,
+    error,
+    loading,
+    updateMe,
+    getMe,
+    clearError,
+    setLoading,
+  } = useContext(UserContext);
 
-  const { user } = state;
   useEffect(() => {
     if (!user) {
       setLoading();
@@ -96,7 +103,7 @@ const AccountScreen = props => {
         behavior="padding"
         style={styles.container}
       >
-        {state.loading && <LoadingComponent />}
+        {loading && <LoadingComponent />}
 
         <TouchableOpacity
           style={styles.avatarContainer}
@@ -133,7 +140,7 @@ const AccountScreen = props => {
           handleOnChange={handleOnChange('address')}
         />
         <View>
-          <Text style={styles.error}>{state.error !== '' && state.error}</Text>
+          <Text style={styles.error}>{error !== '' && error}</Text>
         </View>
 
         <View style={styles.ButtonContainer}>

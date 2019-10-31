@@ -27,6 +27,7 @@ const authReducer = (state, action) => {
       return {
         ...state,
         error: '',
+        token: '',
         loading: false,
         isSignIn: false,
       };
@@ -60,13 +61,20 @@ const signIn = dispatch => {
       // navigate("Main");
       navigateReplace('Main');
     } catch (error) {
-      const payload = error.response ? error.response.data.message : error.message;
+      const payload = error.response
+        ? error.response.data.message
+        : error.message;
       dispatch({ type: 'SET_AUTH_ERROR', payload });
     }
   };
 };
 
-const signUp = dispatch => async ({ name, email, password, passwordConfirm }) => {
+const signUp = dispatch => async ({
+  name,
+  email,
+  password,
+  passwordConfirm,
+}) => {
   // TODO: 10/07/19  Check email and password not empty string
   try {
     if (!name || !email || !password) {
@@ -84,7 +92,9 @@ const signUp = dispatch => async ({ name, email, password, passwordConfirm }) =>
     // navigate("Main");
     navigateReplace('Main');
   } catch (error) {
-    const payload = error.response ? error.response.data.message : error.message;
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
     console.log(error, payload);
     dispatch({ type: 'SET_AUTH_ERROR', payload });
   }
@@ -120,7 +130,9 @@ const forgotPassword = dispatch => async ({ email }) => {
 
     navigateReplace('Nofication');
   } catch (error) {
-    const payload = error.response ? error.response.data.message : error.message;
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
     console.log(error, payload);
     dispatch({ type: 'SET_AUTH_ERROR', payload });
   }
@@ -130,7 +142,11 @@ const setLoading = dispatch => async () => {
   dispatch({ type: 'SET_LOADING' });
 };
 
-const resetPassword = dispatch => async ({ password, passwordConfirm, token }) => {
+const resetPassword = dispatch => async ({
+  password,
+  passwordConfirm,
+  token,
+}) => {
   try {
     if (!password || !passwordConfirm) {
       throw new Error('Please enter new password and password confirm!');
@@ -144,13 +160,19 @@ const resetPassword = dispatch => async ({ password, passwordConfirm, token }) =
 
     navigateReplace('ResetPasswordSuccess');
   } catch (error) {
-    const payload = error.response ? error.response.data.message : error.message;
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
     console.log(error, payload);
     dispatch({ type: 'SET_AUTH_ERROR', payload });
   }
 };
 
-const updatePassword = dispatch => async ({ passwordCurrent, password, passwordConfirm }) => {
+const updatePassword = dispatch => async ({
+  passwordCurrent,
+  password,
+  passwordConfirm,
+}) => {
   try {
     if (!passwordCurrent || !password || !passwordConfirm) {
       throw new Error('Please enter password and and new password!');
@@ -161,11 +183,14 @@ const updatePassword = dispatch => async ({ passwordCurrent, password, passwordC
       password,
       passwordConfirm,
     });
+    await AsyncStorage.removeItem('token');
     dispatch({ type: 'UPDATE_PASSWORD' });
 
     navigateReplace('ResetPasswordSuccess');
   } catch (error) {
-    const payload = error.response ? error.response.data.message : error.message;
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
     console.log(error, payload);
     dispatch({ type: 'SET_AUTH_ERROR', payload });
   }

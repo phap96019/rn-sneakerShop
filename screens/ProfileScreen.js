@@ -1,7 +1,13 @@
 import React, { useEffect, useContext } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions, StatusBar } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  StatusBar,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import { NavigationEvents } from 'react-navigation';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
 import ListButtonComponent from '../components/ListButtonComponent';
@@ -34,18 +40,24 @@ const styles = StyleSheet.create({
 });
 
 const ProfileScreen = props => {
-  const { state, signOut } = useContext(AuthContext);
-  const { state: userState, getMe, setLoading } = useContext(UserContext);
-  const { user } = userState;
+  const { isSignIn, signOut } = useContext(AuthContext);
+  const { user, getMe } = useContext(UserContext);
   useEffect(() => {
-    if (state.isSignIn && !user) {
-      setLoading();
-      getMe();
-    }
-  }, []);
+    const didBlurSubscription = props.navigation.addListener(
+      'willFocus',
+      () => {
+        if (isSignIn) {
+          getMe();
+        }
+      }
+    );
+    return () => {
+      didBlurSubscription.remove();
+    };
+  }, [isSignIn]);
 
   const renderComponnet = () => {
-    if (state.isSignIn && user) {
+    if (isSignIn) {
       return (
         <View>
           <View style={styles.imageContainer}>
@@ -57,8 +69,12 @@ const ProfileScreen = props => {
               }}
             />
           </View>
-          <Text style={styles.TextName}>{user.name}</Text>
-          <Text style={{ color: '#FFF' }}>{user.email}</Text>
+          {user && (
+            <View>
+              <Text style={styles.TextName}>{user.name}</Text>
+              <Text style={{ color: '#FFF' }}>{user.email}</Text>
+            </View>
+          )}
         </View>
       );
     }
@@ -90,7 +106,7 @@ const ProfileScreen = props => {
   };
 
   const navigateCheckLogin = (routeName, params) => () => {
-    if (state.isSignIn) {
+    if (isSignIn) {
       props.navigation.navigate({ routeName, params });
       return;
     }
@@ -99,13 +115,6 @@ const ProfileScreen = props => {
 
   return (
     <ScrollView style={{ flex: 1 }}>
-      <NavigationEvents
-        onWillFocus={() => {
-          if (state.isSignIn) {
-            getMe();
-          }
-        }}
-      />
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
 
       <View style={styles.container}>
@@ -209,7 +218,7 @@ const ProfileScreen = props => {
             />
           </View>
           <View style={{ flexDirection: 'row', marginBottom: 20 }}>
-            {state.isSignIn && (
+            {isSignIn && (
               <ButtonComponent
                 activeOpacity={0.8}
                 containerStyle={{ flex: 1, marginTop: 30 }}

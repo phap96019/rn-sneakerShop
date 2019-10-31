@@ -1,17 +1,16 @@
-import React from 'react';
-import { Text, TouchableOpacity, StyleSheet, View, Image, Dimensions } from 'react-native';
+import React, { useContext } from 'react';
+import {
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Image,
+  Dimensions,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import ButtonComponent from "./ButtonComponent";
+import ButtonComponent from './ButtonComponent';
+import { Context as UserContext } from '../context/UserContext';
 
-const item = {
-  name: 'Giày loại A',
-  size: 'Size: 40',
-  cost: 200,
-  pic:
-    'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-};
-//= ====================
-const handleOnSubmit = () => {};
 const WishListItemComponent = ({
   item,
   containerStyle,
@@ -22,6 +21,11 @@ const WishListItemComponent = ({
   iconName,
   ...props
 }) => {
+  const { removeCartItems, setLoading } = useContext(UserContext);
+  const handleOnSubmit = id => {
+    setLoading();
+    removeCartItems(id);
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -41,14 +45,18 @@ const WishListItemComponent = ({
               borderRadius: 15,
             }}
             source={{
-              uri: item.pic,
+              uri: item.variant.product.imageCover,
             }}
           />
         </View>
         <View style={styles.info}>
-          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{item.name}</Text>
-          <Text style={{}}>{item.size}</Text>
-          <Text style={{ fontWeight: 'bold' }}>{`$ ${  item.cost}`}</Text>
+          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+            {item.variant.product.name}
+          </Text>
+          <Text style={{}}>{item.variant.size}</Text>
+          <Text
+            style={{ fontWeight: 'bold' }}
+          >{`$ ${item.variant.product.price}`}</Text>
           <ButtonComponent
             activeOpacity={0.8}
             containerStyle={{
@@ -68,7 +76,7 @@ const WishListItemComponent = ({
             }}
             textStyle={{ color: '#000', marginBottom: 5 }}
             title="Remove"
-            handleOnPress={handleOnSubmit}
+            handleOnPress={() => handleOnSubmit(item._id)}
           />
         </View>
       </TouchableOpacity>

@@ -8,13 +8,12 @@ import AccountScreen from '../screens/AccountScreen';
 import LoginScreen from '../screens/LoginScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import SearchScreen from '../screens/SearchScreen';
-import TestScreen from '../screens/TestScreen';
 import FilterScreen from '../screens/FilterScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 
 const TabNavigator = createBottomTabNavigator({
   Home: {
-    screen: TestScreen,
+    screen: HomeScreen,
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />,

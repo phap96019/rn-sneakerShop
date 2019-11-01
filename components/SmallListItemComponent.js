@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-const Test2Component = ({ item }) => {
+const SmallListItemComponent = ({ item }) => {
   return (
     <TouchableOpacity>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -17,4 +17,4 @@ const Test2Component = ({ item }) => {
   );
 };
 
-export default Test2Component;
+export default SmallListItemComponent;

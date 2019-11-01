@@ -1,20 +1,20 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   FlatList,
   ScrollView,
   Image,
   StatusBar,
   TouchableOpacity,
   Dimensions,
-  Button,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { Context as AuthContext } from '../context/AuthContext';
 import BigListItemComponent from '../components/BigListItemComponent';
-import Test2Component from '../components/Test2Component';
+import SmallListItemComponent from '../components/SmallListItemComponent';
+import { Context as AuthContext } from '../context/AuthContext';
+import { Context as UserContext } from '../context/UserContext';
+import NewArriavalComponent from '../components/NewArriavalComponent';
 
 const dataX = [
   {
@@ -58,11 +58,22 @@ const dataX = [
   },
 ];
 
-const HomeScreen = props => {
-  const { tryLocalSignIn } = useContext(AuthContext);
+const TestScreen = props => {
+  const { isSignIn, tryLocalSignIn, setLoading: setAuthLoading } = useContext(
+    AuthContext
+  );
+  const { getMe, getCart, setLoading: setUserLoading } = useContext(
+    UserContext
+  );
   useEffect(() => {
+    setAuthLoading();
     tryLocalSignIn();
-  }, []);
+    if (isSignIn) {
+      setUserLoading();
+      getMe();
+      getCart();
+    }
+  }, [isSignIn]);
   return (
     <ScrollView style={{ flex: 1 }}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
@@ -93,7 +104,6 @@ const HomeScreen = props => {
         >
           <TouchableOpacity
             onPress={() => {
-              // eslint-disable-next-line react/prop-types
               props.navigation.navigate('WishList');
             }}
           >
@@ -103,7 +113,6 @@ const HomeScreen = props => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              // eslint-disable-next-line react/prop-types
               props.navigation.navigate('Cart');
             }}
           >
@@ -129,8 +138,7 @@ const HomeScreen = props => {
       </View>
 
       <View style={{ marginLeft: 20 }}>
-        <FlatList
-          // eslint-disable-next-line no-undef
+        {/* <FlatList
           data={dataX}
           keyExtractor={data => data.id.toString()}
           horizontal
@@ -138,7 +146,8 @@ const HomeScreen = props => {
           renderItem={({ item }) => {
             return <BigListItemComponent item={item} />;
           }}
-        />
+        /> */}
+        <NewArriavalComponent />
       </View>
 
       <View
@@ -159,13 +168,12 @@ const HomeScreen = props => {
 
       <View style={{ marginLeft: 20, marginBottom: 20 }}>
         <FlatList
-          // eslint-disable-next-line no-undef
           data={dataX}
           keyExtractor={data => data.id.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
-            return <Test2Component item={item} />;
+            return <SmallListItemComponent item={item} />;
           }}
         />
       </View>
@@ -173,4 +181,4 @@ const HomeScreen = props => {
   );
 };
 
-export default HomeScreen;
+export default TestScreen;

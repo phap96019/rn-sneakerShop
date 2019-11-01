@@ -1,5 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
@@ -19,13 +26,18 @@ const BigListItemComponent = ({ item, navigation }) => {
   return (
     <TouchableOpacity>
       <View
-        style={{ height: 170, width: 170, marginRight: 15, marginBottom: 2 }}
+        style={{
+          height: Dimensions.get('window').width / 2.5,
+          width: Dimensions.get('window').width / 2.5,
+          marginRight: 15,
+          marginBottom: 2,
+        }}
       >
         <View style={{ position: 'absolute' }}>
           <Image
             style={{
-              height: 170,
-              width: 170,
+              height: Dimensions.get('window').width / 2.5,
+              width: Dimensions.get('window').width / 2.5,
               borderRadius: 10,
               resizeMode: 'contain',
             }}
@@ -51,7 +63,7 @@ const BigListItemComponent = ({ item, navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ height: 170, width: 170 }}>
+      <View style={{ width: Dimensions.get('window').width / 2.5 }}>
         <Text numberOfLines={1} ellipsizeMode="tail" style={{ fontSize: 17 }}>
           {item.name}
         </Text>

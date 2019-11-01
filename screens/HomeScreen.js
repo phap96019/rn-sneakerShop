@@ -93,6 +93,7 @@ const HomeScreen = props => {
         >
           <TouchableOpacity
             onPress={() => {
+              // eslint-disable-next-line react/prop-types
               props.navigation.navigate('WishList');
             }}
           >
@@ -102,6 +103,7 @@ const HomeScreen = props => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              // eslint-disable-next-line react/prop-types
               props.navigation.navigate('Cart');
             }}
           >
@@ -128,6 +130,7 @@ const HomeScreen = props => {
 
       <View style={{ marginLeft: 20 }}>
         <FlatList
+          // eslint-disable-next-line no-undef
           data={dataX}
           keyExtractor={data => data.id.toString()}
           horizontal
@@ -156,6 +159,7 @@ const HomeScreen = props => {
 
       <View style={{ marginLeft: 20, marginBottom: 20 }}>
         <FlatList
+          // eslint-disable-next-line no-undef
           data={dataX}
           keyExtractor={data => data.id.toString()}
           horizontal

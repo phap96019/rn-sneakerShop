@@ -14,7 +14,6 @@ import {
 import { Context as AuthContext } from '../context/AuthContext';
 import InputComponent from '../components/InputComponent';
 import ButtonComponent from '../components/ButtonComponent';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import WishListItemComponent from '../components/WishListItemComponent';
 import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import FilterItemComponent from '../components/FilterItemComponent';

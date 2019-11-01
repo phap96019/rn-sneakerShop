@@ -10,6 +10,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import ButtonComponent from './ButtonComponent';
 import { Context as UserContext } from '../context/UserContext';
+import PlusNumberComponent from '../components/PlusNumberComponent';
 
 const WishListItemComponent = ({
   item,
@@ -19,8 +20,12 @@ const WishListItemComponent = ({
   handleOnPress,
   title,
   iconName,
+  countButton,
   ...props
 }) => {
+  const renderCountButton = button => {
+    if (button) return <PlusNumberComponent />;
+  };
   const { removeCartItems, setLoading } = useContext(UserContext);
   const handleOnSubmit = id => {
     setLoading();
@@ -50,7 +55,11 @@ const WishListItemComponent = ({
           />
         </View>
         <View style={styles.info}>
-          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+          <Text
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            style={{ fontSize: 17, fontWeight: 'bold' }}
+          >
             {item.variant.product.name}
           </Text>
           <Text style={{}}>{item.variant.size}</Text>
@@ -80,6 +89,15 @@ const WishListItemComponent = ({
           />
         </View>
       </TouchableOpacity>
+      <View
+        style={{
+          // flex: 1,
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+        }}
+      >
+        {renderCountButton(countButton)}
+      </View>
     </View>
   );
 };

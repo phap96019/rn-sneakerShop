@@ -10,6 +10,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import SearchScreen from '../screens/SearchScreen';
 import TestScreen from '../screens/TestScreen';
 import FilterScreen from '../screens/FilterScreen';
+import CategoryScreen from '../screens/CategoryScreen';
 
 const TabNavigator = createBottomTabNavigator({
   Home: {
@@ -20,9 +21,9 @@ const TabNavigator = createBottomTabNavigator({
     },
   },
   Filter: {
-    screen: FilterScreen,
+    screen: CategoryScreen,
     navigationOptions: {
-      tabBarLabel: 'Filter',
+      tabBarLabel: 'Category',
       tabBarIcon: ({ tintColor }) => (
         <Ionicons name="ios-color-filter" size={30} />
       ),

@@ -4,20 +4,16 @@ import { Ionicons } from '@expo/vector-icons';
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: 'red',
-    flexDirection: 'row',
+    borderWidth: 0.5,
+    height: 50,
+    width: 50,
+    borderRadius: 100,
     justifyContent: 'center',
-    padding: 5,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
-  containerStyle: {},
-  info: {
-    // justifyContent: 'center',
-    flexDirection: 'row',
+    alignItems: 'center',
+    margin: 5,
   },
 });
-
+// chose Size here
 const FilterItemComponent = ({ textStyle, handleOnPress, title, ...props }) => {
   return (
     <View style={styles.container}>
@@ -29,12 +25,7 @@ const FilterItemComponent = ({ textStyle, handleOnPress, title, ...props }) => {
           flex: 1,
         }}
       >
-        <View style={styles.info}>
-          <Text style={{ fontSize: 20 }}>{title}</Text>
-          <View style={{ flex: 1, alignItems: 'flex-end' }}>
-            <Ionicons name="md-arrow-dropright" size={23} color="#3d3d3d" />
-          </View>
-        </View>
+        <Text style={{ fontSize: 20, paddingTop: 10 }}>{title}</Text>
       </TouchableOpacity>
     </View>
   );

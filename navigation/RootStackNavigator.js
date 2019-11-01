@@ -106,7 +106,7 @@ const RootStackNavigator = createStackNavigator(
     Filter: {
       screen: FilterScreen,
       navigationOptions: () => ({
-        header: null,
+        title: 'Filter',
       }),
     },
     Product: {
@@ -132,7 +132,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'WishList',
+    initialRouteName: 'Filter',
   }
 );
 

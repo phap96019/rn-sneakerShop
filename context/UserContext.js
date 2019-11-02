@@ -82,7 +82,7 @@ const getMe = dispatch => async () => {
       ? error.response.data.message
       : error.message;
     console.log(error, payload);
-    dispatch({ type: 'SET_AUTH_ERROR', payload });
+    dispatch({ type: 'SET_USER_ERROR', payload });
   }
 };
 
@@ -119,8 +119,6 @@ const setLoading = dispatch => async () => {
 };
 
 const clearUser = dispatch => async () => {
-  console.log('loading');
-
   dispatch({ type: 'CLEAR_USER' });
 };
 

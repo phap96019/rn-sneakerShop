@@ -10,11 +10,11 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import BigListItemComponent from '../components/BigListItemComponent';
 import SmallListItemComponent from '../components/SmallListItemComponent';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
 import NewArriavalComponent from '../components/NewArriavalComponent';
+import { Badge } from 'react-native-elements';
 
 const dataX = [
   {
@@ -62,7 +62,7 @@ const TestScreen = props => {
   const { isSignIn, tryLocalSignIn, setLoading: setAuthLoading } = useContext(
     AuthContext
   );
-  const { getMe, getCart, setLoading: setUserLoading } = useContext(
+  const { cart, getMe, getCart, setLoading: setUserLoading } = useContext(
     UserContext
   );
   useEffect(() => {
@@ -118,6 +118,13 @@ const TestScreen = props => {
           >
             <View>
               <Ionicons name="ios-cart" size={25} color="white" />
+              {(cart && cart.length) > 0 && (
+                <Badge
+                  value={cart.length}
+                  status="success"
+                  containerStyle={{ position: 'absolute', top: -8, right: -8 }}
+                />
+              )}
             </View>
           </TouchableOpacity>
         </View>

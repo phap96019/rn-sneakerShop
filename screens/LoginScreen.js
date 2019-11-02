@@ -145,7 +145,7 @@ const LoginScreen = props => {
               props.navigation.navigate('SignUp');
             }}
           >
-            <Text>Don&lsquo;t have an account?</Text>
+            <Text>Don't have an account?</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>

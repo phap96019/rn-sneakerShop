@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
-import { Context as AuthContext } from '../context/AuthContext';
+import { Rating } from 'react-native-elements';
 
 const BigListItemComponent = ({ item }) => {
   return (

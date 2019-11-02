@@ -17,7 +17,6 @@ import NoficationChangePasswordScreen from '../screens/NoficationChangePasswordS
 import SearchResultScreen from '../screens/SearchResultScreen';
 import FilterScreen from '../screens/FilterScreen';
 import ProductScreen from '../screens/ProductScreen';
-import TestScreen from '../screens/TestScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 
 const RootStackNavigator = createStackNavigator(
@@ -106,7 +105,7 @@ const RootStackNavigator = createStackNavigator(
     Filter: {
       screen: FilterScreen,
       navigationOptions: () => ({
-        header: null,
+        title: 'Filter',
       }),
     },
     Product: {
@@ -114,9 +113,6 @@ const RootStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         title: 'Product A',
       }),
-    },
-    Test: {
-      screen: TestScreen,
     },
     Category: {
       screen: CategoryScreen,
@@ -132,7 +128,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'WishList',
+    //initialRouteName: 'Filter',
   }
 );
 

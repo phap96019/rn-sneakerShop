@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   FlatList,
+  Picker,
 } from 'react-native';
 import { Context as AuthContext } from '../context/AuthContext';
 import InputComponent from '../components/InputComponent';
@@ -16,6 +17,7 @@ import ButtonComponent from '../components/ButtonComponent';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import WishListItemComponent from '../components/WishListItemComponent';
 import SearchResultItemComponent from '../components/SearchResultItemComponent';
+import { Ionicons } from '@expo/vector-icons';
 
 data2 = [
   {
@@ -86,6 +88,49 @@ const SearchResultScreen = props => {
       }}
     >
       <ScrollView>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            padding: 10,
+            marginBottom: 5,
+          }}
+        >
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Text style={{ fontSize: 17 }}>Select</Text>
+            <Picker
+              //selectedValue={this.state.language}
+              style={{ height: 30, width: 100 }}
+              onValueChange={(itemValue, itemIndex) =>
+                this.setState({ language: itemValue })
+              }
+            >
+              <Picker.Item label="All" value="java" />
+              <Picker.Item label="Yen Mai Chon di" value="js" />
+              <Picker.Item label="Yen Mai Chon di" value="js" />
+              <Picker.Item label="Yen Mai Chon di" value="js" />
+            </Picker>
+          </View>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Filter');
+            }}
+          >
+            <View
+              style={{ flexDirection: 'row', paddingRight: 5, paddingTop: 4 }}
+            >
+              <Text style={{ fontSize: 17, paddingRight: 10 }}>Filter</Text>
+              <Ionicons name={'md-color-filter'} size={22} color="#3d3d3d" />
+            </View>
+          </TouchableOpacity>
+        </View>
+        {/* ============= List ============ */}
         <View>
           <FlatList
             data={data2}

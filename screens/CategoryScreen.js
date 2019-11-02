@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CategoryScreen = () => {
+const CategoryScreen = props => {
   return (
     <View
       style={{
@@ -59,7 +59,11 @@ const CategoryScreen = () => {
       }}
     >
       <View style={styles.SearchContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('Search');
+          }}
+        >
           <View
             style={{
               height: 45,

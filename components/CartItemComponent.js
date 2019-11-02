@@ -7,8 +7,10 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import ButtonComponent from './ButtonComponent';
 import { Context as UserContext } from '../context/UserContext';
+import PlusNumberComponent from '../components/PlusNumberComponent';
 
 const WishListItemComponent = ({
   item,
@@ -20,10 +22,10 @@ const WishListItemComponent = ({
   iconName,
   ...props
 }) => {
-  const { removeWishlistItem, setLoading } = useContext(UserContext);
+  const { removeCartItems, setLoading } = useContext(UserContext);
   const handleOnSubmit = id => {
     setLoading();
-    removeWishlistItem(id);
+    removeCartItems(id);
   };
   return (
     <View style={styles.container}>
@@ -44,7 +46,7 @@ const WishListItemComponent = ({
               borderRadius: 15,
             }}
             source={{
-              uri: item.product.imageCover,
+              uri: item.variant.product.imageCover,
             }}
           />
         </View>
@@ -54,12 +56,12 @@ const WishListItemComponent = ({
             ellipsizeMode="tail"
             style={{ fontSize: 17, fontWeight: 'bold' }}
           >
-            {item.product.name}
+            {item.variant.product.name}
           </Text>
-          <Text style={{}}>{item.size}</Text>
+          <Text style={{}}>{item.variant.size}</Text>
           <Text
             style={{ fontWeight: 'bold' }}
-          >{`$ ${item.product.price}`}</Text>
+          >{`$ ${item.variant.product.price}`}</Text>
           <ButtonComponent
             activeOpacity={0.8}
             containerStyle={{
@@ -89,7 +91,9 @@ const WishListItemComponent = ({
           alignItems: 'flex-end',
           justifyContent: 'center',
         }}
-      ></View>
+      >
+        <PlusNumberComponent quantity={item.quantity} id={item._id} />
+      </View>
     </View>
   );
 };

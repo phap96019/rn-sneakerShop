@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -19,68 +19,82 @@ import WishListItemComponent from '../components/WishListItemComponent';
 import ListOderComponent from '../components/ListOderComponent';
 import { Ionicons } from '@expo/vector-icons';
 import * as Animatable from 'react-native-animatable';
+import { NavigationEvents } from 'react-navigation';
 
 const styles = StyleSheet.create({
   Container: {
-    height: 80,
-    backgroundColor: '#1d1d1d',
-    justifyContent: 'center',
-    paddingTop: 23,
-    paddingLeft: 5,
-    paddingRight: 5,
+    // height: 80,
+    // backgroundColor: '#1d1d1d',
+    // justifyContent: 'center',
+    paddingVertical: 40,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   SearchContainer: {
-    height: 50,
-    backgroundColor: '#FFF',
+    height: 45,
+    // backgroundColor: '#FFF',
+    flex: 1,
+    borderColor: 'rgba(127, 140, 141, 0.43)',
+    borderWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 25,
+    borderRadius: 20,
   },
 });
 
-const onSubmit = () => {};
 const SearchScreen = props => {
+  const [value, setValue] = useState('');
+  useEffect(() => {
+    willFocusSubscription = props.navigation.addListener('willFocus', () => {});
+
+    return () => {
+      // Remove the listener when you are done
+      willFocusSubscription.remove();
+    };
+  }, [value]);
+
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.Container}>
-        <Animatable.View
-          animation="slideInRight"
-          duration={500}
-          style={styles.SearchContainer}
+    <View style={styles.Container}>
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <TouchableOpacity
+          onPress={() => {
+            props.navigation.navigate('Home');
+          }}
         >
           <Ionicons
-            name={'ios-search'}
-            size={30}
+            name="md-arrow-back"
+            size={25}
             color="#3d3d3d"
-            style={{ padding: 10 }}
+            style={{ marginRight: 10 }}
+          />
+        </TouchableOpacity>
+        <View style={styles.SearchContainer}>
+          <Ionicons
+            name={'ios-search'}
+            size={25}
+            color="#3d3d3d"
+            style={{ margin: 20 }}
           />
           <TextInput
+            value={value}
+            onChangeText={setValue}
             placeholder="Search"
             autoFocus
             returnKeyType="go"
             onSubmitEditing={() => {
+              Keyboard.dismiss();
+              setValue('');
               props.navigation.navigate('SearchResult');
             }}
             style={{ fontSize: 20, marginLeft: 5, flex: 1 }}
           />
-          <View style={{ width: 50, height: 50 }}>
-            <TouchableOpacity
-              onPress={() => {}}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                top: -5,
-              }}
-            >
-              <Ionicons
-                name={'ios-close'}
-                size={40}
-                color="#3d3d3d"
-                style={{ padding: 10 }}
-              />
-            </TouchableOpacity>
-          </View>
-        </Animatable.View>
+        </View>
       </View>
     </View>
   );

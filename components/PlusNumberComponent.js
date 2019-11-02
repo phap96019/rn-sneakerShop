@@ -1,9 +1,20 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import { Text, TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Context as UserContext } from '../context/UserContext';
 
-const item = 5;
-const PlusNumberComponent = () => {
+const PlusNumberComponent = ({ quantity, id }) => {
+  const initialNum = quantity > 0 ? quantity : 1;
+  const [number, setNumber] = useState(initialNum);
+  const { updateQuantityCartItem, setLoading } = useContext(UserContext);
+  const handleOnPress = num => {
+    if (number <= 1 && num < 0) return;
+    const nextNumber = number + num;
+    setNumber(nextNumber);
+    setLoading();
+    updateQuantityCartItem(id, nextNumber);
+  };
+
   return (
     <View
       style={{
@@ -12,10 +23,13 @@ const PlusNumberComponent = () => {
     >
       <View style={{}}>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => {
+            handleOnPress(-1);
+          }}
           style={{
             justifyContent: 'center',
             alignItems: 'center',
+
             width: 15,
             borderTopLeftRadius: 25,
             borderBottomLeftRadius: 25,
@@ -33,11 +47,13 @@ const PlusNumberComponent = () => {
           backgroundColor: '#ecf0f1',
         }}
       >
-        {item}
+        {number}
       </Text>
       <View>
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={() => {
+            handleOnPress(1);
+          }}
           style={{
             justifyContent: 'center',
             alignItems: 'center',

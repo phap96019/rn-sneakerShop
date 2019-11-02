@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
 const ProfileScreen = props => {
   const { isSignIn, signOut } = useContext(AuthContext);
-  const { user, getMe } = useContext(UserContext);
+  const { user, getMe, clearUser } = useContext(UserContext);
   useEffect(() => {
     const didBlurSubscription = props.navigation.addListener(
       'willFocus',
@@ -225,6 +225,7 @@ const ProfileScreen = props => {
                 title="Logout"
                 handleOnPress={() => {
                   signOut();
+                  clearUser();
                 }}
               />
             )}

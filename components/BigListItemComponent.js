@@ -1,23 +1,15 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
 import { Context as AuthContext } from '../context/AuthContext';
-import { Context as UserContext } from '../context/UserContext';
-import { navigate } from '../utils/navigationRef';
 
-const BigListItemComponent = ({ item, navigation }) => {
-  const [love, setLove] = useState(false);
-  const handleOnPress = () => {
-    if (!isSignIn) {
-      navigate('Login');
-      return;
-    }
-    setLove(!love);
-    //call api here
-  };
-  const { isSignIn } = useContext(AuthContext);
+const BigListItemComponent = ({ item }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      style={{
+        maxHeight: 230,
+      }}
+    >
       <View
         style={{ height: 170, width: 170, marginRight: 15, marginBottom: 2 }}
       >
@@ -32,23 +24,22 @@ const BigListItemComponent = ({ item, navigation }) => {
             source={{ uri: item.imageCover }}
           />
         </View>
-        <TouchableOpacity onPress={handleOnPress}>
-          <View
-            style={{
-              justifyContent: 'flex-end',
-              flexDirection: 'row',
-              marginTop: 15,
-              marginRight: 15,
-            }}
-          >
-            <Ionicons
-              name={love ? 'ios-heart' : 'ios-heart-empty'}
-              size={20}
-              color={love ? '#e74c3c' : 'grey'}
-              backgroundColor="grey"
-            />
-          </View>
-        </TouchableOpacity>
+
+        <View
+          style={{
+            justifyContent: 'flex-end',
+            flexDirection: 'row',
+            marginTop: 15,
+            marginRight: 15,
+          }}
+        >
+          <Foundation
+            name="burst-new"
+            size={40}
+            color={'#2ecc71'}
+            backgroundColor="grey"
+          />
+        </View>
       </View>
 
       <View style={{ height: 170, width: 170 }}>

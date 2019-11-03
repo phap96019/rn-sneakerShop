@@ -8,14 +8,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 15,
+    // shadowColor: '#000',
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 12,
+    // },
+    // shadowOpacity: 0.58,
+    // shadowRadius: 16.0,
+    // elevation: 24,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 12,
+      height: 7,
     },
-    shadowOpacity: 0.58,
-    shadowRadius: 16.0,
-    elevation: 24,
+    shadowOpacity: 0.41,
+    shadowRadius: 9.11,
+
+    elevation: 14,
   },
   textStyle: {
     color: '#fff',

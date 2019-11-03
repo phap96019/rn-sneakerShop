@@ -5,9 +5,8 @@ import { Context as UserContext } from '../context/UserContext';
 import sourceAnimation from '../assets/emptybox.json';
 import AnimationViewComponent from '../components/AnimationViewComponent';
 import ButtonComponent from '../components/ButtonComponent';
-import WishListItemComponent from '../components/WishListItemComponent';
+import CartItemScreen from '../components/CartItemComponent';
 import LoadingComponent from '../components/LoadingComponent';
-const total = 400;
 const CartScreen = props => {
   const {
     cart,
@@ -23,6 +22,15 @@ const CartScreen = props => {
       getCart();
     }
   }, [cart]);
+
+  const renderTotal = () => {
+    let total = 0;
+    if (!cart || !cart.length) return;
+    cart.forEach(item => {
+      total += item.quantity * item.variant.product.price;
+    });
+    return total;
+  };
   const renderComponent = () => {
     if (appLoading)
       return (
@@ -85,8 +93,7 @@ const CartScreen = props => {
               data={cart}
               keyExtractor={item => item._id}
               renderItem={({ item }) => (
-                <WishListItemComponent
-                  countButton
+                <CartItemScreen
                   item={item}
                   activeOpacity={0.8}
                   handleOnPress={() => {}}
@@ -98,7 +105,7 @@ const CartScreen = props => {
           <View>
             <View style={styles.totalContainer}>
               <Text style={styles.total}>Total:</Text>
-              <Text style={styles.total}>{` $ ${total}`}</Text>
+              <Text style={styles.total}>{` $ ${renderTotal()}`}</Text>
             </View>
             <ButtonComponent
               activeOpacity={0.8}

@@ -19,7 +19,7 @@ const TabNavigator = createBottomTabNavigator({
       tabBarIcon: ({ tintColor }) => <Ionicons name="md-home" size={30} />,
     },
   },
-  Filter: {
+  Catagory: {
     screen: CategoryScreen,
     navigationOptions: {
       tabBarLabel: 'Category',

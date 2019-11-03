@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import apiHelper from '../utils/apiHelper';
 import BigListItemComponent from './BigListItemComponent';
-import SkeletonContent from 'react-native-skeleton-content';
 
 const NewArriavalComponent = () => {
   const [items, setItems] = useState([]);

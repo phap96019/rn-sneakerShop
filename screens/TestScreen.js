@@ -10,7 +10,8 @@ import {
   Dimensions,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import SmallListItemComponent from '../components/SmallListItemComponent';
+import BigListItemComponent from '../components/BigListItemComponent';
+import Test2Component from '../components/Test2Component';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
 import NewArriavalComponent from '../components/NewArriavalComponent';
@@ -104,6 +105,10 @@ const TestScreen = props => {
         >
           <TouchableOpacity
             onPress={() => {
+              if (!isSignIn) {
+                props.navigation.navigate('Login');
+                return;
+              }
               props.navigation.navigate('WishList');
             }}
           >
@@ -113,6 +118,10 @@ const TestScreen = props => {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
+              if (!isSignIn) {
+                props.navigation.navigate('Login');
+                return;
+              }
               props.navigation.navigate('Cart');
             }}
           >
@@ -180,7 +189,7 @@ const TestScreen = props => {
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
-            return <SmallListItemComponent item={item} />;
+            return <Test2Component item={item} />;
           }}
         />
       </View>

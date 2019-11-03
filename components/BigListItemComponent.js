@@ -7,24 +7,16 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { Context as AuthContext } from '../context/AuthContext';
-import { Context as UserContext } from '../context/UserContext';
-import { navigate } from '../utils/navigationRef';
+import { Foundation } from '@expo/vector-icons';
+import { Rating } from 'react-native-elements';
 
-const BigListItemComponent = ({ item, navigation }) => {
-  const [love, setLove] = useState(false);
-  const handleOnPress = () => {
-    if (!isSignIn) {
-      navigate('Login');
-      return;
-    }
-    setLove(!love);
-    //call api here
-  };
-  const { isSignIn } = useContext(AuthContext);
+const BigListItemComponent = ({ item }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      style={{
+        maxHeight: 230,
+      }}
+    >
       <View
         style={{
           height: Dimensions.get('window').width / 2.5,
@@ -44,23 +36,22 @@ const BigListItemComponent = ({ item, navigation }) => {
             source={{ uri: item.imageCover }}
           />
         </View>
-        <TouchableOpacity onPress={handleOnPress}>
-          <View
-            style={{
-              justifyContent: 'flex-end',
-              flexDirection: 'row',
-              marginTop: 15,
-              marginRight: 15,
-            }}
-          >
-            <Ionicons
-              name={love ? 'ios-heart' : 'ios-heart-empty'}
-              size={20}
-              color={love ? '#e74c3c' : 'grey'}
-              backgroundColor="grey"
-            />
-          </View>
-        </TouchableOpacity>
+
+        <View
+          style={{
+            justifyContent: 'flex-end',
+            flexDirection: 'row',
+            marginTop: 15,
+            marginRight: 15,
+          }}
+        >
+          <Foundation
+            name="burst-new"
+            size={40}
+            color={'#2ecc71'}
+            backgroundColor="grey"
+          />
+        </View>
       </View>
 
       <View style={{ width: Dimensions.get('window').width / 2.5 }}>

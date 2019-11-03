@@ -1,6 +1,5 @@
 import contextFactory from './contextFactory';
 import apiHelper from '../utils/apiHelper';
-// import { navigateReplace } from '../utils/navigationRef';
 
 const userReducer = (state, action) => {
   switch (action.type) {
@@ -25,9 +24,29 @@ const userReducer = (state, action) => {
         loading: false,
         appLoading: false,
       };
+    case 'UPDATE_CART_ITEM':
+      const carts = state.cart.map(item => {
+        if (item._id !== action.payload.id) return item;
+        item.quantity = action.payload.quantity;
+        return item;
+      });
+      return { ...state, cart: carts, loading: false };
     case 'REMOVE_CART_ITEM':
       const cart = state.cart.filter(item => item._id !== action.payload);
       return { ...state, cart: cart, loading: false };
+    case 'GET_WISHLIST_ITEMS':
+      return {
+        ...state,
+        wishlist: action.payload,
+        loading: false,
+        appLoading: false,
+      };
+    case 'REMOVE_WISHLIST_ITEMS':
+      let wishlist = state.wishlist.filter(item => item._id !== action.payload);
+      return { ...state, wishlist: wishlist, loading: false };
+    case 'ADD_WISHLIST_ITEM':
+      wishlist = [...state.wishlist, action.payload];
+      return { ...state, wishlist: wishlist, loading: false };
     case 'SET_USER_ERROR':
       return {
         ...state,
@@ -37,6 +56,16 @@ const userReducer = (state, action) => {
       };
     case 'CLEAR_USER_ERROR':
       return { ...state, error: '', loading: false, appLoading: false };
+    case 'CLEAR_USER':
+      return {
+        ...state,
+        error: '',
+        loading: false,
+        appLoading: false,
+        user: null,
+        cart: null,
+        wishlist: null,
+      };
     default:
       return state;
   }
@@ -53,7 +82,7 @@ const getMe = dispatch => async () => {
       ? error.response.data.message
       : error.message;
     console.log(error, payload);
-    dispatch({ type: 'SET_AUTH_ERROR', payload });
+    dispatch({ type: 'SET_USER_ERROR', payload });
   }
 };
 
@@ -87,6 +116,10 @@ const setLoading = dispatch => async () => {
   console.log('loading');
 
   dispatch({ type: 'SET_LOADING' });
+};
+
+const clearUser = dispatch => async () => {
+  dispatch({ type: 'CLEAR_USER' });
 };
 
 const setAppLoading = dispatch => async () => {
@@ -124,6 +157,71 @@ const removeCartItems = dispatch => async id => {
   }
 };
 
+const updateQuantityCartItem = dispatch => async (id, quantity) => {
+  console.log(id, quantity);
+
+  try {
+    await apiHelper.patch(`/api/v1/users/cart/${id}`, { quantity });
+
+    dispatch({
+      type: 'UPDATE_CART_ITEM',
+      payload: { id, quantity },
+    });
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: 'SET_USER_ERROR', payload });
+  }
+};
+
+const getWishList = dispatch => async () => {
+  try {
+    const { data } = await apiHelper.get(`/api/v1/users/wishlist`);
+    console.log('Get wishlist!', data.data.data.length);
+
+    dispatch({ type: 'GET_WISHLIST_ITEMS', payload: data.data.data });
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: 'SET_USER_ERROR', payload });
+  }
+};
+
+const addWishlistItem = dispatch => async productId => {
+  try {
+    const { data } = await apiHelper.post(`/api/v1/users/wishlist`, {
+      product: productId,
+    });
+    console.log('Add wishlist!');
+
+    dispatch({ type: 'ADD_WISHLIST_ITEM', payload: data.data.data });
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: 'SET_USER_ERROR', payload });
+  }
+};
+
+const removeWishlistItem = dispatch => async id => {
+  try {
+    await apiHelper.delete(`/api/v1/users/wishlist/${id}`);
+
+    dispatch({ type: 'REMOVE_WISHLIST_ITEMS', payload: id });
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: 'SET_USER_ERROR', payload });
+  }
+};
+
 export const { Provider, Context } = contextFactory(
   userReducer,
   {
@@ -134,11 +232,16 @@ export const { Provider, Context } = contextFactory(
     getCart,
     removeCartItems,
     setAppLoading,
+    updateQuantityCartItem,
+    getWishList,
+    addWishlistItem,
+    removeWishlistItem,
+    clearUser,
   },
   {
     cart: null,
     user: null,
-    wishlist: [],
+    wishlist: null,
     error: '',
     loading: false,
     appLoading: false,

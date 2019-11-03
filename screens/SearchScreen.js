@@ -1,88 +1,185 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
+  Image,
   View,
   StyleSheet,
-  Image,
-  Text,
-  KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-  ScrollView,
-  FlatList,
   TextInput,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Context as AuthContext } from '../context/AuthContext';
-import InputComponent from '../components/InputComponent';
-import ButtonComponent from '../components/ButtonComponent';
-import WishListItemComponent from '../components/WishListItemComponent';
-import ListOderComponent from '../components/ListOderComponent';
 import { Ionicons } from '@expo/vector-icons';
-import * as Animatable from 'react-native-animatable';
+import { Text, Tile } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   Container: {
-    height: 80,
-    backgroundColor: '#1d1d1d',
-    justifyContent: 'center',
-    paddingTop: 23,
-    paddingLeft: 5,
-    paddingRight: 5,
+    // height: 80,
+    // backgroundColor: '#1d1d1d',
+    // justifyContent: 'center',
+    flex: 1,
+    paddingVertical: 40,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   SearchContainer: {
-    height: 50,
-    backgroundColor: '#FFF',
+    height: 45,
+    // backgroundColor: '#FFF',
+    marginVertical: 30,
+    flex: 1,
+    borderColor: 'rgba(127, 140, 141, 0.43)',
+    borderBottomWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 25,
+    borderRadius: 20,
   },
 });
 
-const onSubmit = () => {};
 const SearchScreen = props => {
+  const [value, setValue] = useState('');
   return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.Container}>
-        <Animatable.View
-          animation="slideInRight"
-          duration={500}
-          style={styles.SearchContainer}
-        >
-          <Ionicons
-            name={'ios-search'}
-            size={30}
-            color="#3d3d3d"
-            style={{ padding: 10 }}
-          />
-          <TextInput
-            placeholder="Search"
-            autoFocus
-            returnKeyType="go"
-            onSubmitEditing={() => {
-              props.navigation.navigate('SearchResult');
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <ScrollView>
+        <View style={styles.Container}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
             }}
-            style={{ fontSize: 20, marginLeft: 5, flex: 1 }}
-          />
-          <View style={{ width: 50, height: 50 }}>
-            <TouchableOpacity
-              onPress={() => {}}
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                top: -5,
+          >
+            {/* <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Home');
               }}
             >
               <Ionicons
-                name={'ios-close'}
-                size={40}
+                name="md-arrow-back"
+                size={25}
                 color="#3d3d3d"
-                style={{ padding: 10 }}
+                style={{ marginRight: 10 }}
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+            <View style={styles.SearchContainer}>
+              <Ionicons
+                name={'ios-search'}
+                size={25}
+                color="#3d3d3d"
+                style={{ margin: 20 }}
+              />
+              <TextInput
+                value={value}
+                onChangeText={setValue}
+                placeholder="Search"
+                // autoFocus
+                returnKeyType="go"
+                onSubmitEditing={() => {
+                  Keyboard.dismiss();
+                  if (!value.trim()) return;
+                  setValue('');
+                  props.navigation.navigate('SearchResult', { entered: value });
+                }}
+                style={{ fontSize: 20, marginLeft: 5, flex: 1 }}
+              />
+            </View>
           </View>
-        </Animatable.View>
-      </View>
-    </View>
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <View>
+              <Tile
+                width={Dimensions.get('window').width - 30}
+                height={Dimensions.get('window').height / 3}
+                imageSrc={require('../assets/nike.jpg')}
+                title="NIKE"
+                featured
+                containerStyle={{
+                  borderRadius: 10,
+                  marginVertical: 10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 7,
+                  },
+                  shadowOpacity: 0.41,
+                  shadowRadius: 9.11,
+
+                  elevation: 14,
+                }}
+                imageProps={{
+                  borderRadius: 10,
+                }}
+                overlayContainerStyle={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 10,
+                }}
+                caption="Just Do It"
+              />
+              <Tile
+                width={Dimensions.get('window').width - 30}
+                height={Dimensions.get('window').height / 3}
+                imageSrc={require('../assets/adidas.jpg')}
+                title="ADIDAS"
+                featured
+                containerStyle={{
+                  borderRadius: 10,
+                  marginVertical: 10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 7,
+                  },
+                  shadowOpacity: 0.41,
+                  shadowRadius: 9.11,
+
+                  elevation: 14,
+                }}
+                imageProps={{
+                  borderRadius: 10,
+                }}
+                overlayContainerStyle={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 10,
+                }}
+                caption="Impossible is nothing"
+              />
+              <Tile
+                width={Dimensions.get('window').width - 30}
+                height={Dimensions.get('window').height / 3}
+                imageSrc={require('../assets/jordan.jpg')}
+                title="JORDAN"
+                featured
+                containerStyle={{
+                  borderRadius: 10,
+                  marginVertical: 10,
+                  shadowColor: '#000',
+                  shadowOffset: {
+                    width: 0,
+                    height: 7,
+                  },
+                  shadowOpacity: 0.41,
+                  shadowRadius: 9.11,
+
+                  elevation: 14,
+                }}
+                imageProps={{
+                  borderRadius: 10,
+                }}
+                overlayContainerStyle={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                  borderRadius: 10,
+                }}
+                caption="Become Legendary"
+              />
+            </View>
+          </View>
+        </View>
+      </ScrollView>
+    </TouchableWithoutFeedback>
   );
 };
 

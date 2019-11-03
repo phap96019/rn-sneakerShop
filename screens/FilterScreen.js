@@ -11,7 +11,7 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
-import { Context as AuthContext } from '../context/AuthContext';
+import { Context as ProductContext } from '../context/ProductContext';
 import InputComponent from '../components/InputComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { TouchableOpacity, TextInput } from 'react-native-gesture-handler';
@@ -20,10 +20,12 @@ import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import FilterItemComponent from '../components/FilterItemComponent';
 import ListButtonComponent from '../components/ListButtonComponent';
 import { CheckBox } from 'react-native-elements';
+import { AirbnbRating } from 'react-native-ratings';
+import trimData from '../utils/trimData';
 
 const styles = StyleSheet.create({
   titleName: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
     padding: 10,
     paddingLeft: 15,
@@ -36,18 +38,69 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 5,
     flex: 1,
-    borderWidth: 0.3,
-    borderRadius: 15,
+    // borderWidth: 0.3,
+    borderBottomWidth: 2,
+    // borderRadius: 15,
     padding: 3,
+    marginHorizontal: 30,
     flexDirection: 'row',
   },
 });
 
 const FilterScreen = props => {
-  const [yes, setYes] = useState(false);
-  const [yes1, setYes1] = useState(false);
-  const [yes2, setYes2] = useState(false);
-  const [yes3, setYes3] = useState(false);
+  const initBrands = {
+    nike: { name: 'Nike', checked: false },
+    adidas: { name: 'Adidas', checked: false },
+    reebok: { name: 'Reebok', checked: false },
+    bitis: { name: "Biti's", checked: false },
+    converse: { name: 'Converse', checked: false },
+    vans: { name: 'Vans', checked: false },
+    timberland: { name: 'Timberland', checked: false },
+    underArmor: { name: 'Under Armor', checked: false },
+  };
+  const initInputData = {
+    minPrice: '',
+    maxPrice: '',
+  };
+  const [brands, setBrands] = useState(initBrands);
+  const [rating, setRating] = useState(0);
+  const [inputData, setInputData] = useState(initInputData);
+  const { getProducts } = useContext(ProductContext);
+  const { minPrice, maxPrice } = inputData;
+
+  const handleOnChange = name => text => {
+    setInputData({ ...inputData, [name]: text });
+  };
+
+  const handleOnCheck = brand => {
+    nextBrands = { ...brands };
+    nextBrands[brand].checked = !nextBrands[brand].checked;
+    setBrands(nextBrands);
+  };
+
+  const onClearFilter = () => {
+    setBrands(initBrands);
+    setRating(0);
+    setInputData(initInputData);
+  };
+  const handleOnPress = () => {
+    let query = '';
+    console.log('here');
+
+    const { minPrice, maxPrice } = trimData(inputData);
+    if (minPrice) query = query + `&price[gte]=${minPrice}`;
+    if (maxPrice) query = query + `&price[lte]=${maxPrice}`;
+    if (rating > 0) query = query + `&ratingsAverage[gte]=${rating}`;
+    Object.keys(brands).forEach(key => {
+      if (brands[key].checked) query = query + `&brand=${brands[key].name}`;
+    });
+    console.log(`query: ${query}`);
+  };
+
+  const ratingCompleted = rated => {
+    console.log('Rating is: ' + rated);
+    setRating(rated);
+  };
   return (
     <View
       style={{
@@ -66,6 +119,8 @@ const FilterScreen = props => {
             keyboardType="number-pad"
             placeholder="Lowest price"
             style={{ paddingLeft: 5 }}
+            value={minPrice}
+            onChangeText={handleOnChange('minPrice')}
           />
         </View>
         <Text style={{ fontSize: 20, fontWeight: 'bold' }}> - </Text>
@@ -75,11 +130,13 @@ const FilterScreen = props => {
             keyboardType="number-pad"
             placeholder="Highest price"
             style={{ paddingLeft: 5 }}
+            value={maxPrice}
+            onChangeText={handleOnChange('maxPrice')}
           />
         </View>
       </View>
       {/* ========== Chose Size =============== */}
-      <Text style={styles.titleName}>Sizes</Text>
+      <Text style={styles.titleName}>Rating from</Text>
       <View
         style={{
           width: Dimensions.get('window').width - 20,
@@ -87,53 +144,70 @@ const FilterScreen = props => {
           justifyContent: 'space-around',
         }}
       >
-        <FilterItemComponent title="XS" handleOnPress={() => {}} />
-        <FilterItemComponent title="S" handleOnPress={() => {}} />
-        <FilterItemComponent title="M" handleOnPress={() => {}} />
-        <FilterItemComponent title="L" handleOnPress={() => {}} />
-        <FilterItemComponent title="XL" handleOnPress={() => {}} />
+        <AirbnbRating
+          count={5}
+          defaultRating={rating}
+          size={35}
+          showRating={false}
+          onFinishRating={ratingCompleted}
+        />
       </View>
       {/* ============ Chose brand =========== */}
       <Text style={styles.titleName}>Brand</Text>
-      <CheckBox
-        title="Nike"
-        checked={yes}
-        onPress={() => {
-          setYes(!yes);
+      <FlatList
+        data={Object.keys(brands)}
+        renderItem={({ item }) => {
+          return (
+            <CheckBox
+              title={brands[item].name}
+              checked={brands[item].checked}
+              onPress={() => handleOnCheck(item)}
+            />
+          );
         }}
+        keyExtractor={brands => brands}
       />
-      <CheckBox
-        title="Adidas"
-        checked={yes1}
-        onPress={() => {
-          setYes1(!yes1);
-        }}
-      />
-      <CheckBox
-        title="Reebok"
-        checked={yes2}
-        onPress={() => {
-          setYes2(!yes2);
-        }}
-      />
-      <CheckBox
-        title="Other"
-        checked={yes3}
-        onPress={() => {
-          setYes3(!yes3);
-        }}
-      />
-
       {/* ============ Button ================== */}
       <View style={{ flexDirection: 'row' }}>
         <ButtonComponent
           activeOpacity={0.8}
-          containerStyle={{ flex: 1, marginTop: 10 }}
-          title="Apply"
-          handleOnPress={() => {
-            props.navigation.navigate('SearchResult');
+          containerStyle={{
+            flex: 1,
+            marginTop: 10,
+            borderWidth: 1,
+            borderColor: '#1d1d1d',
+            marginHorizontal: 2,
           }}
+          title="Apply"
+          handleOnPress={handleOnPress}
         />
+        <ButtonComponent
+          activeOpacity={0.8}
+          containerStyle={{
+            marginHorizontal: 2,
+            flex: 1,
+            marginTop: 10,
+            backgroundColor: '#FFF',
+            borderWidth: 1,
+            borderColor: '#2d3436',
+          }}
+          title="Clear"
+          textStyle={{ color: '#000' }}
+          handleOnPress={onClearFilter}
+        />
+
+        {/* <ButtonComponent
+          activeOpacity={0.8}
+          containerStyle={{
+            flex: 1,
+            backgroundColor: '#FFF',
+            borderWidth: 1,
+            borderColor: '#2d3436',
+          }}
+          textStyle={{ color: '#000' }}
+          title="Remove"
+          handleOnPress={() => {}}
+        /> */}
       </View>
     </View>
   );

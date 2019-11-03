@@ -18,6 +18,7 @@ import SearchResultScreen from '../screens/SearchResultScreen';
 import FilterScreen from '../screens/FilterScreen';
 import ProductScreen from '../screens/ProductScreen';
 import CategoryScreen from '../screens/CategoryScreen';
+import CategoryResultScreen from '../screens/CategoryResultScreen';
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -120,6 +121,12 @@ const RootStackNavigator = createStackNavigator(
         header: null,
       }),
     },
+    CategoryResult: {
+      screen: CategoryResultScreen,
+      navigationOptions: () => ({
+        title: 'Result',
+      }),
+    },
     Nofication: {
       screen: NoficationScreen,
     },
@@ -128,7 +135,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'SearchResult',
+    // initialRouteName: 'CategoryResult',
   }
 );
 

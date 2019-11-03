@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -11,7 +11,7 @@ import {
   FlatList,
   Picker,
 } from 'react-native';
-import { Context as AuthContext } from '../context/AuthContext';
+import { Context as ProductContext } from '../context/ProductContext';
 import InputComponent from '../components/InputComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -19,64 +19,25 @@ import WishListItemComponent from '../components/WishListItemComponent';
 import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import { Ionicons } from '@expo/vector-icons';
 
-data2 = [
-  {
-    id: 0,
-    name: 'Giày loại X',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 1,
-    name: 'Giày loại A',
-    size: 'Size: 40',
-    cost: 200,
-    pic: 'https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg',
-  },
-  {
-    id: 2,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 3,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 4,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 5,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 6,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-];
 const SearchResultScreen = props => {
+  const {
+    products,
+    searchQuery,
+    filterQuery,
+    sortQuery,
+    setLoading,
+    sortProducts,
+    searchProducts,
+  } = useContext(ProductContext);
+  const [sort, setSort] = useState('-createAt');
+
+  useEffect(() => {
+    if (sortQuery) {
+      let sortData = sortQuery.split('=');
+      if (sortData.length > 0) setSort(sortData[1]);
+    }
+  }, [products]);
+
   return (
     <View
       style={{
@@ -103,18 +64,23 @@ const SearchResultScreen = props => {
               alignItems: 'center',
             }}
           >
-            <Text style={{ fontSize: 17 }}>Select</Text>
+            <Text style={{ fontSize: 17 }}>Sort</Text>
             <Picker
-              //selectedValue={this.state.language}
+              selectedValue={sort}
               style={{ height: 30, width: 100 }}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ language: itemValue })
-              }
+              onValueChange={(itemValue, itemIndex) => {
+                setLoading();
+                setSort(itemValue);
+                console.log(itemValue);
+
+                const sortQuery = `&sort=${itemValue}`;
+                sortProducts(searchQuery, filterQuery, sortQuery);
+              }}
             >
-              <Picker.Item label="All" value="java" />
-              <Picker.Item label="Yen Mai Chon di" value="js" />
-              <Picker.Item label="Yen Mai Chon di" value="js" />
-              <Picker.Item label="Yen Mai Chon di" value="js" />
+              <Picker.Item label="Newest" value="-createdAt" />
+              <Picker.Item label="Highest Rating" value="-ratingsAverage" />
+              <Picker.Item label="Price: High-Low" value="-price" />
+              <Picker.Item label="Price: Low-High" value="price" />
             </Picker>
           </View>
           <TouchableOpacity
@@ -133,8 +99,8 @@ const SearchResultScreen = props => {
         {/* ============= List ============ */}
         <View>
           <FlatList
-            data={data2}
-            keyExtractor={data => data.id.toString()}
+            data={products}
+            keyExtractor={data => data.id}
             renderItem={({ item }) => (
               <SearchResultItemComponent
                 item={item}
@@ -149,4 +115,7 @@ const SearchResultScreen = props => {
   );
 };
 
+SearchResultScreen.navigationOptions = props => ({
+  title: props.navigation.getParam('title'),
+});
 export default SearchResultScreen;

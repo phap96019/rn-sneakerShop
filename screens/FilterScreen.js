@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -62,10 +62,26 @@ const FilterScreen = props => {
     minPrice: '',
     maxPrice: '',
   };
+
   const [brands, setBrands] = useState(initBrands);
   const [rating, setRating] = useState(0);
   const [inputData, setInputData] = useState(initInputData);
-  const { getProducts } = useContext(ProductContext);
+  const {
+    filterProducts,
+    searchQuery,
+    sortQuery,
+    clearFilter,
+    filter,
+  } = useContext(ProductContext);
+
+  useEffect(() => {
+    if (filter) {
+      setBrands(filter.brands);
+      setInputData(filter.inputData);
+      setRating(filter.rating);
+    }
+  }, []);
+
   const { minPrice, maxPrice } = inputData;
 
   const handleOnChange = name => text => {
@@ -82,19 +98,23 @@ const FilterScreen = props => {
     setBrands(initBrands);
     setRating(0);
     setInputData(initInputData);
+    clearFilter(searchQuery, sortQuery);
   };
   const handleOnPress = () => {
-    let query = '';
-    console.log('here');
+    let filterQuery = '';
 
     const { minPrice, maxPrice } = trimData(inputData);
-    if (minPrice) query = query + `&price[gte]=${minPrice}`;
-    if (maxPrice) query = query + `&price[lte]=${maxPrice}`;
-    if (rating > 0) query = query + `&ratingsAverage[gte]=${rating}`;
+    if (minPrice) filterQuery = filterQuery + `&price[gte]=${minPrice}`;
+    if (maxPrice) filterQuery = filterQuery + `&price[lte]=${maxPrice}`;
+    if (rating > 0)
+      filterQuery = filterQuery + `&ratingsAverage[gte]=${rating}`;
     Object.keys(brands).forEach(key => {
-      if (brands[key].checked) query = query + `&brand=${brands[key].name}`;
+      if (brands[key].checked)
+        filterQuery = filterQuery + `&brand=${brands[key].name}`;
     });
-    console.log(`query: ${query}`);
+    console.log(`filterQuery: ${filterQuery}`);
+    const newFilter = { brands, inputData, rating };
+    filterProducts(searchQuery, filterQuery, sortQuery, newFilter);
   };
 
   const ratingCompleted = rated => {

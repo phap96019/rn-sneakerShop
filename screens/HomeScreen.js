@@ -129,34 +129,7 @@ const TestScreen = props => {
           </TouchableOpacity>
         </View>
       </View>
-
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          margin: 20,
-        }}
-      >
-        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>New Arrival</Text>
-        <TouchableOpacity>
-          <Text style={{ fontSize: 15, color: '#2f3542' }}>Show all</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View style={{ marginLeft: 20 }}>
-        {/* <FlatList
-          data={dataX}
-          keyExtractor={data => data.id.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => {
-            return <BigListItemComponent item={item} />;
-          }}
-        /> */}
-        <NewArriavalComponent />
-      </View>
-
+      <NewArriavalComponent />
       <View
         style={{
           flexDirection: 'row',

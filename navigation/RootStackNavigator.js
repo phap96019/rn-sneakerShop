@@ -98,9 +98,9 @@ const RootStackNavigator = createStackNavigator(
     },
     SearchResult: {
       screen: SearchResultScreen,
-      navigationOptions: () => ({
-        title: 'Search Result',
-      }),
+      // navigationOptions: () => ({
+      //   title: 'Search Result',
+      // }),
     },
     Filter: {
       screen: FilterScreen,

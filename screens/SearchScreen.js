@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   Image,
   View,
@@ -9,7 +9,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Context as ProductContext } from '../context/ProductContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Text, Tile } from 'react-native-elements';
 
@@ -38,18 +38,26 @@ const styles = StyleSheet.create({
 
 const SearchScreen = props => {
   const [value, setValue] = useState('');
+  const { searchProducts } = useContext(ProductContext);
+
+  const handleOnSubmit = () => {
+    Keyboard.dismiss();
+    if (!value.trim()) return;
+    setValue('');
+    searchProducts(value);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <ScrollView>
-        <View style={styles.Container}>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            {/* <TouchableOpacity
+      <View style={styles.Container}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {/* <TouchableOpacity
               onPress={() => {
                 props.navigation.navigate('Home');
               }}
@@ -61,29 +69,25 @@ const SearchScreen = props => {
                 style={{ marginRight: 10 }}
               />
             </TouchableOpacity> */}
-            <View style={styles.SearchContainer}>
-              <Ionicons
-                name={'ios-search'}
-                size={25}
-                color="#3d3d3d"
-                style={{ margin: 20 }}
-              />
-              <TextInput
-                value={value}
-                onChangeText={setValue}
-                placeholder="Search"
-                // autoFocus
-                returnKeyType="go"
-                onSubmitEditing={() => {
-                  Keyboard.dismiss();
-                  if (!value.trim()) return;
-                  setValue('');
-                  props.navigation.navigate('SearchResult', { entered: value });
-                }}
-                style={{ fontSize: 20, marginLeft: 5, flex: 1 }}
-              />
-            </View>
+          <View style={styles.SearchContainer}>
+            <Ionicons
+              name={'ios-search'}
+              size={25}
+              color="#3d3d3d"
+              style={{ margin: 20 }}
+            />
+            <TextInput
+              value={value}
+              onChangeText={setValue}
+              placeholder="Search"
+              // autoFocus
+              returnKeyType="go"
+              onSubmitEditing={handleOnSubmit}
+              style={{ fontSize: 20, marginLeft: 5, flex: 1 }}
+            />
           </View>
+        </View>
+        <ScrollView>
           <View
             style={{
               justifyContent: 'center',
@@ -177,8 +181,8 @@ const SearchScreen = props => {
               />
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </View>
     </TouchableWithoutFeedback>
   );
 };

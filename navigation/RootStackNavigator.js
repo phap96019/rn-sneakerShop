@@ -128,7 +128,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    //initialRouteName: 'Filter',
+    initialRouteName: 'Product',
   }
 );
 

@@ -100,7 +100,11 @@ const ScreenForTest = props => {
                 <WishListItemComponent
                   item={item}
                   activeOpacity={0.8}
-                  handleOnPress={() => {}}
+                  handleOnPress={() => {
+                    props.navigation.navigate('Product', {
+                      productId: item.product._id,
+                    });
+                  }}
                 />
               )}
             />

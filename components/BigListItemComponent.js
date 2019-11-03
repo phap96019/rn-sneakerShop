@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import { Foundation } from '@expo/vector-icons';
 import { Rating } from 'react-native-elements';
+import { navigate } from '../utils/navigationRef';
 
 const BigListItemComponent = ({ item }) => {
   return (
     <TouchableOpacity
+      onPress={() => navigate('Product', { productId: item.id })}
       style={{
         maxHeight: 230,
       }}

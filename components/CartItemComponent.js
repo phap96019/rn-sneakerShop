@@ -58,7 +58,9 @@ const WishListItemComponent = ({
           >
             {item.variant.product.name}
           </Text>
-          <Text style={{}}>{item.variant.size}</Text>
+          <Text
+            style={{}}
+          >{`${item.variant.size} | ${item.variant.color}`}</Text>
           <Text
             style={{ fontWeight: 'bold' }}
           >{`$ ${item.variant.product.price}`}</Text>

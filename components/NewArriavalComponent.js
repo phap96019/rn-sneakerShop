@@ -32,8 +32,8 @@ const NewArriavalComponent = props => {
         <Text style={{ fontWeight: 'bold', fontSize: 25 }}>New Arrival</Text>
         <TouchableOpacity
           onPress={() =>
-            navigate('SearchResult', {
-              sortParam: '&sort=-createAt',
+            navigate('CategoryResult', {
+              searchParam: '&sort=-createAt',
               title: 'New Arriaval',
             })
           }

@@ -42,3 +42,11 @@ export const navigateCheckLogin = (routeName, state, params) => () => {
     );
   }
 };
+
+export const navigatePop = (n = 1) => {
+  navigator.dispatch(
+    StackActions.pop({
+      n,
+    })
+  );
+};

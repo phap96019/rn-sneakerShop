@@ -24,15 +24,18 @@ const userReducer = (state, action) => {
         loading: false,
         appLoading: false,
       };
+    case 'ADD_CART_ITEM':
+      let cart = [...state.cart, action.payload];
+      return { ...state, cart: cart, loading: false };
     case 'UPDATE_CART_ITEM':
-      const carts = state.cart.map(item => {
+      cart = state.cart.map(item => {
         if (item._id !== action.payload.id) return item;
         item.quantity = action.payload.quantity;
         return item;
       });
-      return { ...state, cart: carts, loading: false };
+      return { ...state, cart: cart, loading: false };
     case 'REMOVE_CART_ITEM':
-      const cart = state.cart.filter(item => item._id !== action.payload);
+      cart = state.cart.filter(item => item._id !== action.payload);
       return { ...state, cart: cart, loading: false };
     case 'GET_WISHLIST_ITEMS':
       return {
@@ -143,6 +146,24 @@ const getCart = dispatch => async () => {
   }
 };
 
+const addCartItem = dispatch => async variantId => {
+  try {
+    const { data } = await apiHelper.post(`/api/v1/users/cart`, {
+      variant: variantId,
+      quantity: 1,
+    });
+    console.log('Add to cart!');
+
+    dispatch({ type: 'ADD_CART_ITEM', payload: data.data.data });
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: 'SET_USER_ERROR', payload });
+  }
+};
+
 const removeCartItems = dispatch => async id => {
   try {
     await apiHelper.delete(`/api/v1/users/cart/${id}`);
@@ -230,6 +251,7 @@ export const { Provider, Context } = contextFactory(
     clearError,
     setLoading,
     getCart,
+    addCartItem,
     removeCartItems,
     setAppLoading,
     updateQuantityCartItem,

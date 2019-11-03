@@ -105,7 +105,9 @@ const SearchResultScreen = props => {
               <SearchResultItemComponent
                 item={item}
                 activeOpacity={0.8}
-                handleOnPress={() => {}}
+                handleOnPress={() => {
+                  props.navigation.navigate('Product', { productId: item._id });
+                }}
               />
             )}
           />

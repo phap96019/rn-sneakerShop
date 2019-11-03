@@ -96,7 +96,11 @@ const CartScreen = props => {
                 <CartItemScreen
                   item={item}
                   activeOpacity={0.8}
-                  handleOnPress={() => {}}
+                  handleOnPress={() => {
+                    props.navigation.navigate('Product', {
+                      productId: item.variant.product._id,
+                    });
+                  }}
                 />
               )}
             />

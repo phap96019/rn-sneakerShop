@@ -66,6 +66,7 @@ const FilterScreen = props => {
   const [brands, setBrands] = useState(initBrands);
   const [rating, setRating] = useState(0);
   const [inputData, setInputData] = useState(initInputData);
+  const [error, setError] = useState('');
   const {
     filterProducts,
     searchQuery,
@@ -101,9 +102,24 @@ const FilterScreen = props => {
     clearFilter(searchQuery, sortQuery);
   };
   const handleOnPress = () => {
+    const { minPrice, maxPrice } = trimData(inputData);
+    const regex = new RegExp(/^\d+$/);
+    if (minPrice || maxPrice) {
+      if (minPrice && maxPrice && minPrice > maxPrice) {
+        setError('Min price must is low than max price');
+        return;
+      }
+      if (
+        (minPrice && !regex.test(minPrice)) ||
+        (maxPrice && !regex.test(maxPrice))
+      ) {
+        setError('Price must is a number!');
+        return;
+      }
+    }
+
     let filterQuery = '';
 
-    const { minPrice, maxPrice } = trimData(inputData);
     if (minPrice) filterQuery = filterQuery + `&price[gte]=${minPrice}`;
     if (maxPrice) filterQuery = filterQuery + `&price[lte]=${maxPrice}`;
     if (rating > 0)
@@ -154,6 +170,7 @@ const FilterScreen = props => {
             onChangeText={handleOnChange('maxPrice')}
           />
         </View>
+        {error !== '' && <Text style={{ color: '#e74c3c' }}>{error}</Text>}
       </View>
       {/* ========== Chose Size =============== */}
       <Text style={styles.titleName}>Rating from</Text>

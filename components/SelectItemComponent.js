@@ -1,18 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { withTheme } from 'react-native-elements';
 
 const SelectItemComponent = ({ att, active, type, handlePress }) => {
-  const backgroundColor = type === 'color' ? att : 'white';
-  const title = type === 'size' ? att : '';
-
   return (
     <TouchableOpacity
-      style={{ width: 60, height: 60, marginHorizontal: 10 }}
+      style={{ backgroundColor: active ? '2f3542' : '#FFF' }}
       activeOpacity={0.8}
       onPress={handlePress}
     >
-      <View
+      {/* <View
         style={{
           width: 60,
           height: 60,
@@ -22,9 +20,25 @@ const SelectItemComponent = ({ att, active, type, handlePress }) => {
           borderWidth: active ? 3 : 0,
           backgroundColor,
         }}
+      > */}
+      <Text
+        style={{
+          // backgroundColor: 'white',
+          backgroundColor: active ? '#2f3542' : '#FFF',
+          color: active ? '#FFF' : '#000',
+          padding: 5,
+          borderWidth: 1,
+          borderRadius: 10,
+          borderColor: '#2f3542',
+          fontSize: 17,
+          padding: 10,
+          marginRight: 8,
+          marginVertical: 5,
+        }}
       >
-        <Text>{title}</Text>
-      </View>
+        {att}
+      </Text>
+      {/* </View> */}
     </TouchableOpacity>
   );
 };

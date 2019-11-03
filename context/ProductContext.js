@@ -45,6 +45,23 @@ const productReducer = (state, action) => {
         products: action.payload.products,
         sortQuery: action.payload.sortQuery,
       };
+
+    case 'GET_PRODUCT':
+      return {
+        ...state,
+        error: '',
+        appLoading: '',
+        loading: '',
+        product: action.payload,
+      };
+    case 'CLEAR_PRODUCT':
+      return {
+        ...state,
+        error: '',
+        appLoading: '',
+        loading: '',
+        product: null,
+      };
     case 'SET_PRODUCT_ERROR':
       return {
         ...state,
@@ -91,6 +108,25 @@ const searchProducts = dispatch => async text => {
     dispatch({ type: 'SET_PRODUCT_ERROR', payload });
   }
   navigate('SearchResult', { search: text });
+};
+
+const getProduct = dispatch => async id => {
+  try {
+    console.log(`/api/v1/products?/${id}`);
+
+    const { data } = await apiHelper.get(`/api/v1/products/${id}`);
+
+    dispatch({
+      type: 'GET_PRODUCT',
+      payload: data.data.data,
+    });
+  } catch (error) {
+    const payload = error.response
+      ? error.response.data.message
+      : error.message;
+    console.log(error, payload);
+    dispatch({ type: 'SET_PRODUCT_ERROR', payload });
+  }
 };
 
 const filterProducts = dispatch => async (
@@ -170,18 +206,25 @@ const sortProducts = dispatch => async (
   navigate('SearchResult');
 };
 
+const clearProduct = dispatch => () => {
+  dispatch({ type: 'CLEAR_PRODUCT' });
+};
+
 export const { Provider, Context } = contextFactory(
   productReducer,
   {
+    getProduct,
     searchProducts,
     filterProducts,
     setLoading,
     setAppLoading,
     clearFilter,
     sortProducts,
+    clearProduct,
   },
   {
     products: null,
+    product: null,
     error: '',
     loading: false,
     appLoading: false,

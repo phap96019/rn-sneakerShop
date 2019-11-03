@@ -112,7 +112,14 @@ const RootStackNavigator = createStackNavigator(
     Product: {
       screen: ProductScreen,
       navigationOptions: () => ({
-        title: 'Product A',
+        headerTransparent: true,
+        headerStyle: {
+          color: 'white',
+        },
+        headerTitleStyle: {
+          color: 'white',
+        },
+        // headerTintColor: '#FFF',
       }),
     },
     Category: {
@@ -135,7 +142,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'CategoryResult',
+    // initialRouteName: 'Product',
   }
 );
 

@@ -2,13 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Dimensions } from 'react-native';
 import SelectItemComponent from './SelectItemComponent';
 
-const PickProductComponent = ({ variants, pickedColor, pickedSize }) => {
+const PickProductComponent = ({
+  variants,
+  handleOnChange,
+  pickedColor,
+  pickedSize,
+}) => {
   const [selectedColor, setSelectedColor] = useState(pickedColor);
   const [selectedSize, setSelectedSize] = useState(pickedSize);
   const [colorList, setColorsList] = useState([]);
   const [sizeList, setSizeList] = useState([]);
 
   useEffect(() => {
+    let color = selectedColor;
+    let size = selectedSize;
     const colors = variants
       .map(item => item.color)
       .filter((item, index, inputArray) => inputArray.indexOf(item) === index);
@@ -16,6 +23,7 @@ const PickProductComponent = ({ variants, pickedColor, pickedSize }) => {
 
     if (!selectedColor) {
       setSelectedColor(colors[0]);
+      color = colors[0];
     }
     const sizes = variants
       .filter(item => item.color === selectedColor)
@@ -24,19 +32,37 @@ const PickProductComponent = ({ variants, pickedColor, pickedSize }) => {
 
     if (!selectedSize || sizes.indexOf(selectedSize) < 0) {
       setSelectedSize(sizes[0]);
+      size = sizes[0];
     }
-  }, [selectedColor, selectedSize]);
 
-  console.log('size ne', selectedSize);
+    const selectedVarriant = variants.find(
+      item => item.color === color && item.size === size
+    );
+
+    handleOnChange(selectedVarriant);
+  }, [variants, selectedColor, selectedSize]);
+
+  // console.log('size ne', selectedSize);
+
   const handleOnPress = (type, att) => () => {
-    console.log(type, att);
+    let selectedVarriant = {};
+    // console.log(type, att);
     if (type === 'color') {
       setSelectedColor(att);
+      //reset size to index 0
       // setSelectedSize('');
+      selectedVarriant = variants.find(
+        item => item.color === att && item.size === selectedSize
+      );
+      handleOnChange(selectedVarriant);
       return;
     }
     if (type === 'size') {
       setSelectedSize(att);
+      selectedVarriant = variants.find(
+        item => item.size === att && item.color === selectedColor
+      );
+      handleOnChange(selectedVarriant);
       return;
     }
     return;
@@ -53,7 +79,7 @@ const PickProductComponent = ({ variants, pickedColor, pickedSize }) => {
         }}
       >
         <FlatList
-          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start' }}
           data={colorList}
           keyExtractor={color => color}
           horizontal
@@ -71,7 +97,7 @@ const PickProductComponent = ({ variants, pickedColor, pickedSize }) => {
 
       <View>
         <FlatList
-          contentContainerStyle={{ flexGrow: 1, justifyContent: 'center' }}
+          contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start' }}
           data={sizeList}
           keyExtractor={size => size.toString()}
           horizontal

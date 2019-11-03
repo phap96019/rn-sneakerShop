@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Context as ProductContext } from '../context/ProductContext';
 import { Ionicons } from '@expo/vector-icons';
-import { Text, Tile } from 'react-native-elements';
+import { Tile } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   Container: {

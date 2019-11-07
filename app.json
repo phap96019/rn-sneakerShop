@@ -28,7 +28,8 @@
           "action": "VIEW",
           "data": {
             "scheme": "https",
-            "host": "*.qssneaker.herokuapp.com"
+            "host": "qssneaker.herokuapp.com",
+            "pathPrefix": "/"
           },
           "category": ["BROWSABLE", "DEFAULT"]
         }

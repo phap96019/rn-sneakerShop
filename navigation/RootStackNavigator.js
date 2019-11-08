@@ -142,7 +142,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'Product',
+    // initialRouteName: 'CategoryResult',
   }
 );
 

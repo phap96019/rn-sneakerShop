@@ -16,8 +16,7 @@ import trimData from '../utils/trimData';
 import LoadingComponent from '../components/LoadingComponent';
 
 const item = {
-  pic:
-    'https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AAI6BwY.img?h=552&w=750&m=6&q=60&u=t&o=f&l=f&x=325&y=171',
+  pic: 'https://cdn.stocksnap.io/img-thumbs/960w/X7BBEK50WK.jpg',
 };
 
 const styles = StyleSheet.create({

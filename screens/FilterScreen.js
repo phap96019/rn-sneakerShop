@@ -170,8 +170,17 @@ const FilterScreen = props => {
             onChangeText={handleOnChange('maxPrice')}
           />
         </View>
+      </View>
+      <View
+        style={{
+          justifyContent: 'center',
+          alignContent: 'center',
+          flexDirection: 'row',
+        }}
+      >
         {error !== '' && <Text style={{ color: '#e74c3c' }}>{error}</Text>}
       </View>
+
       {/* ========== Chose Size =============== */}
       <Text style={styles.titleName}>Rating from</Text>
       <View

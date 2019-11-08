@@ -11,7 +11,7 @@
     "scheme": "qssneaker",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode":"contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {

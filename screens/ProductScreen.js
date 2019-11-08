@@ -185,7 +185,7 @@ const ProductScreen = ({ navigation }) => {
 
             {/* images */}
 
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ alignItems: 'center' }}>
               <Text style={{ fontSize: 23, fontWeight: 'bold' }}>
                 {product.name}
               </Text>

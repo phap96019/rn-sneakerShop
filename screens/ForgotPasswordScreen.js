@@ -75,13 +75,7 @@ const ForgotPasswordScreen = () => {
         style={styles.container}
       >
         <NavigationEvents onWillBlur={clearError} />
-        <Image
-          style={styles.logo}
-          source={{
-            uri:
-              'https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062',
-          }}
-        />
+        <Image style={styles.logo} source={require('../assets/Logo.png')} />
         <View style={styles.messageContainer}>
           <Text style={styles.message}>Enter your Email.</Text>
           <Text style={styles.message}>

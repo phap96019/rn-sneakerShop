@@ -26,7 +26,8 @@ const NoficationScreen = () => {
         Your password reset email has been sent
       </Text>
       <Text style={{ textAlign: 'center' }}>
-        Please follow the instructions in the email to reset the password for your account
+        Please follow the instructions in the email to reset the password for
+        your account
       </Text>
       <View style={{ flexDirection: 'row' }}>
         <ButtonComponent

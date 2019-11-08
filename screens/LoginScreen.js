@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 200,
-    height: 150,
+    height: 200,
   },
   title: {
     textAlign: 'center',
@@ -94,13 +94,7 @@ const LoginScreen = props => {
         {loading && <LoadingComponent />}
         <NavigationEvents onWillBlur={clearError} />
 
-        <Image
-          style={styles.logo}
-          source={{
-            uri:
-              'https://cdn.shopify.com/s/files/1/1431/4540/products/NIKE_Logo_AIR_Jordan_JumpMan_23_HUGE_Flight_Wall_Decal_Sticker_grande.jpg?v=1526782062',
-          }}
-        />
+        <Image style={styles.logo} source={require('../assets/Logo.png')} />
 
         <InputComponent
           label="Email"

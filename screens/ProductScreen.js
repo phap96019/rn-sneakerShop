@@ -12,12 +12,13 @@ import PickProductComponent from '../components/PickProductComponent';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
 import { Context as ProductContext } from '../context/ProductContext';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import sourceAnimation from '../assets/notfound.json';
 import LoadingComponent from '../components/LoadingComponent';
 import AnimationViewComponent from '../components/AnimationViewComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { NavigationEvents } from 'react-navigation';
+import { Badge } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   TextStyle: {
@@ -34,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const ProductScreen = ({ navigation }) => {
+const ProductScreen = props => {
   const [selectedProduct, setSelectedProduct] = useState('');
   const { isSignIn } = useContext(AuthContext);
   const {
@@ -54,7 +55,7 @@ const ProductScreen = ({ navigation }) => {
     appLoading,
   } = useContext(ProductContext);
 
-  const productId = navigation.getParam('productId');
+  const productId = props.navigation.getParam('productId');
   // console.log(
   //   selectedProduct.color,
   //   selectedProduct.size,
@@ -63,7 +64,7 @@ const ProductScreen = ({ navigation }) => {
   // );
 
   useEffect(() => {
-    const productId = navigation.getParam('productId');
+    const productId = props.navigation.getParam('productId');
 
     setAppLoading();
     getProduct(productId);
@@ -71,7 +72,7 @@ const ProductScreen = ({ navigation }) => {
 
   const handleOnAddToCart = () => {
     if (!isSignIn) {
-      navigation.navigate('Login');
+      props.navigation.navigate('Login');
       return;
     }
     setUserLoading();
@@ -80,7 +81,7 @@ const ProductScreen = ({ navigation }) => {
 
   handleAddToWishlist = () => {
     if (!isSignIn) {
-      navigation.navigate('Login');
+      props.navigation.navigate('Login');
       return;
     }
     setUserLoading();
@@ -134,13 +135,9 @@ const ProductScreen = ({ navigation }) => {
   return (
     <View
       style={{
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-        justifyContent: 'center',
         // marginTop: 15,
         // marginHorizontal: 15,
         marginBottom: 20,
-        flex: 1,
       }}
     >
       <NavigationEvents
@@ -166,13 +163,52 @@ const ProductScreen = ({ navigation }) => {
               }}
             />
           </View>
+
+          <View
+            style={{
+              justifyContent: 'flex-end',
+              flexDirection: 'row',
+              marginTop: 40,
+              marginRight: 20,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('WishList');
+              }}
+            >
+              <View style={{ marginRight: 20 }}>
+                <Ionicons name="ios-heart-empty" size={25} color="black" />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('Cart');
+              }}
+            >
+              <View>
+                <Ionicons name="ios-cart" size={25} color="black" />
+                {(cart && cart.length) > 0 && (
+                  <Badge
+                    value={cart.length}
+                    status="success"
+                    containerStyle={{
+                      position: 'absolute',
+                      top: -8,
+                      right: -8,
+                    }}
+                  />
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
 
         <View style={{ marginTop: 15, marginHorizontal: 15 }}>
           <View
             style={{
               alignItems: 'center',
-              paddingVertical: 10,
             }}
           >
             {/* <Image
@@ -186,11 +222,27 @@ const ProductScreen = ({ navigation }) => {
             {/* images */}
 
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 23, fontWeight: 'bold' }}>
+              <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
                 {product.name}
               </Text>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <FontAwesome name="star" color="#fee501" size={15} />
+                <FontAwesome name="star" color="#fee501" size={15} />
+                <FontAwesome name="star" color="#fee501" size={15} />
+                <FontAwesome name="star" color="#fee501" size={15} />
+                <FontAwesome name="star-half-full" color="#fee501" size={15} />
+                <TouchableOpacity>
+                  <Text
+                    style={{ marginLeft: 5, color: '#005494', fontSize: 15 }}
+                  >
+                    (See Reviews)
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
               <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
-                ${product.price}
+                $ {product.price}
               </Text>
             </View>
           </View>
@@ -232,8 +284,6 @@ const ProductScreen = ({ navigation }) => {
           <View
             style={{
               marginTop: 25,
-              marginLeft: 5,
-              marginHorizontal: 15,
               // marginBottom: Dimensions.get('window').height / 15,
             }}
           >
@@ -257,6 +307,9 @@ const ProductScreen = ({ navigation }) => {
               {product.description}
             </Text>
           </View>
+
+          <View style={{height: 60}}></View>
+
         </View>
       </ScrollView>
 

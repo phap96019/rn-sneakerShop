@@ -129,6 +129,8 @@ const TestScreen = props => {
           </TouchableOpacity>
         </View>
       </View>
+
+
       <NewArriavalComponent />
       <View
         style={{

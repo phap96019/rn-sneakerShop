@@ -115,7 +115,9 @@ const ScreenForTest = props => {
               activeOpacity={0.8}
               containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
               title="Continue shopping"
-              handleOnPress={() => {}}
+              handleOnPress={() => {
+                props.navigation.pop();
+              }}
             />
           </View>
         </View>
@@ -132,35 +134,6 @@ const ScreenForTest = props => {
         }}
       />
       {renderComponent()}
-    </View>
-  );
-
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: 'center',
-        flexDirection: 'row',
-        margin: 10,
-        paddingBottom: 20,
-      }}
-    >
-      <ScrollView>
-        <View>
-          <FlatList
-            data={data2}
-            keyExtractor={data => data.id.toString()}
-            renderItem={({ item }) => (
-              <WishListItemComponent
-                item={item}
-                activeOpacity={0.8}
-                handleOnPress={() => {}}
-              />
-            )}
-          />
-          <Text>hello</Text>
-        </View>
-      </ScrollView>
     </View>
   );
 };

@@ -116,7 +116,7 @@ const searchProducts = dispatch => async (
 
 const getProduct = dispatch => async id => {
   try {
-    console.log(`/api/v1/products?/${id}`);
+    console.log(`/api/v1/products/${id}`);
 
     const { data } = await apiHelper.get(`/api/v1/products/${id}`);
 

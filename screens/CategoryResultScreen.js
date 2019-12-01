@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,6 +12,7 @@ import {
   Picker,
 } from 'react-native';
 import { Context as AuthContext } from '../context/AuthContext';
+import { Context as ProductContext } from '../context/ProductContext';
 import InputComponent from '../components/InputComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -76,7 +77,16 @@ data2 = [
       'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
 ];
+
 const CategoryResultScreen = props => {
+  const { searchProducts, setLoading, products } = useContext(ProductContext);
+  useEffect(() => {
+    if (!products) {
+      setLoading;
+      searchProducts('');
+      console.log(products);
+    }
+  }, [products]);
   return (
     <View
       style={{

@@ -33,6 +33,13 @@ const styles = StyleSheet.create({
     marginRight: 8,
     marginVertical: 5,
   },
+  container: {
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginHorizontal: 15,
+    marginVertical: 80,
+  },
 });
 
 const ProductScreen = props => {
@@ -135,14 +142,16 @@ const ProductScreen = props => {
   return (
     <View
       style={{
-        // marginTop: 15,
+        marginTop: 15,
         // marginHorizontal: 15,
         marginBottom: 20,
+        justifyContent: 'center',
+        // alignItems: 'center',
       }}
     >
       <NavigationEvents
         onWillFocus={() => {
-          clearProduct();
+          // clearProduct();
         }}
       />
       {userLoading && <LoadingComponent />}
@@ -308,8 +317,7 @@ const ProductScreen = props => {
             </Text>
           </View>
 
-          <View style={{height: 60}}></View>
-
+          <View style={{ height: 60 }}></View>
         </View>
       </ScrollView>
 

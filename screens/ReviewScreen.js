@@ -62,8 +62,10 @@ const Datatemp = [
 
 const ReviewScreen = props => {
   return (
-    <View style={{ flex: 1, marginHorizontal: 15, marginBottom: 55 }}>
-      <View style={{}}>
+    <View
+      style={{ flex: 1, marginTop: 5, marginHorizontal: 20, marginBottom: 60 }}
+    >
+      <View>
         <FlatList
           data={Datatemp}
           keyExtractor={data => data.id.toString()}

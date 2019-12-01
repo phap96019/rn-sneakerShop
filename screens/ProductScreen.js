@@ -214,7 +214,7 @@ const ProductScreen = props => {
           </View>
         </View>
 
-        <View style={{ marginTop: 15, marginHorizontal: 15 }}>
+        <View style={{ marginTop: 15, marginHorizontal: 20 }}>
           <View
             style={{
               alignItems: 'center',

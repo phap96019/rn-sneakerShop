@@ -1,5 +1,12 @@
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Dimensions } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 
 const DataX = [
   {
@@ -13,29 +20,50 @@ const DataX = [
 ];
 
 const WriteReviewScreen = () => {
+  const [comment, writeComment] = useState('');
   return (
-    <View style={{ marginHorizontal: 15, marginBottom: 10 }}>
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
-      <Image
-        style={{
-          height: Dimensions.get('window').width / 5,
-          width: Dimensions.get('window').width / 5,
-        }}
-        source={{ uri: 'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg' }}
-      />
-      <Text>Adidas Ultra Boost</Text>
+    <View style={{ marginTop: 10, marginHorizontal: 20, marginBottom: 10 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <Image
+          style={{
+            height: Dimensions.get('window').width / 4,
+            width: Dimensions.get('window').width / 4,
+          }}
+          source={{
+            uri:
+              'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
+          }}
+        />
+        <Text style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 10 }}>
+          Adidas Ultra Boost
+        </Text>
       </View>
       <TextInput
         style={{
           borderBottomWidth: 1,
           borderBottomColor: 'black',
-          marginBottom: 10,
-          fontSize: 17,
+          marginVertical: 10,
+          fontSize: 18,
         }}
         placeholder="Write comment..."
         autoCapitalize="none"
         autoCorrect={false}
+        value={comment}
+        onChangeText={newValue => writeComment(newValue)}
       />
+      {comment.length < 2000 ? (
+        <View style={{ alignItems: 'flex-end', marginBottom: 10 }}>
+          <Text style={{ fontSize: 13, color: 'black' }}>
+            {comment.length}/2000
+          </Text>
+        </View>
+      ) : (
+        <View style={{ alignItems: 'flex-end', marginBottom: 10 }}>
+          <Text style={{ fontSize: 13, color: 'red' }}>
+            Character limit: 2000
+          </Text>
+        </View>
+      )}
 
       <TouchableOpacity
         style={{

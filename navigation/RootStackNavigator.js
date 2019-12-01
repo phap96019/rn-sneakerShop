@@ -134,7 +134,7 @@ const RootStackNavigator = createStackNavigator(
     CategoryResult: {
       screen: CategoryResultScreen,
       navigationOptions: () => ({
-        title: 'Result',
+        // title: 'Result',
       }),
     },
     Nofication: {

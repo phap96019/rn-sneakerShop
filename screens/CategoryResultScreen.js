@@ -19,6 +19,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import WishListItemComponent from '../components/WishListItemComponent';
 import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import { Ionicons } from '@expo/vector-icons';
+import LoadingComponent from '../components/LoadingComponent';
 
 data2 = [
   {
@@ -79,14 +80,34 @@ data2 = [
 ];
 
 const CategoryResultScreen = props => {
-  const { searchProducts, setLoading, products } = useContext(ProductContext);
+  const { searchProducts, setLoading, products, loading } = useContext(
+    ProductContext
+  );
   useEffect(() => {
     if (!products) {
-      setLoading;
-      searchProducts('');
+      const search = props.navigation.getParam('search');
+      const field = props.navigation.getParam('field');
+      const type = props.navigation.getParam('type');
+      setLoading();
+      searchProducts(search, 'CategoryResult', field, type);
       console.log(products);
     }
   }, [products]);
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          flexDirection: 'row',
+          margin: 10,
+          paddingBottom: 20,
+        }}
+      >
+        <LoadingComponent />
+      </View>
+    );
+  }
   return (
     <View
       style={{
@@ -101,13 +122,15 @@ const CategoryResultScreen = props => {
         {/* ============= List ============ */}
         <View>
           <FlatList
-            data={data2}
+            data={products}
             keyExtractor={data => data.id.toString()}
             renderItem={({ item }) => (
               <SearchResultItemComponent
                 item={item}
                 activeOpacity={0.8}
-                handleOnPress={() => {}}
+                handleOnPress={() => {
+                  props.navigation.navigate('Product', { productId: item._id });
+                }}
               />
             )}
           />
@@ -115,6 +138,12 @@ const CategoryResultScreen = props => {
       </ScrollView>
     </View>
   );
+};
+
+CategoryResultScreen.navigationOptions = ({ navigation }) => {
+  return {
+    title: navigation.getParam('title', 'Category'),
+  };
 };
 
 export default CategoryResultScreen;

@@ -89,6 +89,7 @@ const setLoading = dispatch => async () => {
 
 const searchProducts = dispatch => async (
   text,
+  nextScr = 'SearchResult',
   field = 'name',
   type = 'regex'
 ) => {
@@ -111,7 +112,7 @@ const searchProducts = dispatch => async (
     console.log(error, payload);
     dispatch({ type: 'SET_PRODUCT_ERROR', payload });
   }
-  navigate('SearchResult', { search: text });
+  navigate(nextScr, { search: text });
 };
 
 const getProduct = dispatch => async id => {

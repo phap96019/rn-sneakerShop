@@ -19,6 +19,9 @@ import FilterScreen from '../screens/FilterScreen';
 import ProductScreen from '../screens/ProductScreen';
 import CategoryScreen from '../screens/CategoryScreen';
 import CategoryResultScreen from '../screens/CategoryResultScreen';
+import GetInfoToOrderScreen from '../screens/GetInfoToOrderScreen';
+import NoficationOrderScreen from '../screens/NoficationOrderScreen';
+import OrderDetailScreen from '../screens/OrderDetailScreen';
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -140,9 +143,27 @@ const RootStackNavigator = createStackNavigator(
     ResetPasswordSuccess: {
       screen: NoficationChangePasswordScreen,
     },
+    GetInfo: {
+      screen: GetInfoToOrderScreen,
+      navigationOptions: () => ({
+        title: 'Receiver infomation',
+      }),
+    },
+    NoficationOrder: {
+      screen: NoficationOrderScreen,
+      navigationOptions: () => ({
+        title: 'Nofication',
+      }),
+    },
+    OrderDetail: {
+      screen: OrderDetailScreen,
+      navigationOptions: () => ({
+        title: 'Detail',
+      }),
+    },
   },
   {
-    // initialRouteName: 'CategoryResult',
+    // initialRouteName: 'OrderDetail',
   }
 );
 

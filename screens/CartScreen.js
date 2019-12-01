@@ -115,7 +115,9 @@ const CartScreen = props => {
               activeOpacity={0.8}
               containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
               title="Proceed to ordering"
-              handleOnPress={() => {}}
+              handleOnPress={() => {
+                props.navigation.navigate('GetInfo');
+              }}
             />
           </View>
         </View>

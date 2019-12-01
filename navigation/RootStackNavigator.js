@@ -22,6 +22,8 @@ import CategoryResultScreen from '../screens/CategoryResultScreen';
 import GetInfoToOrderScreen from '../screens/GetInfoToOrderScreen';
 import NoficationOrderScreen from '../screens/NoficationOrderScreen';
 import OrderDetailScreen from '../screens/OrderDetailScreen';
+import ReviewScreen from '../screens/ReviewScreen';
+import WriteReviewScreen from '../screens/WriteReviewScreen';
 
 const RootStackNavigator = createStackNavigator(
   {
@@ -159,6 +161,18 @@ const RootStackNavigator = createStackNavigator(
       screen: OrderDetailScreen,
       navigationOptions: () => ({
         title: 'Detail',
+      }),
+    },
+    Review: {
+      screen: ReviewScreen,
+      navigationOptions: () => ({
+        title: 'Review',
+      }),
+    },
+    WriteReview: {
+      screen: WriteReviewScreen,
+      navigationOptions: () => ({
+        title: 'Write Review',
       }),
     },
   },

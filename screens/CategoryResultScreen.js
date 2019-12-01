@@ -20,6 +20,7 @@ import WishListItemComponent from '../components/WishListItemComponent';
 import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import { Ionicons } from '@expo/vector-icons';
 import LoadingComponent from '../components/LoadingComponent';
+import { NavigationEvents } from 'react-navigation';
 
 data2 = [
   {
@@ -45,54 +46,28 @@ data2 = [
     pic:
       'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
-  {
-    id: 3,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 4,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 5,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 6,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
 ];
 
 const CategoryResultScreen = props => {
-  const { searchProducts, setLoading, products, loading } = useContext(
-    ProductContext
-  );
+  const {
+    searchProducts,
+    setLoading,
+    clearProducts,
+    products,
+    loading,
+    searchQuery,
+  } = useContext(ProductContext);
   useEffect(() => {
-    if (!products) {
+    if (!products || searchQuery) {
       const search = props.navigation.getParam('search');
       const field = props.navigation.getParam('field');
       const type = props.navigation.getParam('type');
       setLoading();
       searchProducts(search, 'CategoryResult', field, type);
       console.log(products);
+      return () => {};
     }
-  }, [products]);
+  }, []);
   if (loading) {
     return (
       <View
@@ -118,6 +93,11 @@ const CategoryResultScreen = props => {
         paddingBottom: 20,
       }}
     >
+      <NavigationEvents
+        onWillBlur={() => {
+          clearProducts();
+        }}
+      />
       <ScrollView>
         {/* ============= List ============ */}
         <View>

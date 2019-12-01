@@ -33,7 +33,7 @@ const NewArriavalComponent = props => {
         <TouchableOpacity
           onPress={() =>
             navigate('CategoryResult', {
-              searchParam: '&sort=-createAt',
+              search: '',
               title: 'New Arriaval',
             })
           }

@@ -87,10 +87,14 @@ const setLoading = dispatch => async () => {
   dispatch({ type: 'SET_LOADING' });
 };
 
-const searchProducts = dispatch => async text => {
+const searchProducts = dispatch => async (
+  text,
+  field = 'name',
+  type = 'regex'
+) => {
   try {
     const nameCapitalized = text.charAt(0).toUpperCase() + text.slice(1);
-    const query = `&name[regex]=${nameCapitalized}`;
+    const query = `&${field}[${type}]=${nameCapitalized}`;
     console.log(`/api/v1/products?${query}`);
 
     const { data } = await apiHelper.get(`/api/v1/products?${query}`);

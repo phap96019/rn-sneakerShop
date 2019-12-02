@@ -1,5 +1,11 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import ReviewComponent from '../components/ReviewComponent';
 
 const Datatemp = [
@@ -12,7 +18,7 @@ const Datatemp = [
     pic:
       'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
     status: 'Purchased',
-    createdAt: '2019-11-30T09:01:58.819Z',
+    createdAt: 'Oct 10 2019',
   },
   {
     id: 1,
@@ -23,7 +29,7 @@ const Datatemp = [
     pic:
       'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
     status: 'Purchased',
-    createdAt: '2019-11-30T09:01:58.819Z',
+    createdAt: 'Oct 10 2019',
   },
   {
     id: 2,
@@ -34,7 +40,7 @@ const Datatemp = [
     pic:
       'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
     status: 'Purchased',
-    createdAt: '2019-11-30T09:01:58.819Z',
+    createdAt: 'Oct 10 2019',
   },
   {
     id: 3,
@@ -45,7 +51,7 @@ const Datatemp = [
     pic:
       'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
     status: 'Purchased',
-    createdAt: '2019-11-30T09:01:58.819Z',
+    createdAt: 'Oct 10 2019',
   },
   {
     id: 4,
@@ -56,49 +62,90 @@ const Datatemp = [
     pic:
       'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
     status: 'Purchased',
-    createdAt: '2019-11-30T09:01:58.819Z',
+    createdAt: 'Oct 10 2019',
+  },
+  {
+    id: 5,
+    user: 'Chris',
+    title: 'Ok',
+    comment: 'This is a comment about this product.',
+    rate: 5,
+    pic:
+      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
+    status: 'Purchased',
+    createdAt: 'Oct 10 2019',
+  },
+  {
+    id: 6,
+    user: 'Chris',
+    title: 'Ok',
+    comment: 'This is a comment about this product.',
+    rate: 5,
+    pic:
+      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
+    status: 'Purchased',
+    createdAt: 'Oct 10 2019',
   },
 ];
 
 const ReviewScreen = props => {
   return (
-    <View
-      style={{ flex: 1, marginTop: 5, marginHorizontal: 20, marginBottom: 60 }}
-    >
-      <View>
+    <View style={{ flex: 1 }}>
+      <ScrollView
+        style={{
+          flex: 1,
+          marginVertical: 5,
+          marginHorizontal: 20,
+          marginBottom: 53,
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        <Text style={{ fontSize: 15, marginBottom: 0 }}>13 Reviews</Text>
         <FlatList
           data={Datatemp}
           keyExtractor={data => data.id.toString()}
           horizontal={false}
           showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
           renderItem={({ item }) => {
             return <ReviewComponent item={item} />;
           }}
         />
-      </View>
-
-      <TouchableOpacity
+      </ScrollView>
+      <View
         style={{
-          alignItems: 'center',
-          backgroundColor: 'red',
-          borderRadius: 10,
-        }}
-        onPress={() => {
-          console.log('Press here');
-          props.navigation.navigate('WriteReview');
+          position: 'absolute',
+          bottom: 5,
+          right: 5,
+          left: 5,
+          zIndex: 2,
+          flexDirection: 'row',
         }}
       >
-        <Text
+        <TouchableOpacity
           style={{
-            fontSize: 14,
-            fontWeight: 'bold',
-            color: 'white',
-            padding: 15,
+            flex: 1,
+            alignItems: 'center',
+            backgroundColor: '#1d1d1d',
+            borderRadius: 10,
+          }}
+          onPress={() => {
+            console.log('Press here');
+            props.navigation.navigate('WriteReview');
           }}
         >
-          Write Review
-        </Text>
-      </TouchableOpacity>
+          <Text
+            style={{
+              fontSize: 14,
+              fontWeight: 'bold',
+              color: 'white',
+              padding: 15,
+            }}
+          >
+            Write Review
+          </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

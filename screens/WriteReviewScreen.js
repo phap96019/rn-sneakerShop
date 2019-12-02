@@ -7,6 +7,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import { AirbnbRating } from 'react-native-ratings';
 
 const DataX = [
   {
@@ -21,6 +22,12 @@ const DataX = [
 
 const WriteReviewScreen = () => {
   const [comment, writeComment] = useState('');
+  const [rating, setRating] = useState(0);
+  const ratingCompleted = rated => {
+    console.log('Rating is: ' + rated);
+    setRating(rated);
+  };
+
   return (
     <View style={{ marginTop: 10, marginHorizontal: 20, marginBottom: 10 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -38,6 +45,15 @@ const WriteReviewScreen = () => {
           Adidas Ultra Boost
         </Text>
       </View>
+
+      <AirbnbRating
+        count={5}
+        defaultRating={rating}
+        size={25}
+        // showRating={false}
+        onFinishRating={ratingCompleted}
+      />
+
       <TextInput
         style={{
           borderBottomWidth: 1,
@@ -68,7 +84,7 @@ const WriteReviewScreen = () => {
       <TouchableOpacity
         style={{
           alignItems: 'center',
-          backgroundColor: 'red',
+          backgroundColor: '#1d1d1d',
           borderRadius: 10,
         }}
       >

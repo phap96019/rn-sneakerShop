@@ -75,7 +75,7 @@ const TestScreen = props => {
     }
   }, [isSignIn]);
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />
       <View
         style={{
@@ -129,7 +129,6 @@ const TestScreen = props => {
           </TouchableOpacity>
         </View>
       </View>
-
 
       <NewArriavalComponent />
       <View

@@ -8,13 +8,16 @@ import {
   StatusBar,
   TouchableOpacity,
   Dimensions,
+  StyleSheet,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import SmallListItemComponent from '../components/SmallListItemComponent';
 import { Context as AuthContext } from '../context/AuthContext';
 import { Context as UserContext } from '../context/UserContext';
 import NewArriavalComponent from '../components/NewArriavalComponent';
 import { Badge } from 'react-native-elements';
+import SwiperFlatList from 'react-native-swiper-flatlist';
+import RatingChart from '../components/RatingChart';
 
 const dataX = [
   {
@@ -58,7 +61,22 @@ const dataX = [
   },
 ];
 
+const images = [
+  'https://thesimplifiers.com/wp-content/uploads/2019/07/nicolas-cuestas-n1fm9ojsEu8-unsplash-1024x685.jpg',
+  'https://megamobile.pk/wp-content/uploads/2019/09/photo-1549298916-f52d724204b4.jpg',
+  'https://cdn.shopify.com/s/files/1/0247/0245/1796/products/air-jordan-design-footwear-1598505_1200x1200.jpg?v=1556428513',
+  'http://netblogtips.com/wp-content/uploads/2019/07/photo-1552346154-21d32810aba3.jpg',
+];
+
 const TestScreen = props => {
+  const navigateCheckLogin = (routeName, params) => () => {
+    if (isSignIn) {
+      props.navigation.navigate({ routeName, params });
+      return;
+    }
+    props.navigation.navigate('Login');
+  };
+
   const { isSignIn, tryLocalSignIn, setLoading: setAuthLoading } = useContext(
     AuthContext
   );
@@ -83,7 +101,7 @@ const TestScreen = props => {
         }}
       >
         <View style={{ position: 'absolute' }}>
-          <Image
+          {/* <Image
             style={{
               width: Dimensions.get('window').width,
               height: Dimensions.get('window').height / 2,
@@ -92,30 +110,45 @@ const TestScreen = props => {
               uri:
                 'https://i.pinimg.com/originals/cc/ab/5e/ccab5e910619394d2641a99a962c7517.jpg',
             }}
-          />
+          /> */}
+          <SwiperFlatList
+            autoplay
+            autoplayDelay={5}
+            autoplayLoop
+            index={0}
+            showPagination
+            paginationStyleItem={{ width: 10, height: 10 }}
+          >
+            {images.map(item => {
+              return (
+                <Image
+                  key={item}
+                  style={{
+                    width: Dimensions.get('window').width,
+                    height: Dimensions.get('window').height / 2,
+                  }}
+                  source={{
+                    uri: item,
+                  }}
+                />
+              );
+            })}
+          </SwiperFlatList>
         </View>
         <View
           style={{
             justifyContent: 'flex-end',
             flexDirection: 'row',
-            marginTop: 40,
+            marginTop: 50, // 40
             marginRight: 20,
           }}
         >
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate('WishList');
-            }}
-          >
+          <TouchableOpacity onPress={navigateCheckLogin('WishList')}>
             <View style={{ marginRight: 20 }}>
               <Ionicons name="ios-heart-empty" size={25} color="white" />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              props.navigation.navigate('Cart');
-            }}
-          >
+          <TouchableOpacity onPress={navigateCheckLogin('Cart')}>
             <View>
               <Ionicons name="ios-cart" size={25} color="white" />
               {(cart && cart.length) > 0 && (
@@ -129,7 +162,6 @@ const TestScreen = props => {
           </TouchableOpacity>
         </View>
       </View>
-
 
       <NewArriavalComponent />
       <View
@@ -162,5 +194,19 @@ const TestScreen = props => {
     </ScrollView>
   );
 };
+
+const { width, height } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  child: {
+    height: height * 0.5,
+    width,
+    justifyContent: 'center',
+  },
+  text: {
+    fontSize: width * 0.5,
+    textAlign: 'center',
+  },
+});
 
 export default TestScreen;

@@ -6,7 +6,7 @@ import { navigate } from '../utils/navigationRef';
 
 const NewArriavalComponent = props => {
   const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
     const { data } = await apiHelper.get(`/api/v1/products?limit=5`);
@@ -33,7 +33,7 @@ const NewArriavalComponent = props => {
         <TouchableOpacity
           onPress={() =>
             navigate('CategoryResult', {
-              searchParam: '&sort=-createAt',
+              search: '',
               title: 'New Arriaval',
             })
           }
@@ -52,13 +52,14 @@ const NewArriavalComponent = props => {
             return <BigListItemComponent item={item} />;
           }}
         /> */}
+
         <FlatList
           data={items}
           keyExtractor={item => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
-            return <BigListItemComponent item={item} />;
+            return <BigListItemComponent item={item} isLoading={isLoading} />;
           }}
         />
       </View>

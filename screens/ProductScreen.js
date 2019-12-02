@@ -19,6 +19,8 @@ import AnimationViewComponent from '../components/AnimationViewComponent';
 import ButtonComponent from '../components/ButtonComponent';
 import { NavigationEvents } from 'react-navigation';
 import { Badge } from 'react-native-elements';
+import SwiperFlatList from 'react-native-swiper-flatlist';
+import { Rating } from 'react-native-ratings';
 
 const styles = StyleSheet.create({
   TextStyle: {
@@ -61,6 +63,17 @@ const ProductScreen = props => {
     setAppLoading,
     appLoading,
   } = useContext(ProductContext);
+
+  let isClear = true;
+
+  const navigateCheckLogin = (routeName, params) => () => {
+    isClear = false;
+    if (isSignIn) {
+      props.navigation.navigate({ routeName, params });
+      return;
+    }
+    props.navigation.navigate('Login');
+  };
 
   const productId = props.navigation.getParam('productId');
   // console.log(
@@ -150,8 +163,10 @@ const ProductScreen = props => {
       }}
     >
       <NavigationEvents
-        onWillFocus={() => {
-          // clearProduct();
+        onWillBlur={() => {
+          if (isClear) {
+            clearProduct();
+          }
         }}
       />
       {userLoading && <LoadingComponent />}
@@ -162,7 +177,7 @@ const ProductScreen = props => {
           }}
         >
           <View style={{ position: 'absolute' }}>
-            <Image
+            {/* <Image
               style={{
                 width: Dimensions.get('window').width,
                 height: Dimensions.get('window').height / 2,
@@ -170,7 +185,30 @@ const ProductScreen = props => {
               source={{
                 uri: product.imageCover,
               }}
-            />
+            /> */}
+            <SwiperFlatList
+              autoplay
+              autoplayDelay={4}
+              autoplayLoop
+              index={0}
+              showPagination
+              paginationStyleItem={{ width: 10, height: 10 }}
+            >
+              {product.images.map(item => {
+                return (
+                  <Image
+                    key={item}
+                    style={{
+                      width: Dimensions.get('window').width,
+                      height: Dimensions.get('window').height / 2,
+                    }}
+                    source={{
+                      uri: item,
+                    }}
+                  />
+                );
+              })}
+            </SwiperFlatList>
           </View>
 
           <View
@@ -181,21 +219,13 @@ const ProductScreen = props => {
               marginRight: 20,
             }}
           >
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('WishList');
-              }}
-            >
+            <TouchableOpacity onPress={navigateCheckLogin('WishList')}>
               <View style={{ marginRight: 20 }}>
                 <Ionicons name="ios-heart-empty" size={25} color="black" />
               </View>
             </TouchableOpacity>
 
-            <TouchableOpacity
-              onPress={() => {
-                props.navigation.navigate('Cart');
-              }}
-            >
+            <TouchableOpacity onPress={navigateCheckLogin('Cart')}>
               <View>
                 <Ionicons name="ios-cart" size={25} color="black" />
                 {(cart && cart.length) > 0 && (
@@ -236,16 +266,24 @@ const ProductScreen = props => {
               </Text>
 
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                {/* <FontAwesome name="star" color="#fee501" size={15} />
                 <FontAwesome name="star" color="#fee501" size={15} />
                 <FontAwesome name="star" color="#fee501" size={15} />
                 <FontAwesome name="star" color="#fee501" size={15} />
-                <FontAwesome name="star" color="#fee501" size={15} />
-                <FontAwesome name="star-half-full" color="#fee501" size={15} />
+                <FontAwesome name="star-half-full" color="#fee501" size={15} /> */}
+
+                <Rating
+                  startingValue={product.ratingsAverage}
+                  readonly
+                  imageSize={20}
+                  style={{ paddingVertical: 10 }}
+                />
                 <TouchableOpacity>
                   <Text
                     style={{ marginLeft: 5, color: '#005494', fontSize: 15 }}
                   >
-                    (See Reviews)
+                    {product.ratingsQuantity &&
+                      `(See ${product.ratingsQuantity} Reviews)`}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -256,35 +294,6 @@ const ProductScreen = props => {
             </View>
           </View>
 
-          {/* <View style={{ marginTop: 25, marginLeft: 5 }}>
-            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Color</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignContent: 'flex-start',
-              flexWrap: 'wrap',
-            }}
-          >
-            <TouchableOpacity>
-              <Text style={styles.TextStyle}>Black</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text style={styles.TextStyle}>White</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={{ marginTop: 20, marginLeft: 5 }}>
-            <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Size</Text>
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              alignItems: 'flex-start',
-            }}
-          >
-          </View> */}
           <PickProductComponent
             variants={product.variants}
             handleOnChange={setSelectedProduct}

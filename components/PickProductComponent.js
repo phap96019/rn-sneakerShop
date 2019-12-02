@@ -70,10 +70,13 @@ const PickProductComponent = ({
 
   return (
     <View>
+      <View style={{ marginTop: 20 }}>
+        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Color</Text>
+      </View>
       <View
         style={{
           flexDirection: 'row',
-          marginVertical: 20,
+          marginBottom: 20,
           justifyContent: 'center',
           width: Dimensions.get('screen').width,
         }}
@@ -95,6 +98,9 @@ const PickProductComponent = ({
         />
       </View>
 
+      <View>
+        <Text style={{ fontSize: 15, fontWeight: 'bold' }}>Size</Text>
+      </View>
       <View>
         <FlatList
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start' }}

@@ -146,7 +146,7 @@ const CategoryScreen = props => {
           <CategoryItemComponent
             title="Other"
             img="https://c.static-nike.com/a/images/t_PDP_1728_v1/f_auto,b_rgb:f5f5f5/salis6eyc5s6wjme1dh4/custom-nike-metcon-5-by-you.jpg"
-            handleOnpress={searchItems('Lebron', 'categories', 'in')}
+            handleOnpress={searchItems('', 'categories', 'in')}
           />
         </View>
         {/*==================================== */}

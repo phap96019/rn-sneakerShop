@@ -223,6 +223,8 @@ const sortProducts = dispatch => async (
 };
 
 const clearProduct = dispatch => () => {
+  console.log('clear product!');
+
   dispatch({ type: 'CLEAR_PRODUCT' });
 };
 

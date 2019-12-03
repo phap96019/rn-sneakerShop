@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
   },
 });
 
+let isClear = true;
+
 const ProductScreen = props => {
   const [selectedProduct, setSelectedProduct] = useState('');
   const { isSignIn } = useContext(AuthContext);
@@ -64,8 +66,6 @@ const ProductScreen = props => {
     appLoading,
   } = useContext(ProductContext);
 
-  let isClear = true;
-
   const navigateCheckLogin = (routeName, params) => () => {
     isClear = false;
     if (isSignIn) {
@@ -76,18 +76,12 @@ const ProductScreen = props => {
   };
 
   const productId = props.navigation.getParam('productId');
-  // console.log(
-  //   selectedProduct.color,
-  //   selectedProduct.size,
-  //   selectedProduct.quantity,
-  //   selectedProduct._id
-  // );
 
   useEffect(() => {
     const productId = props.navigation.getParam('productId');
-
     setAppLoading();
     getProduct(productId);
+    props.navigation.setParams({ navigateCheckLogin, cart });
   }, []);
 
   const handleOnAddToCart = () => {
@@ -99,13 +93,24 @@ const ProductScreen = props => {
     addCartItem(selectedProduct._id);
   };
 
-  handleAddToWishlist = () => {
+  const handleAddToWishlist = () => {
     if (!isSignIn) {
       props.navigation.navigate('Login');
       return;
     }
     setUserLoading();
     addWishlistItem(productId);
+  };
+
+  const handleScroll = event => {
+    if (
+      event.nativeEvent.contentOffset.y >
+      Dimensions.get('window').height / 2.5
+    ) {
+      props.navigation.setParams({ isScroll: true });
+      return;
+    }
+    props.navigation.setParams({ isScroll: false });
   };
 
   if (appLoading)
@@ -166,11 +171,13 @@ const ProductScreen = props => {
         onWillBlur={() => {
           if (isClear) {
             clearProduct();
+            return;
           }
+          isClear = true;
         }}
       />
       {userLoading && <LoadingComponent />}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} onScroll={handleScroll}>
         <View
           style={{
             height: Dimensions.get('window').height / 2,
@@ -211,7 +218,7 @@ const ProductScreen = props => {
             </SwiperFlatList>
           </View>
 
-          <View
+          {/* <View
             style={{
               justifyContent: 'flex-end',
               flexDirection: 'row',
@@ -241,7 +248,7 @@ const ProductScreen = props => {
                 )}
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
 
         <View style={{ marginTop: 15, marginHorizontal: 20 }}>
@@ -270,7 +277,6 @@ const ProductScreen = props => {
                 <FontAwesome name="star" color="#fee501" size={15} />
                 <FontAwesome name="star" color="#fee501" size={15} />
                 <FontAwesome name="star" color="#fee501" size={15} />
-<<<<<<< HEAD
                 <FontAwesome name="star-half-full" color="#fee501" size={15} /> */}
 
                 <Rating
@@ -279,14 +285,18 @@ const ProductScreen = props => {
                   imageSize={20}
                   style={{ paddingVertical: 10 }}
                 />
-                <TouchableOpacity>
-=======
-                <FontAwesome name="star" color="#fee501" size={15} />
-                <FontAwesome name="star-half-full" color="#fee501" size={15} />
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Review')}
+                  onPress={() => {
+                    isClear = false;
+                    props.navigation.navigate('Review', {
+                      product: {
+                        id: product.id,
+                        rating: product.ratingsAverage,
+                        nRating: product.ratingsQuantity,
+                      },
+                    });
+                  }}
                 >
->>>>>>> 1b6804e97a8332ec30c9fcd6ea44620fa3840ca9
                   <Text
                     style={{ marginLeft: 5, color: '#005494', fontSize: 15 }}
                   >
@@ -389,4 +399,64 @@ const ProductScreen = props => {
   );
 };
 
+ProductScreen.navigationOptions = ({ navigation }) => {
+  const {
+    isScroll,
+    navigateCheckLogin = () => {},
+    cart,
+  } = navigation.state.params;
+
+  return {
+    headerTransparent: !isScroll,
+    headerStyle: {
+      color: 'white',
+      backgroundColor: isScroll ? '#1d1d1d' : 'transparent',
+    },
+
+    headerTintColor: isScroll ? '#FFF' : '#000',
+    headerRight: () => {
+      return (
+        <View
+          style={{
+            // justifyContent: 'flex-end',
+            flexDirection: 'row',
+            // marginTop: 40,
+            marginRight: 40,
+          }}
+        >
+          <TouchableOpacity onPress={navigateCheckLogin('WishList')}>
+            <View style={{ marginRight: 20 }}>
+              <Ionicons
+                name="ios-heart-empty"
+                size={25}
+                color={isScroll ? '#FFF' : 'black'}
+              />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={navigateCheckLogin('Cart')}>
+            <View>
+              <Ionicons
+                name="ios-cart"
+                size={25}
+                color={isScroll ? '#FFF' : 'black'}
+              />
+              {(cart && cart.length) > 0 && (
+                <Badge
+                  value={cart.length}
+                  status="success"
+                  containerStyle={{
+                    position: 'absolute',
+                    top: -8,
+                    right: -8,
+                  }}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    },
+  };
+};
 export default ProductScreen;

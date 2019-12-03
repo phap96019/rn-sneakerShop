@@ -116,16 +116,6 @@ const RootStackNavigator = createStackNavigator(
     },
     Product: {
       screen: ProductScreen,
-      navigationOptions: () => ({
-        headerTransparent: true,
-        headerStyle: {
-          color: 'white',
-        },
-        headerTitleStyle: {
-          color: 'white',
-        },
-        // headerTintColor: '#FFF',
-      }),
     },
     Category: {
       screen: CategoryScreen,

@@ -270,7 +270,6 @@ const ProductScreen = props => {
                 <FontAwesome name="star" color="#fee501" size={15} />
                 <FontAwesome name="star" color="#fee501" size={15} />
                 <FontAwesome name="star" color="#fee501" size={15} />
-<<<<<<< HEAD
                 <FontAwesome name="star-half-full" color="#fee501" size={15} /> */}
 
                 <Rating
@@ -280,13 +279,6 @@ const ProductScreen = props => {
                   style={{ paddingVertical: 10 }}
                 />
                 <TouchableOpacity>
-=======
-                <FontAwesome name="star" color="#fee501" size={15} />
-                <FontAwesome name="star-half-full" color="#fee501" size={15} />
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Review')}
-                >
->>>>>>> 1b6804e97a8332ec30c9fcd6ea44620fa3840ca9
                   <Text
                     style={{ marginLeft: 5, color: '#005494', fontSize: 15 }}
                   >

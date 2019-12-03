@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import ReviewComponent from '../components/ReviewComponent';
+import { Context as ReviewContext } from '../context/ReviewContext';
 
 const Datatemp = [
   {
@@ -89,6 +90,10 @@ const Datatemp = [
 ];
 
 const ReviewScreen = props => {
+  const { setLoading, setAppLoading, getReview } = useContext(ReviewContext);
+  useEffect(() => {
+    
+  }, [])
   return (
     <View style={{ flex: 1 }}>
       <ScrollView

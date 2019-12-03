@@ -21,6 +21,7 @@ import { NavigationEvents } from 'react-navigation';
 import { Badge } from 'react-native-elements';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { Rating } from 'react-native-ratings';
+import { ToastAndroid } from 'react-native';
 
 const styles = StyleSheet.create({
   TextStyle: {
@@ -45,15 +46,19 @@ const styles = StyleSheet.create({
 });
 
 let isClear = true;
+// let isLoading = true;
+let actionName = '';
 
 const ProductScreen = props => {
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const { isSignIn } = useContext(AuthContext);
+
   const {
     cart,
+    error,
+    clearError,
     loading: userLoading,
-    getMe,
-    getCart,
     addWishlistItem,
     addCartItem,
     setLoading: setUserLoading,
@@ -78,22 +83,43 @@ const ProductScreen = props => {
   const productId = props.navigation.getParam('productId');
 
   useEffect(() => {
-    const productId = props.navigation.getParam('productId');
-    setAppLoading();
-    getProduct(productId);
+    if (isLoading) {
+      const productId = props.navigation.getParam('productId');
+      setAppLoading();
+      getProduct(productId);
+      setIsLoading(false);
+    }
     props.navigation.setParams({ navigateCheckLogin, cart });
-  }, []);
+
+    if (error) {
+      const errDisplay = error.startsWith('Duplicate')
+        ? `Product already exists in your ${actionName}`
+        : error;
+      ToastAndroid.showWithGravityAndOffset(
+        errDisplay,
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP,
+        25,
+        150
+      );
+      clearError();
+    }
+  }, [cart, error]);
 
   const handleOnAddToCart = () => {
+    setIsLoading(false);
+    actionName = 'Cart';
     if (!isSignIn) {
       props.navigation.navigate('Login');
       return;
     }
     setUserLoading();
     addCartItem(selectedProduct._id);
+    console.log(error);
   };
 
   const handleAddToWishlist = () => {
+    actionName = 'Wishlist';
     if (!isSignIn) {
       props.navigation.navigate('Login');
       return;
@@ -411,6 +437,7 @@ ProductScreen.navigationOptions = ({ navigation }) => {
     headerStyle: {
       color: 'white',
       backgroundColor: isScroll ? '#1d1d1d' : 'transparent',
+      shadowColor: isScroll ? '#1d1d1d' : 'transparent',
     },
 
     headerTintColor: isScroll ? '#FFF' : '#000',

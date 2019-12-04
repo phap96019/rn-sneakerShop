@@ -29,9 +29,9 @@ const NoficationOrderScreen = props => {
       <View style={{ flexDirection: 'row' }}>
         <ButtonComponent
           activeOpacity={0.8}
-          title="Continue shopping"
+          title="View your orders"
           handleOnPress={() => {
-            props.navigation.replace('Main');
+            props.navigation.replace('Order');
           }}
           containerStyle={{ flex: 1 }}
         />

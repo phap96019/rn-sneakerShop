@@ -18,6 +18,9 @@ import LoadingComponent from '../components/LoadingComponent';
 import trimData from '../utils/trimData';
 import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import { ScrollView } from 'react-native-gesture-handler';
+import { Context as orderContext } from '../context/OrderContext';
+import { NavigationEvents } from 'react-navigation';
+import ItemInOrderComponent from '../components/ItemInOrderComponent';
 
 const styles = StyleSheet.create({
   container: {
@@ -37,24 +40,50 @@ data2 = [
     pic:
       'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
-  {
-    id: 1,
-    name: 'Giày loại A',
-    size: 'Size: 40',
-    cost: 200,
-    pic: 'https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg',
-  },
 ];
 dataInfo = {
-  id: 2232334,
-  date: '12/12/2019',
-  stt: 'being transported',
-  name: 'Truong Phap',
-  phone: '0915227229',
-  address: 'Kí túc xá khu B',
+  id: '',
+  date: '',
+  stt: '',
+  name: '',
+  phone: '',
+  address: '',
   cost: 200,
 };
-const OrderDetailScreen = () => {
+const OrderDetailScreen = props => {
+  const orderId = props.navigation.getParam('orderId');
+  const {
+    getOrder,
+    setLoading,
+    setAppLoading,
+    order,
+    loading,
+    clearDetailOrder,
+  } = useContext(orderContext);
+  if (order) {
+    dataInfo.id = order._id.toString();
+    dataInfo.date = new Date(order.createdAt).toDateString();
+    dataInfo.stt = order.paid ? 'Purchased' : 'Not purchased';
+    dataInfo.name = order.name;
+    dataInfo.phone = order.phone;
+    dataInfo.address = order.address;
+    dataInfo.cost = order.price.toString();
+  }
+  useEffect(() => {
+    const orderId = props.navigation.getParam('orderId');
+    setLoading();
+    getOrder(orderId);
+  }, []);
+  if (order) {
+    console.log(order.variants);
+  }
+
+  if (!order || loading)
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <LoadingComponent />
+      </View>
+    );
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -66,6 +95,11 @@ const OrderDetailScreen = () => {
             paddingTop: 15,
           }}
         >
+          <NavigationEvents
+            onWillBlur={() => {
+              clearDetailOrder();
+            }}
+          />
           <Text
             style={{ fontSize: 18, fontWeight: 'bold' }}
           >{`ID: ${dataInfo.id}`}</Text>
@@ -93,10 +127,10 @@ const OrderDetailScreen = () => {
           </Text>
           <View>
             <FlatList
-              data={data2}
-              keyExtractor={data => data.id.toString()}
+              data={order.variants}
+              keyExtractor={data => data._id.toString()}
               renderItem={({ item }) => (
-                <SearchResultItemComponent
+                <ItemInOrderComponent
                   item={item}
                   activeOpacity={0.8}
                   handleOnPress={() => {}}

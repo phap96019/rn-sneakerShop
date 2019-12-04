@@ -20,6 +20,9 @@ import WishListItemComponent from '../components/WishListItemComponent';
 import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import { Ionicons } from '@expo/vector-icons';
 import LoadingComponent from '../components/LoadingComponent';
+import { NavigationEvents } from 'react-navigation';
+import AnimationViewComponent from '../components/AnimationViewComponent';
+import sourceAnimation from '../assets/emptybox.json';
 
 data2 = [
   {
@@ -30,69 +33,28 @@ data2 = [
     pic:
       'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
   },
-  {
-    id: 1,
-    name: 'Giày loại A',
-    size: 'Size: 40',
-    cost: 200,
-    pic: 'https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg',
-  },
-  {
-    id: 2,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 3,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 4,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 5,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 6,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
 ];
 
 const CategoryResultScreen = props => {
-  const { searchProducts, setLoading, products, loading } = useContext(
-    ProductContext
-  );
+  const {
+    searchProducts,
+    setLoading,
+    clearProducts,
+    products,
+    loading,
+    searchQuery,
+  } = useContext(ProductContext);
   useEffect(() => {
-    if (!products) {
+    if (!products || searchQuery) {
       const search = props.navigation.getParam('search');
       const field = props.navigation.getParam('field');
       const type = props.navigation.getParam('type');
       setLoading();
       searchProducts(search, 'CategoryResult', field, type);
       console.log(products);
+      return () => {};
     }
-  }, [products]);
+  }, []);
   if (loading) {
     return (
       <View
@@ -108,6 +70,50 @@ const CategoryResultScreen = props => {
       </View>
     );
   }
+  if (!products || (products && !products.length)) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: 'space-around',
+          alignItems: 'center',
+          marginHorizontal: 15,
+          marginVertical: 80,
+        }}
+      >
+        <AnimationViewComponent
+          animationStyle={{ width: 200, height: 200 }}
+          autoPlay
+          source={sourceAnimation}
+        />
+        <View>
+          <Text
+            style={{
+              textAlign: 'center',
+              fontSize: 20,
+              fontWeight: 'bold',
+              marginVertical: 10,
+            }}
+          >
+            Opps! Your products is empty
+          </Text>
+          <Text style={{ textAlign: 'center' }}>
+            Add somthing to make me happy:)
+          </Text>
+        </View>
+        <View style={{ flexDirection: 'row', marginVertical: 15 }}>
+          <ButtonComponent
+            activeOpacity={0.8}
+            title="Go back"
+            handleOnPress={() => {
+              props.navigation.pop();
+            }}
+            containerStyle={{ flex: 1 }}
+          />
+        </View>
+      </View>
+    );
+  }
   return (
     <View
       style={{
@@ -118,6 +124,12 @@ const CategoryResultScreen = props => {
         paddingBottom: 20,
       }}
     >
+      <NavigationEvents
+        onWillBlur={() => {
+          clearProducts();
+        }}
+      />
+
       <ScrollView>
         {/* ============= List ============ */}
         <View>

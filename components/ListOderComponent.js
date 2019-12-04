@@ -26,9 +26,12 @@ const ListOrderComponent = ({
   textStyle,
   handleOnPress,
   title,
+  index,
 
   ...props
 }) => {
+  const date = new Date(item.createdAt).toUTCString();
+  const isPaid = item.paid ? 'Purchased' : 'Not purchased';
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -42,9 +45,11 @@ const ListOrderComponent = ({
         }}
       >
         <View style={styles.info}>
-          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{'ID: ' + item.id}</Text>
-          <Text style={{}}>{`Date: ${item.date}`}</Text>
-          <Text style={{ fontWeight: 'bold' }}>{`Status: ${item.status}`}</Text>
+          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+            {'Order: ' + `#${index + 1}`}
+          </Text>
+          <Text style={{}}>{`Date: ${date}`}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{`Status: ${isPaid}`}</Text>
         </View>
       </TouchableOpacity>
     </View>

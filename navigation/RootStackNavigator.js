@@ -144,7 +144,7 @@ const RootStackNavigator = createStackNavigator(
     NoficationOrder: {
       screen: NoficationOrderScreen,
       navigationOptions: () => ({
-        title: 'Nofication',
+        // header: null,
       }),
     },
     OrderDetail: {
@@ -167,7 +167,7 @@ const RootStackNavigator = createStackNavigator(
     },
   },
   {
-    // initialRouteName: 'OrderDetail',
+    // initialRouteName: 'Order',
   }
 );
 

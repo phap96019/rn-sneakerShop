@@ -61,7 +61,7 @@ const CartScreen = props => {
               Opps! Your cart is empty
             </Text>
             <Text style={{ textAlign: 'center' }}>
-              Add somthing to make me happy:)
+              {`Add somthing to make me happy:)`}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', marginVertical: 15 }}>
@@ -107,25 +107,6 @@ const CartScreen = props => {
                     />
                   )}
                 />
-              </View>
-
-              <View>
-                <View style={styles.totalContainer}>
-                  <Text style={styles.total}>Total:</Text>
-                  <Text style={styles.total}>{` $ ${renderTotal()}`}</Text>
-                </View>
-                <ButtonComponent
-                  activeOpacity={0.8}
-                  containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
-                  title="Proceed to ordering"
-                  handleOnPress={() => {
-                    props.navigation.navigate('Product', {
-                      productId: item.variant.product._id,
-                      cart,
-                    });
-                  }}
-                />
-                )} />
               </View>
 
               <View>

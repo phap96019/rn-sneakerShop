@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  ToastAndroid,
 } from 'react-native';
 import { Context as UserContext } from '../context/UserContext';
 import ButtonComponent from '../components/ButtonComponent';
@@ -25,14 +26,14 @@ const GetInfoToOrderScreen = props => {
   });
   const {
     user,
-    error,
+
     loading,
     updateMe,
     getMe,
-    clearError,
+
     setLoading,
   } = useContext(UserContext);
-  const { createOrder } = useContext(orderContext);
+  const { createOrder, error, clearError } = useContext(orderContext);
 
   const price = props.navigation.getParam('price');
   let variants = props.navigation.getParam('cart');
@@ -44,7 +45,6 @@ const GetInfoToOrderScreen = props => {
   });
 
   useEffect(() => {
-    console.log(variants);
     if (!user) {
       setLoading();
       getMe();
@@ -53,7 +53,17 @@ const GetInfoToOrderScreen = props => {
       const { name = '', phone = '', address = '' } = user;
       setInputData({ ...inputData, name, phone, address });
     }
-  }, [user]);
+    if (error) {
+      ToastAndroid.showWithGravityAndOffset(
+        error,
+        ToastAndroid.LONG,
+        ToastAndroid.TOP,
+        25,
+        150
+      );
+      clearError();
+    }
+  }, [user, error]);
   const { name, phone, address } = inputData;
   const handleOnChange = key => text => {
     setInputData({ ...inputData, [key]: text });

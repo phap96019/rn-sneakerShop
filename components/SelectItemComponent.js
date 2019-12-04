@@ -5,6 +5,7 @@ import { withTheme } from 'react-native-elements';
 
 const SelectItemComponent = ({ att, active, type, handlePress }) => {
   const minWidth = type === 'color' ? 65 : 45;
+
   return (
     <TouchableOpacity
       style={{
@@ -42,9 +43,8 @@ const SelectItemComponent = ({ att, active, type, handlePress }) => {
           minWidth,
         }}
       >
-        {att}
+        {type === 'color' ? att.charAt(0).toUpperCase() + att.slice(1) : att}
       </Text>
-      {/* </View> */}
     </TouchableOpacity>
   );
 };

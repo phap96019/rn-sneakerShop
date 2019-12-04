@@ -21,6 +21,7 @@ import { NavigationEvents } from 'react-navigation';
 import { Badge } from 'react-native-elements';
 import SwiperFlatList from 'react-native-swiper-flatlist';
 import { Rating } from 'react-native-ratings';
+import { ToastAndroid } from 'react-native';
 
 const styles = StyleSheet.create({
   TextStyle: {
@@ -44,14 +45,20 @@ const styles = StyleSheet.create({
   },
 });
 
+let isClear = true;
+// let isLoading = true;
+let actionName = '';
+
 const ProductScreen = props => {
   const [selectedProduct, setSelectedProduct] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
   const { isSignIn } = useContext(AuthContext);
+
   const {
     cart,
+    error,
+    clearError,
     loading: userLoading,
-    getMe,
-    getCart,
     addWishlistItem,
     addCartItem,
     setLoading: setUserLoading,
@@ -64,8 +71,6 @@ const ProductScreen = props => {
     appLoading,
   } = useContext(ProductContext);
 
-  let isClear = true;
-
   const navigateCheckLogin = (routeName, params) => () => {
     isClear = false;
     if (isSignIn) {
@@ -76,36 +81,62 @@ const ProductScreen = props => {
   };
 
   const productId = props.navigation.getParam('productId');
-  // console.log(
-  //   selectedProduct.color,
-  //   selectedProduct.size,
-  //   selectedProduct.quantity,
-  //   selectedProduct._id
-  // );
 
   useEffect(() => {
-    const productId = props.navigation.getParam('productId');
+    if (isLoading) {
+      const productId = props.navigation.getParam('productId');
+      setAppLoading();
+      getProduct(productId);
+      setIsLoading(false);
+    }
+    props.navigation.setParams({ navigateCheckLogin, cart });
 
-    setAppLoading();
-    getProduct(productId);
-  }, []);
+    if (error) {
+      const errDisplay = error.startsWith('Duplicate')
+        ? `Product already exists in your ${actionName}`
+        : error;
+      ToastAndroid.showWithGravityAndOffset(
+        errDisplay,
+        ToastAndroid.SHORT,
+        ToastAndroid.TOP,
+        25,
+        150
+      );
+      clearError();
+    }
+  }, [cart, error]);
 
   const handleOnAddToCart = () => {
+    setIsLoading(false);
+    actionName = 'Cart';
     if (!isSignIn) {
       props.navigation.navigate('Login');
       return;
     }
     setUserLoading();
     addCartItem(selectedProduct._id);
+    console.log(error);
   };
 
-  handleAddToWishlist = () => {
+  const handleAddToWishlist = () => {
+    actionName = 'Wishlist';
     if (!isSignIn) {
       props.navigation.navigate('Login');
       return;
     }
     setUserLoading();
     addWishlistItem(productId);
+  };
+
+  const handleScroll = event => {
+    if (
+      event.nativeEvent.contentOffset.y >
+      Dimensions.get('window').height / 2.5
+    ) {
+      props.navigation.setParams({ isScroll: true });
+      return;
+    }
+    props.navigation.setParams({ isScroll: false });
   };
 
   if (appLoading)
@@ -166,11 +197,13 @@ const ProductScreen = props => {
         onWillBlur={() => {
           if (isClear) {
             clearProduct();
+            return;
           }
+          isClear = true;
         }}
       />
       {userLoading && <LoadingComponent />}
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} onScroll={handleScroll}>
         <View
           style={{
             height: Dimensions.get('window').height / 2,
@@ -211,7 +244,7 @@ const ProductScreen = props => {
             </SwiperFlatList>
           </View>
 
-          <View
+          {/* <View
             style={{
               justifyContent: 'flex-end',
               flexDirection: 'row',
@@ -241,7 +274,7 @@ const ProductScreen = props => {
                 )}
               </View>
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
 
         <View style={{ marginTop: 15, marginHorizontal: 20 }}>
@@ -278,7 +311,18 @@ const ProductScreen = props => {
                   imageSize={20}
                   style={{ paddingVertical: 10 }}
                 />
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    isClear = false;
+                    props.navigation.navigate('Review', {
+                      product: {
+                        id: product.id,
+                        rating: product.ratingsAverage,
+                        nRating: product.ratingsQuantity,
+                      },
+                    });
+                  }}
+                >
                   <Text
                     style={{ marginLeft: 5, color: '#005494', fontSize: 15 }}
                   >
@@ -381,4 +425,65 @@ const ProductScreen = props => {
   );
 };
 
+ProductScreen.navigationOptions = ({ navigation }) => {
+  const {
+    isScroll,
+    navigateCheckLogin = () => {},
+    cart,
+  } = navigation.state.params;
+
+  return {
+    headerTransparent: !isScroll,
+    headerStyle: {
+      color: 'white',
+      backgroundColor: isScroll ? '#1d1d1d' : 'transparent',
+      shadowColor: isScroll ? '#1d1d1d' : 'transparent',
+    },
+
+    headerTintColor: isScroll ? '#FFF' : '#000',
+    headerRight: () => {
+      return (
+        <View
+          style={{
+            // justifyContent: 'flex-end',
+            flexDirection: 'row',
+            // marginTop: 40,
+            marginRight: 40,
+          }}
+        >
+          <TouchableOpacity onPress={navigateCheckLogin('WishList')}>
+            <View style={{ marginRight: 20 }}>
+              <Ionicons
+                name="ios-heart-empty"
+                size={25}
+                color={isScroll ? '#FFF' : 'black'}
+              />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={navigateCheckLogin('Cart')}>
+            <View>
+              <Ionicons
+                name="ios-cart"
+                size={25}
+                color={isScroll ? '#FFF' : 'black'}
+              />
+              {(cart && cart.length) > 0 && (
+                <Badge
+                  value={cart.length}
+                  status="success"
+                  containerStyle={{
+                    position: 'absolute',
+                    top: -8,
+                    right: -8,
+                  }}
+                />
+              )}
+            </View>
+          </TouchableOpacity>
+        </View>
+      );
+    },
+  };
+};
 export default ProductScreen;

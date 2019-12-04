@@ -85,7 +85,8 @@ const PickProductComponent = ({
           contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-start' }}
           data={colorList}
           keyExtractor={color => color}
-          horizontal
+          numColumns={4}
+          // horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <SelectItemComponent

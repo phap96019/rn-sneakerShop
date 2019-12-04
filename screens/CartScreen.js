@@ -77,6 +77,7 @@ const CartScreen = props => {
         </View>
       );
     }
+    const price = renderTotal();
     return (
       <View style={{ justifyContent: 'center', flex: 1 }}>
         {loading && <LoadingComponent />}
@@ -118,7 +119,26 @@ const CartScreen = props => {
                   containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
                   title="Proceed to ordering"
                   handleOnPress={() => {
-                    props.navigation.navigate('GetInfo');
+                    props.navigation.navigate('Product', {
+                      productId: item.variant.product._id,
+                      cart,
+                    });
+                  }}
+                />
+                )} />
+              </View>
+
+              <View>
+                <View style={styles.totalContainer}>
+                  <Text style={styles.total}>Total:</Text>
+                  <Text style={styles.total}>{` $ ${price}`}</Text>
+                </View>
+                <ButtonComponent
+                  activeOpacity={0.8}
+                  containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
+                  title="Proceed to ordering"
+                  handleOnPress={() => {
+                    props.navigation.navigate('GetInfo', { price, cart });
                   }}
                 />
               </View>

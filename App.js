@@ -5,6 +5,8 @@ import { setNavigator } from './utils/navigationRef';
 import { Provider as AuthProvider } from './context/AuthContext';
 import { Provider as UserProvider } from './context/UserContext';
 import { Provider as ProductProvider } from './context/ProductContext';
+import { Provider as ReviewProvider } from './context/ReviewContext';
+import { Provider as OrderProvider } from './context/OrderContext';
 
 const prefix = Expo.Linking.makeUrl('/');
 export default function App() {
@@ -12,14 +14,18 @@ export default function App() {
   return (
     <AuthProvider>
       <UserProvider>
-        <ProductProvider>
-          <RootStackNavigator
-            uriPrefix={prefix}
-            ref={navigator => {
-              setNavigator(navigator);
-            }}
-          />
-        </ProductProvider>
+        <ReviewProvider>
+          <OrderProvider>
+            <ProductProvider>
+              <RootStackNavigator
+                uriPrefix={prefix}
+                ref={navigator => {
+                  setNavigator(navigator);
+                }}
+              />
+            </ProductProvider>
+          </OrderProvider>
+        </ReviewProvider>
       </UserProvider>
     </AuthProvider>
   );

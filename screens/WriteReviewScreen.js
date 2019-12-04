@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,8 @@ import {
   Dimensions,
 } from 'react-native';
 import { AirbnbRating } from 'react-native-ratings';
+import { Context as ReviewContext } from '../context/ReviewContext';
+import trimData from '../utils/trimData';
 
 const DataX = [
   {
@@ -20,12 +22,49 @@ const DataX = [
   },
 ];
 
-const WriteReviewScreen = () => {
-  const [comment, writeComment] = useState('');
+const WriteReviewScreen = props => {
+  const {
+    setLoading,
+    setAppLoading,
+    getReview,
+    reviews,
+    createReview,
+  } = useContext(ReviewContext);
+
   const [rating, setRating] = useState(0);
+
+  const productId = props.navigation.getParam('productId');
+
   const ratingCompleted = rated => {
     console.log('Rating is: ' + rated);
     setRating(rated);
+  };
+
+  const [inputData, setInputData] = useState({
+    review: '',
+  });
+
+  const { review } = inputData;
+  const handleOnChange = name => text => {
+    setInputData({ ...inputData, [name]: text });
+  };
+  const handleOnSubmit = () => {
+    // Trim data to clear space
+    const cleanData = trimData(inputData);
+
+    // Update data input.
+    // Don't send inputData to context beacause setInputData is async fuction
+    setInputData(cleanData);
+
+    // Dismiss keyboard
+    // Keyboard.dismiss();
+
+    // Cleare error on screen
+    // clearError();
+
+    // Set lottie loading
+    setLoading();
+    createReview(productId, { rating, review });
   };
 
   return (
@@ -61,16 +100,16 @@ const WriteReviewScreen = () => {
           marginVertical: 10,
           fontSize: 18,
         }}
-        placeholder="Write comment..."
+        placeholder="Write review..."
         autoCapitalize="none"
         autoCorrect={false}
-        value={comment}
-        onChangeText={newValue => writeComment(newValue)}
+        value={review}
+        onChangeText={handleOnChange('review')}
       />
-      {comment.length < 2000 ? (
+      {review.length < 2000 ? (
         <View style={{ alignItems: 'flex-end', marginBottom: 10 }}>
           <Text style={{ fontSize: 13, color: 'black' }}>
-            {comment.length}/2000
+            {review.length}/2000
           </Text>
         </View>
       ) : (
@@ -87,6 +126,8 @@ const WriteReviewScreen = () => {
           backgroundColor: '#1d1d1d',
           borderRadius: 10,
         }}
+        
+        onPress={handleOnSubmit}
       >
         <Text
           style={{

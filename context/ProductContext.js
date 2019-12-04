@@ -62,6 +62,14 @@ const productReducer = (state, action) => {
         loading: '',
         product: null,
       };
+    case 'CLEAR_PRODUCTS':
+      return {
+        ...state,
+        error: '',
+        appLoading: '',
+        loading: '',
+        products: null,
+      };
     case 'SET_PRODUCT_ERROR':
       return {
         ...state,
@@ -94,7 +102,10 @@ const searchProducts = dispatch => async (
   type = 'regex'
 ) => {
   try {
-    const nameCapitalized = text.charAt(0).toUpperCase() + text.slice(1);
+    let nameCapitalized = text.charAt(0).toUpperCase() + text.slice(1);
+    if (type === 'in') {
+      nameCapitalized = `[${nameCapitalized}]`;
+    }
     const query = `&${field}[${type}]=${nameCapitalized}`;
     console.log(`/api/v1/products?${query}`);
 
@@ -217,6 +228,11 @@ const clearProduct = dispatch => () => {
   dispatch({ type: 'CLEAR_PRODUCT' });
 };
 
+const clearProducts = dispatch => () => {
+  console.log('clear products');
+  dispatch({ type: 'CLEAR_PRODUCTS' });
+};
+
 export const { Provider, Context } = contextFactory(
   productReducer,
   {
@@ -228,6 +244,7 @@ export const { Provider, Context } = contextFactory(
     clearFilter,
     sortProducts,
     clearProduct,
+    clearProducts,
   },
   {
     products: null,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {
   View,
   Text,
@@ -7,90 +7,29 @@ import {
   ScrollView,
 } from 'react-native';
 import ReviewComponent from '../components/ReviewComponent';
+import { Context as ReviewContext } from '../context/ReviewContext';
+import { Context as UserContext } from '../context/UserContext';
 import RatingChart from '../components/RatingChart';
 
-const Datatemp = [
-  {
-    id: 0,
-    user: 'Irene',
-    title: 'Ok',
-    comment: 'You are gorgeous',
-    rate: 5,
-    pic:
-      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
-    status: 'Purchased',
-    createdAt: 'Oct 10 2019',
-  },
-  {
-    id: 1,
-    user: 'Alex',
-    title: 'Ok',
-    comment: 'Good',
-    rate: 5,
-    pic:
-      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
-    status: 'Purchased',
-    createdAt: 'Oct 10 2019',
-  },
-  {
-    id: 2,
-    user: 'Leonardo',
-    title: 'Ok',
-    comment: "It's ok",
-    rate: 5,
-    pic:
-      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
-    status: 'Purchased',
-    createdAt: 'Oct 10 2019',
-  },
-  {
-    id: 3,
-    user: 'Jennie',
-    title: 'Ok',
-    comment: 'Love you guys',
-    rate: 5,
-    pic:
-      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
-    status: 'Purchased',
-    createdAt: 'Oct 10 2019',
-  },
-  {
-    id: 4,
-    user: 'Chris',
-    title: 'Ok',
-    comment: 'This is a comment about this product.',
-    rate: 5,
-    pic:
-      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
-    status: 'Purchased',
-    createdAt: 'Oct 10 2019',
-  },
-  {
-    id: 5,
-    user: 'Chris',
-    title: 'Ok',
-    comment: 'This is a comment about this product.',
-    rate: 5,
-    pic:
-      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
-    status: 'Purchased',
-    createdAt: 'Oct 10 2019',
-  },
-  {
-    id: 6,
-    user: 'Chris',
-    title: 'Ok',
-    comment: 'This is a comment about this product.',
-    rate: 5,
-    pic:
-      'https://vcdn.tikicdn.com/ts/review/48/c8/ee/96f5c3a0d6bf6828e29bd7b9bada2304.jpg',
-    status: 'Purchased',
-    createdAt: 'Oct 10 2019',
-  },
-];
-
 const ReviewScreen = props => {
+  const { setLoading, setAppLoading, getReview, reviews } = useContext(
+    ReviewContext
+  );
+  const { user } = useContext(UserContext);
   const product = props.navigation.getParam('product');
+  useEffect(() => {
+    getReview(product.id);
+  }, []);
+
+  // console.log(reviews);
+
+  const isNotReviewed = () => {
+    if(!reviews) return true;
+    const review = reviews.find(review => review.user._id.toString() === user._id.toString())
+    if(review) return false;
+    return true;
+  } 
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -98,7 +37,7 @@ const ReviewScreen = props => {
           flex: 1,
           marginVertical: 5,
           marginHorizontal: 20,
-          marginBottom: 53,
+          marginBottom: isNotReviewed() ? 53 : 0,
         }}
         showsVerticalScrollIndicator={false}
       >
@@ -107,10 +46,10 @@ const ReviewScreen = props => {
           rating={product.rating}
           nRating={product.nRating}
         />
-        <Text style={{ fontSize: 15, marginBottom: 0 }}>13 Reviews</Text>
+        {/* <Text style={{ fontSize: 15, marginBottom: 0 }}>13 Reviews</Text> */}
         <FlatList
-          data={Datatemp}
-          keyExtractor={data => data.id.toString()}
+          data={reviews}
+          keyExtractor={data => data._id.toString()}
           horizontal={false}
           showsVerticalScrollIndicator={false}
           scrollEnabled={false}
@@ -119,7 +58,8 @@ const ReviewScreen = props => {
           }}
         />
       </ScrollView>
-      <View
+{
+        isNotReviewed() && <View
         style={{
           position: 'absolute',
           bottom: 5,
@@ -138,7 +78,7 @@ const ReviewScreen = props => {
           }}
           onPress={() => {
             console.log('Press here');
-            props.navigation.navigate('WriteReview');
+            props.navigation.navigate('WriteReview', { productId: product.id });
           }}
         >
           <Text
@@ -153,6 +93,7 @@ const ReviewScreen = props => {
           </Text>
         </TouchableOpacity>
       </View>
+}
     </View>
   );
 };

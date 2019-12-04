@@ -77,6 +77,7 @@ const CartScreen = props => {
         </View>
       );
     }
+    const price = renderTotal();
     return (
       <ScrollView
         contentContainerStyle={{
@@ -99,6 +100,7 @@ const CartScreen = props => {
                   handleOnPress={() => {
                     props.navigation.navigate('Product', {
                       productId: item.variant.product._id,
+                      cart,
                     });
                   }}
                 />
@@ -109,14 +111,14 @@ const CartScreen = props => {
           <View>
             <View style={styles.totalContainer}>
               <Text style={styles.total}>Total:</Text>
-              <Text style={styles.total}>{` $ ${renderTotal()}`}</Text>
+              <Text style={styles.total}>{` $ ${price}`}</Text>
             </View>
             <ButtonComponent
               activeOpacity={0.8}
               containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
               title="Proceed to ordering"
               handleOnPress={() => {
-                props.navigation.navigate('GetInfo');
+                props.navigation.navigate('GetInfo', { price, cart });
               }}
             />
           </View>

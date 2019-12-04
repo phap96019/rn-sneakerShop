@@ -15,6 +15,7 @@ import ButtonComponent from '../components/ButtonComponent';
 import InputComponent from '../components/InputComponent';
 import LoadingComponent from '../components/LoadingComponent';
 import trimData from '../utils/trimData';
+import { Context as orderContext } from '../context/OrderContext';
 
 const GetInfoToOrderScreen = props => {
   const [inputData, setInputData] = useState({
@@ -31,7 +32,19 @@ const GetInfoToOrderScreen = props => {
     clearError,
     setLoading,
   } = useContext(UserContext);
+  const { createOrder } = useContext(orderContext);
+
+  const price = props.navigation.getParam('price');
+  let variants = props.navigation.getParam('cart');
+  variants = variants.map(item => {
+    return {
+      variant: item.variant._id.toString(),
+      quantity: item.quantity,
+    };
+  });
+
   useEffect(() => {
+    console.log(variants);
     if (!user) {
       setLoading();
       getMe();
@@ -45,6 +58,29 @@ const GetInfoToOrderScreen = props => {
   const handleOnChange = key => text => {
     setInputData({ ...inputData, [key]: text });
   };
+  // =========
+
+  const handleOnSubmit = () => {
+    // Trim data to clear space
+    const cleanData = trimData(inputData);
+
+    // Update data input.
+    // Don't send inputData to context beacause setInputData is async fuction
+    setInputData(cleanData);
+
+    // Dismiss keyboard
+    // Keyboard.dismiss();
+
+    // Cleare error on screen
+    // clearError();
+
+    // Set lottie loading
+    setLoading();
+
+    // Handle login
+    createOrder({ name, phone, address, price, variants });
+  };
+  // ==========
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={{ flex: 1, justifyContent: 'space-around', padding: 15 }}>
@@ -76,7 +112,7 @@ const GetInfoToOrderScreen = props => {
           containerStyle={{ marginTop: 20 }}
           title="Confirm order"
           handleOnPress={() => {
-            props.navigation.navigate('NoficationOrder');
+            handleOnSubmit();
           }}
         />
       </View>

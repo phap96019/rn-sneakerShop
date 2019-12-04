@@ -12,6 +12,7 @@ import {
 import { Context as ProductContext } from '../context/ProductContext';
 import { Ionicons } from '@expo/vector-icons';
 import { Tile } from 'react-native-elements';
+import { navigate } from '../utils/navigationRef';
 
 const styles = StyleSheet.create({
   Container: {
@@ -96,6 +97,7 @@ const SearchScreen = props => {
           >
             <View>
               <Tile
+                onPress={searchBrand('Nike')}
                 width={Dimensions.get('window').width - 30}
                 height={Dimensions.get('window').height / 3}
                 imageSrc={require('../assets/nike.jpg')}
@@ -124,6 +126,7 @@ const SearchScreen = props => {
                 caption="Just Do It"
               />
               <Tile
+                onPress={searchBrand('Adidas')}
                 width={Dimensions.get('window').width - 30}
                 height={Dimensions.get('window').height / 3}
                 imageSrc={require('../assets/adidas.jpg')}
@@ -152,10 +155,11 @@ const SearchScreen = props => {
                 caption="Impossible is nothing"
               />
               <Tile
+                onPress={searchBrand('Vans')}
                 width={Dimensions.get('window').width - 30}
                 height={Dimensions.get('window').height / 3}
-                imageSrc={require('../assets/jordan.jpg')}
-                title="JORDAN"
+                imageSrc={require('../assets/vans.jpg')}
+                title="VANS"
                 featured
                 containerStyle={{
                   borderRadius: 10,
@@ -177,7 +181,7 @@ const SearchScreen = props => {
                   backgroundColor: 'rgba(0, 0, 0, 0.5)',
                   borderRadius: 10,
                 }}
-                caption="Become Legendary"
+                caption="Off The Wall"
               />
             </View>
           </View>
@@ -185,6 +189,13 @@ const SearchScreen = props => {
       </View>
     </TouchableWithoutFeedback>
   );
+};
+const searchBrand = brand => () => {
+  navigate('CategoryResult', {
+    search: brand,
+    field: 'brand',
+    title: brand,
+  });
 };
 
 export default SearchScreen;

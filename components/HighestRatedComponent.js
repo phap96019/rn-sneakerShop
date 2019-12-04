@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import SmallListItemComponent from './SmallListItemComponent';
 import apiHelper from '../utils/apiHelper';
-import BigListItemComponent from './BigListItemComponent';
+
 import { navigate } from '../utils/navigationRef';
 
-const NewArriavalComponent = props => {
+const HighestRatedComponent = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
-    const { data } = await apiHelper.get(`/api/v1/products?limit=5`);
+    const { data } = await apiHelper.get(
+      `/api/v1/products?sort=-ratingsAverage&limit=5`
+    );
     setItems(data.data.data);
     setIsLoading(false);
   };
@@ -18,7 +21,6 @@ const NewArriavalComponent = props => {
     setIsLoading(true);
     fetchData();
   }, []);
-
   return (
     <View>
       <View
@@ -26,15 +28,17 @@ const NewArriavalComponent = props => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          margin: 20,
+          marginHorizontal: 20,
+          marginBottom: 20,
+          marginTop: 50,
         }}
       >
-        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>New Arrival</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 25 }}>Highest Rated</Text>
         <TouchableOpacity
           onPress={() =>
             navigate('CategoryResult', {
-              search: '',
-              title: 'New Arrival',
+              search: '&sort=-ratingsAverage',
+              title: 'Highest Rated',
             })
           }
         >
@@ -42,24 +46,14 @@ const NewArriavalComponent = props => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ marginLeft: 20 }}>
-        {/* <FlatList
-          data={dataX}
+      <View style={{ marginLeft: 20, marginBottom: 20 }}>
+        <FlatList
+          data={items}
           keyExtractor={data => data.id.toString()}
           horizontal
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => {
-            return <BigListItemComponent item={item} />;
-          }}
-        /> */}
-
-        <FlatList
-          data={items}
-          keyExtractor={item => item.id}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => {
-            return <BigListItemComponent item={item} isLoading={isLoading} />;
+            return <SmallListItemComponent item={item} />;
           }}
         />
       </View>
@@ -67,4 +61,4 @@ const NewArriavalComponent = props => {
   );
 };
 
-export default NewArriavalComponent;
+export default HighestRatedComponent;

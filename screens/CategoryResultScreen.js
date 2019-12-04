@@ -21,64 +21,6 @@ import SearchResultItemComponent from '../components/SearchResultItemComponent';
 import { Ionicons } from '@expo/vector-icons';
 import LoadingComponent from '../components/LoadingComponent';
 
-data2 = [
-  {
-    id: 0,
-    name: 'Giày loại X',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 1,
-    name: 'Giày loại A',
-    size: 'Size: 40',
-    cost: 200,
-    pic: 'https://file.yes24.vn/Upload/ProductImage/anvietsh/1963437_L.jpg',
-  },
-  {
-    id: 2,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 3,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 4,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 5,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-  {
-    id: 6,
-    name: 'Giày loại b',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-];
-
 const CategoryResultScreen = props => {
   const { searchProducts, setLoading, products, loading } = useContext(
     ProductContext

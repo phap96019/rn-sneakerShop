@@ -48,7 +48,9 @@ const userReducer = (state, action) => {
       let wishlist = state.wishlist.filter(item => item._id !== action.payload);
       return { ...state, wishlist: wishlist, loading: false };
     case 'ADD_WISHLIST_ITEM':
-      wishlist = [...state.wishlist, action.payload];
+      wishlist = state.wishlist
+        ? [...state.wishlist, action.payload]
+        : [action.payload];
       return { ...state, wishlist: wishlist, loading: false };
     case 'SET_USER_ERROR':
       return {

@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import ReviewComponent from '../components/ReviewComponent';
+import RatingChart from '../components/RatingChart';
 
 const Datatemp = [
   {
@@ -89,6 +90,7 @@ const Datatemp = [
 ];
 
 const ReviewScreen = props => {
+  const product = props.navigation.getParam('product');
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -100,6 +102,11 @@ const ReviewScreen = props => {
         }}
         showsVerticalScrollIndicator={false}
       >
+        <RatingChart
+          productId={product.id}
+          rating={product.rating}
+          nRating={product.nRating}
+        />
         <Text style={{ fontSize: 15, marginBottom: 0 }}>13 Reviews</Text>
         <FlatList
           data={Datatemp}

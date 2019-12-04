@@ -92,6 +92,7 @@ const TestScreen = props => {
       getCart();
     }
   }, [isSignIn]);
+
   return (
     <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
       <StatusBar backgroundColor="transparent" barStyle="light-content" />

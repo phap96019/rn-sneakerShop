@@ -79,24 +79,45 @@ const CartScreen = props => {
     }
     const price = renderTotal();
     return (
-      <ScrollView
-        contentContainerStyle={{
-          justifyContent: 'center',
-          // alignItems: 'center',
-          flexGrow: 1,
-          marginHorizontal: 15,
-        }}
-      >
+      <View style={{ justifyContent: 'center', flex: 1 }}>
         {loading && <LoadingComponent />}
-        <View style={{ justifyContent: 'space-between', flex: 1 }}>
-          <View style={{ marginTop: 15 }}>
-            <FlatList
-              data={cart}
-              keyExtractor={item => item._id}
-              renderItem={({ item }) => (
-                <CartItemScreen
-                  item={item}
+        <View style={{ flex: 1 }}>
+          <ScrollView
+            contentContainerStyle={{
+              // justifyContent: 'space-between',
+              // alignItems: 'center',
+              flexGrow: 1,
+              marginHorizontal: 15,
+            }}
+          >
+            <View style={{ justifyContent: 'space-between', flex: 1 }}>
+              <View style={{ marginTop: 15 }}>
+                <FlatList
+                  data={cart}
+                  keyExtractor={item => item._id}
+                  renderItem={({ item }) => (
+                    <CartItemScreen
+                      item={item}
+                      activeOpacity={0.8}
+                      handleOnPress={() => {
+                        props.navigation.navigate('Product', {
+                          productId: item.variant.product._id,
+                        });
+                      }}
+                    />
+                  )}
+                />
+              </View>
+
+              <View>
+                <View style={styles.totalContainer}>
+                  <Text style={styles.total}>Total:</Text>
+                  <Text style={styles.total}>{` $ ${renderTotal()}`}</Text>
+                </View>
+                <ButtonComponent
                   activeOpacity={0.8}
+                  containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
+                  title="Proceed to ordering"
                   handleOnPress={() => {
                     props.navigation.navigate('Product', {
                       productId: item.variant.product._id,
@@ -104,26 +125,27 @@ const CartScreen = props => {
                     });
                   }}
                 />
-              )}
-            />
-          </View>
+                )} />
+              </View>
 
-          <View>
-            <View style={styles.totalContainer}>
-              <Text style={styles.total}>Total:</Text>
-              <Text style={styles.total}>{` $ ${price}`}</Text>
+              <View>
+                <View style={styles.totalContainer}>
+                  <Text style={styles.total}>Total:</Text>
+                  <Text style={styles.total}>{` $ ${price}`}</Text>
+                </View>
+                <ButtonComponent
+                  activeOpacity={0.8}
+                  containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
+                  title="Proceed to ordering"
+                  handleOnPress={() => {
+                    props.navigation.navigate('GetInfo', { price, cart });
+                  }}
+                />
+              </View>
             </View>
-            <ButtonComponent
-              activeOpacity={0.8}
-              containerStyle={{ flex: 1, marginTop: 30, marginBottom: 30 }}
-              title="Proceed to ordering"
-              handleOnPress={() => {
-                props.navigation.navigate('GetInfo', { price, cart });
-              }}
-            />
-          </View>
+          </ScrollView>
         </View>
-      </ScrollView>
+      </View>
     );
   };
   return (

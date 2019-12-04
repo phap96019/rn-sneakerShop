@@ -24,20 +24,6 @@ import { NavigationEvents } from 'react-navigation';
 import AnimationViewComponent from '../components/AnimationViewComponent';
 import sourceAnimation from '../assets/emptybox.json';
 
-<<<<<<< HEAD
-=======
-data2 = [
-  {
-    id: 0,
-    name: 'Giày loại X',
-    size: 'Size: 40',
-    cost: 200,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-];
-
->>>>>>> 91d20e1a33cfef1d9de737b222fce964c7fd6e42
 const CategoryResultScreen = props => {
   const {
     searchProducts,

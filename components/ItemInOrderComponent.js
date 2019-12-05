@@ -55,10 +55,10 @@ const ItemInOrderComponent = ({
           >
             {product.name}
           </Text>
-          <Text style={{ fontWeight: 'bold' }}>{'$ ' + product.price}</Text>
           <Text
-            style={{}}
-          >{`${variant.size} | ${variant.color} x ${item.quantity}`}</Text>
+            style={{ fontWeight: 'bold' }}
+          >{`$  ${product.price} x ${item.quantity} Product`}</Text>
+          <Text style={{}}>{`${variant.size} | ${variant.color} `}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   },
   info: {
     flex: 1,
-    padding: 5,
+    padding: 15,
     justifyContent: 'space-around',
   },
 });

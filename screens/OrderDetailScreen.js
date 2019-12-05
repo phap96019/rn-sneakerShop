@@ -74,9 +74,6 @@ const OrderDetailScreen = props => {
     setLoading();
     getOrder(orderId);
   }, []);
-  if (order) {
-    console.log(order.variants);
-  }
 
   if (!order || loading)
     return (
@@ -133,7 +130,11 @@ const OrderDetailScreen = props => {
                 <ItemInOrderComponent
                   item={item}
                   activeOpacity={0.8}
-                  handleOnPress={() => {}}
+                  handleOnPress={() => {
+                    props.navigation.navigate('Product', {
+                      productId: item.variant.product._id.toString(),
+                    });
+                  }}
                 />
               )}
             />

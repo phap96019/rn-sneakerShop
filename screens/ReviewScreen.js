@@ -9,13 +9,13 @@ import {
 import ReviewComponent from '../components/ReviewComponent';
 import { Context as ReviewContext } from '../context/ReviewContext';
 import { Context as UserContext } from '../context/UserContext';
+import { Context as AuthContext } from '../context/AuthContext';
 import RatingChart from '../components/RatingChart';
 
 const ReviewScreen = props => {
-  const { setLoading, setAppLoading, getReview, reviews } = useContext(
-    ReviewContext
-  );
+  const { getReview, reviews } = useContext(ReviewContext);
   const { user } = useContext(UserContext);
+  const { isSignIn } = useContext(AuthContext);
   const product = props.navigation.getParam('product');
   useEffect(() => {
     getReview(product.id);
@@ -24,11 +24,13 @@ const ReviewScreen = props => {
   // console.log(reviews);
 
   const isNotReviewed = () => {
-    if(!reviews) return true;
-    const review = reviews.find(review => review.user._id.toString() === user._id.toString())
-    if(review) return false;
+    if (!reviews || !user) return true;
+    const review = reviews.find(
+      review => review.user._id.toString() === user._id.toString()
+    );
+    if (review) return false;
     return true;
-  } 
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -58,42 +60,47 @@ const ReviewScreen = props => {
           }}
         />
       </ScrollView>
-{
-        isNotReviewed() && <View
-        style={{
-          position: 'absolute',
-          bottom: 5,
-          right: 5,
-          left: 5,
-          zIndex: 2,
-          flexDirection: 'row',
-        }}
-      >
-        <TouchableOpacity
+      {isNotReviewed() && (
+        <View
           style={{
-            flex: 1,
-            alignItems: 'center',
-            backgroundColor: '#1d1d1d',
-            borderRadius: 10,
-          }}
-          onPress={() => {
-            console.log('Press here');
-            props.navigation.navigate('WriteReview', { productId: product.id });
+            position: 'absolute',
+            bottom: 5,
+            right: 5,
+            left: 5,
+            zIndex: 2,
+            flexDirection: 'row',
           }}
         >
-          <Text
+          <TouchableOpacity
             style={{
-              fontSize: 14,
-              fontWeight: 'bold',
-              color: 'white',
-              padding: 15,
+              flex: 1,
+              alignItems: 'center',
+              backgroundColor: '#1d1d1d',
+              borderRadius: 10,
+            }}
+            onPress={() => {
+              if (!isSignIn) {
+                props.navigation.navigate('Login');
+                return;
+              }
+              props.navigation.navigate('WriteReview', {
+                productId: product.id,
+              });
             }}
           >
-            Write Review
-          </Text>
-        </TouchableOpacity>
-      </View>
-}
+            <Text
+              style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: 'white',
+                padding: 15,
+              }}
+            >
+              Write Review
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

@@ -144,6 +144,9 @@ const createOrder = dispatch => async ({
 const clearDetailOrder = dispatch => () => {
   dispatch({ type: 'CLEAR_DETAIL_ORDER' });
 };
+const clearError = dispatch => () => {
+  dispatch({ type: 'CLEAR_ORDER_ERROR' });
+};
 
 export const { Provider, Context } = contextFactory(
   orderReducer,
@@ -154,6 +157,7 @@ export const { Provider, Context } = contextFactory(
     setLoading,
     setAppLoading,
     clearDetailOrder,
+    clearError,
   },
   {
     orders: null,

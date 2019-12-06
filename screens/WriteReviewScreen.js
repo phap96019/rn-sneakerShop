@@ -11,17 +11,6 @@ import { AirbnbRating } from 'react-native-ratings';
 import { Context as ReviewContext } from '../context/ReviewContext';
 import trimData from '../utils/trimData';
 
-const DataX = [
-  {
-    id: 0,
-    name: 'Adidas Ultra Boost',
-    size: 'Size: 40',
-    cost: 44.99,
-    pic:
-      'https://c.static-nike.com/a/images/t_PDP_1280_v1/f_auto/ymmq6yswyxlxycdzquoi/epic-react-flyknit-2-running-shoe-B01C0P.jpg',
-  },
-];
-
 const WriteReviewScreen = props => {
   const {
     setLoading,
@@ -44,7 +33,7 @@ const WriteReviewScreen = props => {
     review: '',
   });
 
-  const { review } = inputData;
+  const { review, error } = inputData;
   const handleOnChange = name => text => {
     setInputData({ ...inputData, [name]: text });
   };
@@ -120,13 +109,14 @@ const WriteReviewScreen = props => {
         </View>
       )}
 
+      {error && <Text style={{ color: '#e74c3c' }}>{error}</Text>}
+
       <TouchableOpacity
         style={{
           alignItems: 'center',
           backgroundColor: '#1d1d1d',
           borderRadius: 10,
         }}
-        
         onPress={handleOnSubmit}
       >
         <Text

@@ -61,7 +61,7 @@ const CartScreen = props => {
               Opps! Your cart is empty
             </Text>
             <Text style={{ textAlign: 'center' }}>
-              {`Add somthing to make me happy:)`}
+              {`Add something to make me happy :)`}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', marginVertical: 15 }}>

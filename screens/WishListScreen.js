@@ -65,7 +65,7 @@ const ScreenForTest = props => {
               Opps! Your wish list is empty
             </Text>
             <Text style={{ textAlign: 'center' }}>
-              Add somthing to make me happy:)
+              {`Add something to make me happy :)`}
             </Text>
           </View>
           <View style={{ flexDirection: 'row', marginVertical: 15 }}>
@@ -137,6 +137,7 @@ const ScreenForTest = props => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

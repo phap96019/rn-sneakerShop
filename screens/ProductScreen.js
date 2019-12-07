@@ -333,7 +333,7 @@ const ProductScreen = props => {
               </View>
 
               <Text style={{ fontSize: 15, fontWeight: 'bold' }}>
-                $ {product.price}
+                ${product.price}
               </Text>
             </View>
           </View>

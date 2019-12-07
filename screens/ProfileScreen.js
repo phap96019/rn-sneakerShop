@@ -69,7 +69,7 @@ const ProfileScreen = props => {
             />
           </View>
           {user && (
-            <View>
+            <View style={{alignItems: "center"}}>
               <Text style={styles.TextName}>{user.name}</Text>
               <Text style={{ color: '#FFF' }}>{user.email}</Text>
             </View>

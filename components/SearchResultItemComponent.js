@@ -52,7 +52,7 @@ const SearchResultItemComponent = ({
           >
             {item.name}
           </Text>
-          <Text style={{ fontWeight: 'bold' }}>{'$ ' + item.price}</Text>
+          <Text style={{ fontWeight: 'bold' }}>{'$' + item.price}</Text>
           <View style={{ justifyContent: 'flex-start' }}>
             <Rating
               imageSize={20}

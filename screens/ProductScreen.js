@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
 });
 
 let isClear = true;
-// let isLoading = true;
 let actionName = '';
 
 const ProductScreen = props => {
@@ -83,9 +82,9 @@ const ProductScreen = props => {
   const productId = props.navigation.getParam('productId');
 
   useEffect(() => {
-    if (isLoading) {
-      const productId = props.navigation.getParam('productId');
+    if (isLoading || !product) {
       setAppLoading();
+      const productId = props.navigation.getParam('productId');
       getProduct(productId);
       setIsLoading(false);
     }
@@ -147,6 +146,15 @@ const ProductScreen = props => {
     );
 
   if (!product) {
+    return <View></View>;
+  }
+
+  if (error && !error.startsWith('Duplicate')) {
+    const errResult =
+      error.startsWith('Invalid _id') ||
+      error.startsWith('No document found with that ID')
+        ? `Your product you find is not found`
+        : `Something is wrong`;
     return (
       <View style={styles.container}>
         <AnimationViewComponent
@@ -163,7 +171,7 @@ const ProductScreen = props => {
               marginVertical: 10,
             }}
           >
-            Opps! Your product you find is not found!
+            {`Opps! ${errResult}!`}
           </Text>
           {/* <Text style={{ textAlign: 'center' }}>
             Add somthing to make me happy:)
@@ -186,7 +194,7 @@ const ProductScreen = props => {
   return (
     <View
       style={{
-        marginTop: 15,
+        // marginTop: 15,
         // marginHorizontal: 15,
         marginBottom: 20,
         justifyContent: 'center',
@@ -274,7 +282,7 @@ const ProductScreen = props => {
                 )}
               </View>
             </TouchableOpacity>
-          </View> */}
+          </> */}
         </View>
 
         <View style={{ marginTop: 15, marginHorizontal: 20 }}>
@@ -294,7 +302,13 @@ const ProductScreen = props => {
             {/* images */}
 
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ fontSize: 25, fontWeight: 'bold' }}>
+              <Text
+                style={{
+                  fontSize: 25,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                }}
+              >
                 {product.name}
               </Text>
 
@@ -319,6 +333,8 @@ const ProductScreen = props => {
                         id: product.id,
                         rating: product.ratingsAverage,
                         nRating: product.ratingsQuantity,
+                        name: product.name,
+                        imageCover: product.imageCover,
                       },
                     });
                   }}

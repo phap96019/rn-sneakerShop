@@ -32,7 +32,7 @@ const RootStackNavigator = createStackNavigator(
       navigationOptions: () => ({
         header: null,
       }),
-      path: '',
+      // path: '',
     },
     Login: {
       screen: LoginScreeen,
@@ -104,9 +104,9 @@ const RootStackNavigator = createStackNavigator(
     },
     SearchResult: {
       screen: SearchResultScreen,
-      // navigationOptions: () => ({
-      //   title: 'Search Result',
-      // }),
+      navigationOptions: () => ({
+        title: 'Search Result',
+      }),
     },
     Filter: {
       screen: FilterScreen,

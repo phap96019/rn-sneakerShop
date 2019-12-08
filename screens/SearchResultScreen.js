@@ -48,7 +48,7 @@ const SearchResultScreen = props => {
         paddingBottom: 20,
       }}
     >
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View
           style={{
             flexDirection: 'row',
@@ -99,6 +99,7 @@ const SearchResultScreen = props => {
         {/* ============= List ============ */}
         <View>
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={products}
             keyExtractor={data => data.id}
             renderItem={({ item }) => (

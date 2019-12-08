@@ -58,16 +58,16 @@ const productReducer = (state, action) => {
       return {
         ...state,
         error: '',
-        appLoading: '',
-        loading: '',
+        appLoading: false,
+        loading: false,
         product: null,
       };
     case 'CLEAR_PRODUCTS':
       return {
         ...state,
         error: '',
-        appLoading: '',
-        loading: '',
+        appLoading: false,
+        loading: false,
         products: null,
       };
     case 'SET_PRODUCT_ERROR':
@@ -179,6 +179,7 @@ const clearFilter = dispatch => async (searchQuery, sortQuery) => {
     const { data } = await apiHelper.get(
       `/api/v1/products?${searchQuery}${sortQuery}`
     );
+    console.log(`clear filter! /api/v1/products?${searchQuery}${sortQuery} `);
 
     dispatch({
       type: 'CLEAR_FILTER',

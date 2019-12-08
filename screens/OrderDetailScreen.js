@@ -69,18 +69,21 @@ const OrderDetailScreen = props => {
     dataInfo.address = order.address;
     dataInfo.cost = order.price.toString();
   }
+  const [isClear, setIsClear] = useState(true);
   useEffect(() => {
     const orderId = props.navigation.getParam('orderId');
     setLoading();
     getOrder(orderId);
   }, []);
 
-  if (!order || loading)
+  if (!order || loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <LoadingComponent />
       </View>
     );
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -94,7 +97,10 @@ const OrderDetailScreen = props => {
         >
           <NavigationEvents
             onWillBlur={() => {
-              clearDetailOrder();
+              if (isClear) {
+                clearDetailOrder();
+              }
+              setIsClear(true);
             }}
           />
           <Text
@@ -131,6 +137,7 @@ const OrderDetailScreen = props => {
                   item={item}
                   activeOpacity={0.8}
                   handleOnPress={() => {
+                    setIsClear(false);
                     props.navigation.navigate('Product', {
                       productId: item.variant.product._id.toString(),
                     });

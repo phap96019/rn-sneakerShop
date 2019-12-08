@@ -44,6 +44,7 @@ const CategoryResultScreen = props => {
       return () => {};
     }
   }, []);
+  const [isClear, setIsCLear] = useState(true);
   if (loading) {
     return (
       <View
@@ -115,21 +116,27 @@ const CategoryResultScreen = props => {
     >
       <NavigationEvents
         onWillBlur={() => {
-          clearProducts();
+          if (isClear) {
+            clearProducts();
+            return;
+          }
+          setIsCLear(true);
         }}
       />
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {/* ============= List ============ */}
         <View>
           <FlatList
             data={products}
             keyExtractor={data => data.id.toString()}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <SearchResultItemComponent
                 item={item}
                 activeOpacity={0.8}
                 handleOnPress={() => {
+                  setIsCLear();
                   props.navigation.navigate('Product', { productId: item._id });
                 }}
               />

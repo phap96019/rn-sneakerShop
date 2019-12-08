@@ -11,7 +11,7 @@
     "scheme": "qssneaker",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode":"contain",
+      "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
@@ -22,18 +22,7 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.yenmaiteam.qssneaker",
-      "intentFilters": [
-        {
-          "action": "VIEW",
-          "data": {
-            "scheme": "https",
-            "host": "qssneaker.herokuapp.com",
-            "pathPrefix": "/"
-          },
-          "category": ["BROWSABLE", "DEFAULT"]
-        }
-      ]
+      "package": "com.yenmaiteam.qssneaker"
     }
   }
 }

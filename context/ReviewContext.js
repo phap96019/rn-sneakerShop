@@ -28,6 +28,14 @@ const reviewReducer = (state, action) => {
         error: '',
         reviews,
       };
+    case 'CLEAR_REVIEWS':
+      return {
+        ...state,
+        reviews: null,
+        loading: false,
+        appLoading: false,
+        error: '',
+      };
     case 'SET_REVIEW_ERROR':
       return {
         ...state,
@@ -47,9 +55,20 @@ const setAppLoading = dispatch => async () => {
   dispatch({ type: 'SET_APP_LOADING' });
 };
 
-const setLoading = dispatch => async () => {
+const setLoading = dispatch => () => {
   console.log('loading');
   dispatch({ type: 'SET_LOADING' });
+};
+
+const clearError = dispatch => async () => {
+  console.log('loading');
+  dispatch({ type: 'CLEAR_REVIEW_ERROR' });
+};
+
+const clearReviews = dispatch => () => {
+  console.log('Clear reviews!');
+
+  dispatch({ type: 'CLEAR_REVIEWS' });
 };
 
 const getReview = dispatch => async productId => {
@@ -104,6 +123,8 @@ export const { Provider, Context } = contextFactory(
     setAppLoading,
     getReview,
     createReview,
+    clearError,
+    clearReviews,
   },
   {
     reviews: null,

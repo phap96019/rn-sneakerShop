@@ -22,7 +22,7 @@ import { Ionicons } from '@expo/vector-icons';
 import LoadingComponent from '../components/LoadingComponent';
 import { NavigationEvents } from 'react-navigation';
 import AnimationViewComponent from '../components/AnimationViewComponent';
-import sourceAnimation from '../assets/emptybox.json';
+import sourceAnimation from '../assets/404NotFound.json';
 
 const CategoryResultScreen = props => {
   const {
@@ -72,7 +72,7 @@ const CategoryResultScreen = props => {
         }}
       >
         <AnimationViewComponent
-          animationStyle={{ width: 200, height: 200 }}
+          animationStyle={{ width: 100, height: 150 }}
           autoPlay
           source={sourceAnimation}
         />
@@ -85,11 +85,9 @@ const CategoryResultScreen = props => {
               marginVertical: 10,
             }}
           >
-            Opps! Your products is empty
+            {`Opps! Something is wrong`}
           </Text>
-          <Text style={{ textAlign: 'center' }}>
-            {`Add something to make me happy :)`}
-          </Text>
+          <Text style={{ textAlign: 'center' }}>{`Please try again`}</Text>
         </View>
         <View style={{ flexDirection: 'row', marginVertical: 15 }}>
           <ButtonComponent

@@ -101,7 +101,7 @@ const ResetPasswordScreen = props => {
         {loading && <LoadingComponent />}
         <Image style={styles.logo} source={require('../assets/Logo.png')} />
         <View style={styles.title}>
-          <Text style={styles.title}>Reset password</Text>
+          <Text style={styles.title}>{``}</Text>
         </View>
 
         <InputComponent
